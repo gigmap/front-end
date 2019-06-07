@@ -1,10 +1,12 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import * as PropTypes from 'prop-types';
-import {Alert, Button, Form, Icon, Input} from 'antd';
+import {Button, Form, Icon, Input} from 'antd';
 import {getArtistQty} from '../../api';
 import {login} from '../../actions/user';
 import {load} from '../../actions/data';
+import styles from './LoginForm.module.css';
+import InitialLoadBlock from './InitialLoadBlock';
 
 class LoginForm extends Component {
 
@@ -17,6 +19,33 @@ class LoginForm extends Component {
     checkingName: false,
     artistQty: null
   };
+
+  renderInputField() {
+    const {checkingName} = this.state;
+    const {getFieldDecorator} = this.props.form;
+
+    let validationProps = {};
+    if (checkingName) {
+      validationProps = {
+        validateStatus: 'validating',
+        hasFeedback: true
+      };
+    }
+
+    return <Form.Item {...validationProps}>
+      {getFieldDecorator('username', {
+        rules: [{
+          required: true,
+          message: 'Please input your songkick username!'
+        }]
+      })(
+        <Input
+          prefix={<Icon type="user" style={{color: 'rgba(0,0,0,.25)'}}/>}
+          placeholder="Songkick Username"/>
+      )}
+    </Form.Item>;
+  }
+
 
   handleSubmit = (e) => {
     e.preventDefault();
@@ -44,97 +73,44 @@ class LoginForm extends Component {
     });
   };
 
-  renderInputField() {
-    const {checkingName} = this.state;
-    const {getFieldDecorator} = this.props.form;
-
-    let validationProps = {};
-    if (checkingName) {
-      validationProps = {
-        validateStatus: 'validating',
-        hasFeedback: true
-      };
-    }
-
-    return <Form.Item {...validationProps}>
-      {getFieldDecorator('username', {
-        rules: [{
-          required: true,
-          message: 'Please input your songkick username!'
-        }]
-      })(
-        <Input
-          prefix={<Icon type="user" style={{color: 'rgba(0,0,0,.25)'}}/>}
-          placeholder="Songkick Username"
-        />
-      )}
+  renderSubmitButton() {
+    return <Form.Item>
+      <Button type="primary" htmlType="submit"
+              disabled={this.state.checkingName}>Enter</Button>
     </Form.Item>;
   }
 
-  renderArtistsQty() {
+  loadConcerts() {
+    const {artistQty} = this.state;
+    const {login, load, form: {getFieldValue}} = this.props;
+    const username = getFieldValue('username');
+    const loginData = {username, artistQty};
+
+    login(loginData);
+    load(loginData);
+  }
+
+  renderInitialLoadBlock() {
     const {artistQty} = this.state;
     if (artistQty === null) {
       return;
     }
 
-    if (artistQty === 0) {
-      return <Alert
-        message={<span>
-          You have no artists tracked on
-          <a target='_blank'
-             rel='noreferrer noopener'
-             href="https://www.songkick.com/tracker/artists">Songkick</a>.
-          Track some and try again!
-           </span>
-        }
-        type="warning"
-        showIcon/>;
-    }
-
-    const word = artistQty === 1 ? 'artist' : 'artists';
-    const tracked = `You have ${artistQty} ${word} tracked.`;
-    const conclusion = artistQty < 30 ?
-      'It shouldn\'t be long!' :
-      'It can take a while.';
-
-    const {login, load, form: {getFieldValue}} = this.props;
-    const username = getFieldValue('username');
-    const loginData = {username, artistQty};
-
-    return <div>
-      <Alert
-        message={`${tracked} ${conclusion}`}
-        type="info"
-        showIcon/>
-
-      <Button type="primary" style={{marginTop: 20}}
-              onClick={() => {
-                login(loginData);
-                load(loginData);
-              }}>
-        Let's go!
-      </Button>
+    return <div style={{marginTop: 20}}>
+      <InitialLoadBlock load={() => this.loadConcerts()}
+                        artistQty={artistQty}/>
     </div>;
   }
 
   render() {
-
     return (
-      <div style={{maxWidth: 400, margin: '0 auto'}}>
+      <div className={styles.wrapper}>
         <Form layout="inline" onSubmit={this.handleSubmit}>
           {this.renderInputField()}
-          <Form.Item>
-            <Button type="primary" htmlType="submit"
-                    className="login-form-button"
-                    disabled={this.state.checkingName}>
-              Enter
-            </Button>
-          </Form.Item>
+          {this.renderSubmitButton()}
         </Form>
 
-        <div style={{marginTop: 20}}>
-          {this.renderArtistsQty()}
-        </div>
+        {this.renderInitialLoadBlock()}
       </div>
     );
   }

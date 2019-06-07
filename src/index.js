@@ -7,10 +7,8 @@ import './index.css';
 import * as serviceWorker from './serviceWorker';
 import configureStore from './store/configureStore';
 import App from './components/app/App';
-// import {connectToStore} from './api';
 
 const {store, persistor} = configureStore({});
-// connectToStore(store);
 
 ReactDOM.render(
   <Provider store={store}>

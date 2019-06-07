@@ -1,5 +1,4 @@
 import React from 'react';
-import './Antd.css';
 import styles from './App.module.css';
 import {connect} from 'react-redux';
 import * as PropTypes from 'prop-types';
