@@ -12,13 +12,18 @@ class CountryFilter extends Component {
 
   render() {
     const {countries} = this.props;
+
+    // todo: 2 cycles
+
     const initialValues = countries.reduce((all, it) => {
       all[it] = true;
       return all;
     }, {});
 
+    const items = countries.map(it => ({id: it, displayName: it}));
+
     const TheForm = createFilterForm('countryFilter'); // TODO: create constant
-    return <TheForm items={countries} initialValues={initialValues}/>;
+    return <TheForm items={items} initialValues={initialValues}/>;
   }
 }
 

@@ -15,9 +15,6 @@ const {Header, Footer, Content} = Layout;
 function App({user, logout, load, loading}) {
   let page, actionsBlock;
 
-  console.warn(process.env);
-
-
   if (user.name) {
     page = <ConcertPage/>;
     actionsBlock = <div>

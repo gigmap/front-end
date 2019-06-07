@@ -11,9 +11,9 @@ class ArtistFilter extends Component {
   };
 
   render() {
-    const artists = this.props.artists.map(it => it.displayName);
+    const {artists} = this.props;
     const initialValues = artists.reduce((all, it) => {
-      all[it] = true;
+      all[it.id] = true;
       return all;
     }, {});
 

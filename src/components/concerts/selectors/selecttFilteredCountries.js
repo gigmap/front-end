@@ -45,7 +45,7 @@ export const getFilteredConcerts = createSelector(
 
     const checkArtist = allArtistsSelected ?
       () => true :
-      concert => concert.relatedArtistNames.some(name => selectedArtists.has(name));
+      concert => concert.members.some(artist => selectedArtists.has(artist.id));
 
     const checkCountry = allCountriesSelected ?
       () => true :

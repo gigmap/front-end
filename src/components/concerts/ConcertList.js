@@ -6,7 +6,7 @@ import {connect} from 'react-redux';
 import {getFilteredConcerts} from './selectors/selecttFilteredCountries';
 
 function ConcertCard({concert}) {
-  const titleText = concert.relatedArtistNames.join(', ');
+  const titleText = concert.members.map(it => it.displayName).join(', ');
   const title = <div>
     <Popover content={titleText}>
       <div className={styles.cutText}>{titleText}</div>

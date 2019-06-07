@@ -15,7 +15,7 @@ class FilterForm extends Component {
     return <div>
       {
         this.props.items.map((it, i) => {
-          return <Field key={i} label={it} name={it}
+          return <Field key={i} label={it.displayName} name={it.id}
                         component={ReduxAntCheckbox}/>;
         })
       }
