@@ -1,7 +1,7 @@
 import {createSelector} from 'reselect';
 import {getFormValues} from 'redux-form';
-
-export const concertsSelector = (state) => state.data.concerts;
+import {concertsWithDistanceSelector} from './distanceSelectors';
+import {ARTIST_FILTER_NAME, COUNTRY_FILTER_NAME} from '../../filters/Constants';
 
 export const countCountriesSelector = (state) => state.data.countries.length;
 
@@ -15,17 +15,17 @@ const createFilterSelector = (name) => createSelector(
   }
 );
 
-export const selectedCountriesSelector = createFilterSelector('countryFilter');
+export const selectedCountriesSelector = createFilterSelector(COUNTRY_FILTER_NAME);
 
-export const selectedAtristsSelector = createFilterSelector('artistFilter');
+export const selectedArtistsSelector = createFilterSelector(ARTIST_FILTER_NAME);
 
 export const getFilteredConcerts = createSelector(
   [
-    concertsSelector,
+    concertsWithDistanceSelector,
     countCountriesSelector,
     countArtistsSelector,
     selectedCountriesSelector,
-    selectedAtristsSelector
+    selectedArtistsSelector
   ],
   /**
    * @param {Array} concerts
@@ -51,7 +51,6 @@ export const getFilteredConcerts = createSelector(
       () => true :
       concert => selectedCountries.has(concert.location.country);
 
-    // TODO: use id instead of relatedArtistNames
     return concerts.filter(it => checkArtist(it) && checkCountry(it));
   });
 

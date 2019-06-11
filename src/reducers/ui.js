@@ -1,7 +1,8 @@
 import {TYPES} from '../actions/ui';
 
 const initialState = {
-  filtersOut: true
+  filtersOut: true,
+  locationDialogOpen: false
 };
 
 export const ui = (state = initialState, {type, payload}) => {
@@ -10,6 +11,12 @@ export const ui = (state = initialState, {type, payload}) => {
       return {
         ...state,
         filtersOut: payload
+      };
+
+    case TYPES.TOGGLE_LOCATION:
+      return {
+        ...state,
+        locationDialogOpen: payload
       };
 
     default:

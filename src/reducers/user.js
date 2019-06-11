@@ -15,6 +15,12 @@ export const user = (state = initialState, {type, payload}) => {
         artistQty: payload.artistQty
       };
 
+    case TYPES.SET_LOCATION:
+      return {
+        ...state,
+        location: payload ? {...payload} : null
+      };
+
     case TYPES.LOGOUT:
       return {
         ...initialState

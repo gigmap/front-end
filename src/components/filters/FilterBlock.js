@@ -1,17 +1,10 @@
 import React, {Component} from 'react';
-import {connect} from 'react-redux';
-import * as PropTypes from 'prop-types';
 
 import {Col, Divider, Row} from 'antd';
 import CountryFilter from './CountryFilter';
 import ArtistFilter from './ArtistFilter';
 
 class FilterBlock extends Component {
-
-  static propTypes = {
-    artists: PropTypes.array.isRequired
-  };
-
   render() {
     return <div>
       <Row>
@@ -29,6 +22,4 @@ class FilterBlock extends Component {
   }
 }
 
-const mapStateToProps = ({data}) => ({artists: data.artists});
-
-export default connect(mapStateToProps)(FilterBlock);
+export default FilterBlock;

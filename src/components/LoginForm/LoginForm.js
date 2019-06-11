@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import * as PropTypes from 'prop-types';
 import {Button, Form, Icon, Input} from 'antd';
-import {getArtistQty} from '../../api';
+import {getArtistQty} from '../../api/gigmap';
 import {login} from '../../actions/user';
 import {load} from '../../actions/data';
 import styles from './LoginForm.module.css';

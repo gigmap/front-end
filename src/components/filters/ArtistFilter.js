@@ -3,6 +3,7 @@ import {connect} from 'react-redux';
 import * as PropTypes from 'prop-types';
 
 import {createFilterForm} from './FilterForm';
+import {ARTIST_FILTER_NAME} from './Constants';
 
 class ArtistFilter extends Component {
 
@@ -17,8 +18,8 @@ class ArtistFilter extends Component {
       return all;
     }, {});
 
-    const TheForm = createFilterForm('artistFilter'); // TODO: create constant
-    return <TheForm items={artists} initialValues={initialValues} />;
+    const FormElement = createFilterForm(ARTIST_FILTER_NAME);
+    return <FormElement items={artists} initialValues={initialValues} />;
   }
 }
 

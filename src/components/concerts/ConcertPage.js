@@ -1,38 +1,21 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import * as PropTypes from 'prop-types';
-import {Alert, Button, Divider, Icon, Spin, Typography} from 'antd';
+import {Alert, Button, Divider, Spin} from 'antd';
 import {load} from '../../actions/data';
 import ConcertList from './ConcertList';
-import FilterBlock from '../filters/FilterBlock';
-import styles from './ConcertPage.module.scss';
-import {toggleFilters} from '../../actions/ui';
-
-const { Title } = Typography;
+import ConcertListControls from './ConcertListControls';
 
 class ConcertPage extends Component {
 
   static propTypes = {
-    user: PropTypes.shape({
-      name: PropTypes.string,
-      artistQty: PropTypes.number,
-      location: PropTypes.shape({
-        lat: PropTypes.number,
-        lng: PropTypes.number,
-        city: PropTypes.string
-      })
-    }).isRequired,
+    username: PropTypes.string.isRequired,
     data: PropTypes.shape({
       loading: PropTypes.bool.isRequired,
       finished: PropTypes.bool.isRequired,
       error: PropTypes.string
     }).isRequired,
-    ui: PropTypes.shape({
-      filtersOut: PropTypes.bool.isRequired
-    }),
-
-    load: PropTypes.func.isRequired,
-    toggleFilters: PropTypes.func.isRequired,
+    load: PropTypes.func.isRequired
   };
 
   renderLoading() {
@@ -42,7 +25,7 @@ class ConcertPage extends Component {
   }
 
   renderError(error) {
-    const {load, user} = this.props;
+    const {load, username} = this.props;
 
     const notice = error ?
       <Alert type='error' showIcon
@@ -53,7 +36,7 @@ class ConcertPage extends Component {
 
     const button =
       <Button type='primary' style={{marginTop: 20}}
-              onClick={() => load({username: user.name})}>Try Again</Button>;
+              onClick={() => load({username})}>Try Again</Button>;
 
     return <div>
       {notice}
@@ -61,31 +44,9 @@ class ConcertPage extends Component {
     </div>;
   }
 
-  renderFilters() {
-    const {ui: {filtersOut}, toggleFilters} = this.props;
-    const wrapperStyles = filtersOut ?
-      styles.filterWrapper :
-      [styles.filterWrapper, styles.collapsed].join(' ');
-
-    return <div>
-      <div style={{textAlign: 'center', marginBottom: 10}}>
-        <Title level={4} style={{textTransform: 'uppercase'}}>Filters</Title>
-      </div>
-      <div className={wrapperStyles}>
-        <FilterBlock/>
-      </div>
-      <div style={{textAlign: 'center'}}>
-        <Button style={{width: '100%', textAlign: 'center'}}
-                onClick={() => toggleFilters(!filtersOut)}>
-          <Icon type={filtersOut ? 'up' : 'down'}/>
-        </Button>
-      </div>
-    </div>;
-  }
-
   renderData() {
     return <div>
-      {this.renderFilters()}
+      <ConcertListControls/>
       <Divider />
       <ConcertList />
     </div>;
@@ -106,7 +67,7 @@ class ConcertPage extends Component {
   }
 }
 
-const mapStateToProps = ({user, data, ui}) => ({user, data, ui});
-const mapDispatchToProps = {load, toggleFilters};
+const mapStateToProps = ({user, data}) => ({username: user.name, data});
+const mapDispatchToProps = {load};
 
 export default connect(mapStateToProps, mapDispatchToProps)(ConcertPage);

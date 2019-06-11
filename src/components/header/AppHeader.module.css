@@ -1,0 +1,13 @@
+.header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.action {
+    margin-left: 20px;
+}
+
+.action:first-child {
+    margin-left: 0;
+}

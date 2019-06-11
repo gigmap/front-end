@@ -3,6 +3,7 @@ import {connect} from 'react-redux';
 import * as PropTypes from 'prop-types';
 
 import {createFilterForm} from './FilterForm';
+import {COUNTRY_FILTER_NAME} from './Constants';
 
 class CountryFilter extends Component {
 
@@ -12,18 +13,16 @@ class CountryFilter extends Component {
 
   render() {
     const {countries} = this.props;
+    const initialValues = {};
+    const items = [];
 
-    // todo: 2 cycles
+    for (const it of countries) {
+      initialValues[it] = true;
+      items.push({id: it, displayName: it});
+    }
 
-    const initialValues = countries.reduce((all, it) => {
-      all[it] = true;
-      return all;
-    }, {});
-
-    const items = countries.map(it => ({id: it, displayName: it}));
-
-    const TheForm = createFilterForm('countryFilter'); // TODO: create constant
-    return <TheForm items={items} initialValues={initialValues}/>;
+    const FormElement = createFilterForm(COUNTRY_FILTER_NAME);
+    return <FormElement items={items} initialValues={initialValues}/>;
   }
 }
 
