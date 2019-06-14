@@ -16,7 +16,7 @@ class FilterForm extends Component {
       {
         this.props.items.map((it, i) => {
           return <Field key={i} label={it.displayName} name={it.id}
-                        component={ReduxAntCheckbox}/>;
+                        available={it.available} component={ReduxAntCheckbox}/>;
         })
       }
     </div>;
@@ -25,5 +25,5 @@ class FilterForm extends Component {
 
 export const createFilterForm = name => reduxForm({
   // a unique name for the form
-  form: name
+  form: name,
 })(FilterForm);

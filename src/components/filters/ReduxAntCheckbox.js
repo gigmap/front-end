@@ -4,7 +4,7 @@ import {Checkbox, Popover} from 'antd';
 const MAX_LABEL_LENGTH = 20;
 
 export const ReduxAntCheckbox = (props) => {
-  const {input, label, ...rest} = props;
+  const {input, label, available, ...rest} = props;
 
   const text = label.length >= MAX_LABEL_LENGTH ?
     <Popover content={label}>{label}</Popover> :
@@ -12,6 +12,7 @@ export const ReduxAntCheckbox = (props) => {
 
   return (
     <Checkbox checked={Boolean(input.value)} {...input} {...rest}>
+      {available ? 'y': 'n'}
       {text}
     </Checkbox>
   );
