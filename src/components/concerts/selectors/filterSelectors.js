@@ -2,6 +2,7 @@ import {createSelector} from 'reselect';
 import {getFormValues} from 'redux-form';
 import {concertsWithDistanceSelector} from './distanceSelectors';
 import {ARTIST_FILTER_NAME, COUNTRY_FILTER_NAME} from '../../filters/Constants';
+import {concertsSelector} from './basicData';
 
 export const countCountriesSelector = (state) => state.data.countries.length;
 
@@ -55,3 +56,35 @@ export const getFilteredConcerts = createSelector(
   });
 
 
+// TODO: optimize for "all selected"
+export const availableCountries = createSelector(
+  [
+    concertsSelector,
+    countArtistsSelector,
+    selectedArtistsSelector
+  ],
+  (concerts, artistsQty, selectedArtists) => {
+    return concerts.reduce((sum, it) => {
+      if (it.members.some(artist => selectedArtists.has(artist.id))) {
+        sum[it.location.country] = true;
+      }
+      return sum;
+    }, {});
+  }
+);
+
+export const availableArtists = createSelector(
+  [
+    concertsSelector,
+    countCountriesSelector,
+    selectedCountriesSelector
+  ],
+  (concerts, countriesQty, selectedCountries) => {
+    return concerts.reduce((sum, it) => {
+      if (selectedCountries.has(it.location.country)) {
+        it.members.forEach(({id}) => sum[id] = true);
+      }
+      return sum;
+    }, {});
+  }
+);

@@ -1,9 +1,7 @@
 import React, {Component} from 'react';
 import * as PropTypes from 'prop-types';
 import {Field, reduxForm} from 'redux-form';
-import {ReduxAntCheckbox} from './ReduxAntCheckbox';
-
-import './Filter.scss';
+import {FilterCheckbox} from './FilterCheckbox';
 
 class FilterForm extends Component {
 
@@ -16,7 +14,7 @@ class FilterForm extends Component {
       {
         this.props.items.map((it, i) => {
           return <Field key={i} label={it.displayName} name={it.id}
-                        component={ReduxAntCheckbox}/>;
+                        available={it.available} component={FilterCheckbox}/>;
         })
       }
     </div>;
@@ -25,5 +23,5 @@ class FilterForm extends Component {
 
 export const createFilterForm = name => reduxForm({
   // a unique name for the form
-  form: name
+  form: name,
 })(FilterForm);
