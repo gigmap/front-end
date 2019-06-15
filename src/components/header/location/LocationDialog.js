@@ -3,9 +3,9 @@ import {connect} from 'react-redux';
 import * as PropTypes from 'prop-types';
 import {toggleLocationDialog} from '../../../actions/ui';
 import {Modal} from 'antd/lib/index';
-import MapLocationPicker from './MapLocationPicker';
 import {setLocation, unsetLocation} from '../../../actions/user';
 import {Button} from 'antd';
+import YandexMapLocationPicker from './yandex/YandexMapLocationPicker';
 
 
 class LocationDialog extends Component {
@@ -59,7 +59,7 @@ class LocationDialog extends Component {
       onCancel={this.close}
       footer={footer}
     >
-      <MapLocationPicker location={this.state.selectedLocation}
+      <YandexMapLocationPicker location={this.state.selectedLocation}
                          setLocation={(location) => this.selectLocation(location)}/>
     </Modal>;
   }

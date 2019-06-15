@@ -22,8 +22,9 @@ export const ui = (state = initialState, {type, payload}) => {
       };
 
     case TYPES.SORT_BY:
-      if (!Object.values(SORTING).includes(payload)) {
-        return  state;
+      if (payload === state.sorting ||
+        !Object.values(SORTING).includes(payload)) {
+        return state;
       }
 
       return {
