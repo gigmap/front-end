@@ -1,0 +1,13 @@
+.wrapper {
+    display: flex;
+    padding: 10px 0;
+    justify-content: center;
+}
+
+.button {
+    margin-right: 10px;
+}
+
+.button:last-child {
+    margin-right: 0;
+}

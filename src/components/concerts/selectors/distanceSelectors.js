@@ -34,6 +34,5 @@ export const getConcertsWithDistance = createSelector(
         distance: haversine(it.location, userLocation)
       };
     })
-      .sort((a, b) => a.distance - b.distance)
   }
 );

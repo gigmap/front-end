@@ -2,8 +2,8 @@ import React from 'react';
 import * as PropTypes from 'prop-types';
 import {BackTop, Col, Empty, Row} from 'antd';
 import {connect} from 'react-redux';
-import {getFilteredConcerts} from './selectors/filterSelectors';
 import ConcertCard from './ConcertCard';
+import {getSortedConcerts} from './selectors/concertListSelector';
 
 
 function renderConcert(concert) {
@@ -28,7 +28,7 @@ ConcertList.propTypes = {
 };
 
 const mapStateToProps = (state) => ({
-  concerts: getFilteredConcerts(state)
+  concerts: getSortedConcerts(state)
 });
 
 export default connect(mapStateToProps)(ConcertList);

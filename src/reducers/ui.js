@@ -1,8 +1,10 @@
 import {TYPES} from '../actions/ui';
+import {SORTING} from '../components/concerts/sorting/Constants';
 
 const initialState = {
   filtersOut: true,
-  locationDialogOpen: false
+  locationDialogOpen: false,
+  sorting: SORTING.date
 };
 
 export const ui = (state = initialState, {type, payload}) => {
@@ -17,6 +19,16 @@ export const ui = (state = initialState, {type, payload}) => {
       return {
         ...state,
         locationDialogOpen: payload
+      };
+
+    case TYPES.SORT_BY:
+      if (!Object.values(SORTING).includes(payload)) {
+        return  state;
+      }
+
+      return {
+        ...state,
+        sorting: payload
       };
 
     default:

@@ -15,7 +15,7 @@ import {
   countCountries,
   countSelectedArtists,
   countSelectedCountries
-} from '../concerts/selectors/filterSelectors';
+} from './selectors/filterSelectors';
 
 const ArtistFilter = createFilterForm(
   ARTIST_FILTER_NAME, getArtists, countArtists,
