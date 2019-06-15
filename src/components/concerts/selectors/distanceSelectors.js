@@ -1,5 +1,5 @@
 import {createSelector} from 'reselect';
-import {concertsSelector} from './basicData';
+import {getConcerts} from './basicData';
 
 const toRad = (n) => {
   return n * Math.PI / 180;
@@ -19,10 +19,10 @@ function haversine({lat: lat1, lng: lon1}, {lat: lat2, lng: lon2}) {
   return Math.round(d);
 }
 
-export const userLocationSelector = (state) => state.user.location;
+export const getUserLocation = (state) => state.user.location;
 
-export const concertsWithDistanceSelector = createSelector(
-  [concertsSelector, userLocationSelector],
+export const getConcertsWithDistance = createSelector(
+  getConcerts, getUserLocation,
   (concerts, userLocation) => {
     if (!userLocation) {
       return concerts;

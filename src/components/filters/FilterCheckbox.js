@@ -1,6 +1,6 @@
 import React from 'react';
 import {Checkbox, Popover} from 'antd';
-import styles from './FilterCheckbox.module.scss';
+import styles from './FilterCheckbox.module.css';
 
 const MAX_LABEL_LENGTH = 20;
 

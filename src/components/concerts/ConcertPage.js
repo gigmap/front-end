@@ -29,7 +29,9 @@ class ConcertPage extends Component {
 
     const notice = error ?
       <Alert type='error' showIcon
-             message={<div>An error happened during concert loading:<br/>{error}</div>}
+             message={
+               <div>An error happened during concert loading:<br/>{error}</div>
+             }
       /> :
       <Alert type='warning' showIcon
              message='Somehow concerts are not loaded.'/>;
@@ -47,8 +49,8 @@ class ConcertPage extends Component {
   renderData() {
     return <div>
       <ConcertListControls/>
-      <Divider />
-      <ConcertList />
+      <Divider/>
+      <ConcertList/>
     </div>;
   }
 
@@ -67,7 +69,8 @@ class ConcertPage extends Component {
   }
 }
 
-const mapStateToProps = ({user, data}) => ({username: user.name, data});
+const mapStateToProps = ({user, data: {loading, finished, error}}) =>
+  ({username: user.name, data: {loading, finished, error}});
 const mapDispatchToProps = {load};
 
 export default connect(mapStateToProps, mapDispatchToProps)(ConcertPage);

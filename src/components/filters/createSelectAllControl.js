@@ -5,7 +5,7 @@ import {Checkbox} from 'antd';
 import {change} from 'redux-form';
 
 export const createSelectAllControl = (
-  filterName, itemsSelector, qtySelector, selectedItemsSelector
+  filterName, getAllItems, countAllItems, countSelectedItems
 ) => {
 
   function SelectAllSwitch({items, totalQty, selectedQty, change}) {
@@ -32,9 +32,9 @@ export const createSelectAllControl = (
   };
 
   const mapStateToProps = (state) => ({
-    items: itemsSelector(state),
-    totalQty: qtySelector(state),
-    selectedQty: selectedItemsSelector(state).size
+    items: getAllItems(state),
+    totalQty: countAllItems(state),
+    selectedQty: countSelectedItems(state)
   });
 
   const mapDispatchToProps = {change};

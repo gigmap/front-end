@@ -1,12 +1,8 @@
 import {createSelector} from 'reselect';
 import {getFormValues} from 'redux-form';
-import {concertsWithDistanceSelector} from './distanceSelectors';
+import {getConcertsWithDistance} from './distanceSelectors';
 import {ARTIST_FILTER_NAME, COUNTRY_FILTER_NAME} from '../../filters/Constants';
-import {concertsSelector} from './basicData';
-
-export const countCountriesSelector = (state) => state.data.countries.length;
-
-export const countArtistsSelector = (state) => state.data.artists.length;
+import {getConcerts} from './basicData';
 
 const createFilterSelector = (name) => createSelector(
   [getFormValues(name)],
@@ -16,18 +12,26 @@ const createFilterSelector = (name) => createSelector(
   }
 );
 
-export const selectedCountriesSelector = createFilterSelector(COUNTRY_FILTER_NAME);
+export const countCountries = (state) => state.data.countries.length;
 
-export const selectedArtistsSelector = createFilterSelector(ARTIST_FILTER_NAME);
+export const countArtists = (state) => state.data.artists.length;
+
+export const getSelectedCountries = createFilterSelector(COUNTRY_FILTER_NAME);
+
+export const getSelectedArtists = createFilterSelector(ARTIST_FILTER_NAME);
+
+export const countSelectedCountries =
+  createSelector(getSelectedCountries, (itemsMap) => itemsMap.size);
+
+export const countSelectedArtists =
+  createSelector(getSelectedArtists, (itemsMap) => itemsMap.size);
 
 export const getFilteredConcerts = createSelector(
-  [
-    concertsWithDistanceSelector,
-    countCountriesSelector,
-    countArtistsSelector,
-    selectedCountriesSelector,
-    selectedArtistsSelector
-  ],
+  getConcertsWithDistance,
+  countCountries,
+  countArtists,
+  getSelectedCountries,
+  getSelectedArtists,
   /**
    * @param {Array} concerts
    * @param {number} countriesQty
@@ -55,14 +59,8 @@ export const getFilteredConcerts = createSelector(
     return concerts.filter(it => checkArtist(it) && checkCountry(it));
   });
 
-
-// TODO: optimize for "all selected"
-export const availableCountries = createSelector(
-  [
-    concertsSelector,
-    countArtistsSelector,
-    selectedArtistsSelector
-  ],
+export const getAvailableCountries = createSelector(
+  getConcerts, countArtists, getSelectedArtists,
   (concerts, artistsQty, selectedArtists) => {
     return concerts.reduce((sum, it) => {
       if (it.members.some(artist => selectedArtists.has(artist.id))) {
@@ -73,12 +71,8 @@ export const availableCountries = createSelector(
   }
 );
 
-export const availableArtists = createSelector(
-  [
-    concertsSelector,
-    countCountriesSelector,
-    selectedCountriesSelector
-  ],
+export const getAvailableArtists = createSelector(
+  getConcerts, countCountries, getSelectedCountries,
   (concerts, countriesQty, selectedCountries) => {
     return concerts.reduce((sum, it) => {
       if (selectedCountries.has(it.location.country)) {

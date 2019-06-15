@@ -2,29 +2,29 @@ import './FilterBlock.scss';
 
 import React from 'react';
 import {Col, Divider, Row} from 'antd';
-import {createFilter} from './createFilter';
+import {createFilterForm} from './createFilterForm';
 import {ARTIST_FILTER_NAME, COUNTRY_FILTER_NAME} from './Constants';
 import {
-  artistsSelector,
-  countriesSelector
+  getArtists,
+  getCountries
 } from '../concerts/selectors/basicData';
 import {
-  availableArtists,
-  availableCountries,
-  countArtistsSelector,
-  countCountriesSelector,
-  selectedArtistsSelector,
-  selectedCountriesSelector
+  getAvailableArtists,
+  getAvailableCountries,
+  countArtists,
+  countCountries,
+  countSelectedArtists,
+  countSelectedCountries
 } from '../concerts/selectors/filterSelectors';
 
-const ArtistFilter = createFilter(
-  ARTIST_FILTER_NAME, artistsSelector, countArtistsSelector,
-  availableArtists, selectedArtistsSelector
+const ArtistFilter = createFilterForm(
+  ARTIST_FILTER_NAME, getArtists, countArtists,
+  getAvailableArtists, countSelectedArtists
 );
 
-const CountryFilter = createFilter(
-  COUNTRY_FILTER_NAME, countriesSelector, countCountriesSelector,
-  availableCountries, selectedCountriesSelector
+const CountryFilter = createFilterForm(
+  COUNTRY_FILTER_NAME, getCountries, countCountries,
+  getAvailableCountries, countSelectedCountries
 );
 
 function FilterBlock() {
