@@ -3,8 +3,8 @@ import {connect} from 'react-redux';
 import * as PropTypes from 'prop-types';
 import {Alert, Button, Divider, Spin} from 'antd';
 import {load} from '../../actions/data';
-import ConcertList from './ConcertList';
-import ConcertListControls from './ConcertListControls';
+import ConcertListControls from './list/ConcertListControls';
+import ConcertTabs from './ConcertTabs';
 
 class ConcertPage extends Component {
 
@@ -50,7 +50,7 @@ class ConcertPage extends Component {
     return <div>
       <ConcertListControls/>
       <Divider/>
-      <ConcertList/>
+      <ConcertTabs/>
     </div>;
   }
 

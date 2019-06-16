@@ -3,7 +3,7 @@ import * as PropTypes from 'prop-types';
 import {BackTop, Col, Empty, Row} from 'antd';
 import {connect} from 'react-redux';
 import ConcertCard from './ConcertCard';
-import {getSortedConcerts} from './selectors/concertListSelector';
+import {getSortedConcerts} from '../selectors/concertListSelector';
 
 
 function renderConcert(concert) {

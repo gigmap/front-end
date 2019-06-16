@@ -4,6 +4,7 @@ import {Card, Icon, Popover} from 'antd';
 import styles from './ConcertList.module.scss';
 
 function ConcertCard({concert}) {
+  // todo: add on server side or on load
   const titleText = concert.members.map(it => it.displayName).join(', ');
   const title = <div>
     <Popover content={titleText}>
@@ -17,9 +18,14 @@ function ConcertCard({concert}) {
       type="export"/> Songkick</a>
   ];
 
-  const distance = concert.distance ?
-    <span> (~{concert.distance}km)</span> :
-    null;
+  // todo: looks like shit
+  let distance;
+  if (concert.distance === undefined) {
+    distance = null;
+  } else {
+    distance =
+      <span> (~{concert.distance === null ? '?' : concert.distance}km)</span>;
+  }
 
   return <Card size='small' title={title}
                actions={actions}

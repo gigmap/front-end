@@ -1,12 +1,13 @@
 import {createSelector} from 'reselect';
 import {getConcerts} from './basicData';
+import {hasLocation} from '../helpers/lib';
 
 const toRad = (n) => {
   return n * Math.PI / 180;
 };
 
 // Distance in kilometers between two points using the Haversine algo.
-function haversine({lat: lat1, lng: lon1}, {lat: lat2, lng: lon2}) {
+export function haversine({lat: lat1, lng: lon1}, {lat: lat2, lng: lon2}) {
   const R = 6371;
   const dLat = toRad(lat2 - lat1);
   const dLong = toRad(lon2 - lon1);
@@ -31,7 +32,7 @@ export const getConcertsWithDistance = createSelector(
     return concerts.map(it => {
       return {
         ...it,
-        distance: haversine(it.location, userLocation)
+        distance: hasLocation(it) ? haversine(it.location, userLocation) : null
       };
     })
   }

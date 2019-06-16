@@ -2,10 +2,10 @@ import React from 'react';
 import {connect} from 'react-redux';
 import * as PropTypes from 'prop-types';
 import {Button, Icon, Typography} from 'antd';
-import FilterBlock from '../filters/FilterBlock';
+import FilterBlock from '../../filters/FilterBlock';
 import styles from './ConcertListControls.module.scss';
-import {toggleFilters} from '../../actions/ui';
-import SortingBlock from './sorting/SortingBlock';
+import {toggleFilters} from '../../../actions/ui';
+import SortingBlock from '../sorting/SortingBlock';
 
 const {Title} = Typography;
 
