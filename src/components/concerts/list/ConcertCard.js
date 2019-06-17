@@ -4,8 +4,7 @@ import {Card, Icon, Popover} from 'antd';
 import styles from './ConcertList.module.scss';
 
 function ConcertCard({concert}) {
-  // todo: add on server side or on load
-  const titleText = concert.members.map(it => it.displayName).join(', ');
+  const titleText = concert.memberNames;
   const title = <div>
     <Popover content={titleText}>
       <div className={styles.cutText}>{titleText}</div>

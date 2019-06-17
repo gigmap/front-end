@@ -2,50 +2,29 @@ import React from 'react';
 import * as PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 import {
-  getFilteredConcerts
-} from '../selectors/concertListSelector';
-import {
-  Map, ObjectManager,
+  Map,
+  ObjectManager,
   Placemark,
-  YMaps, ZoomControl
+  YMaps,
+  ZoomControl
 } from 'react-yandex-maps';
 import {makeYaPosition} from '../../header/location/yandex/helpers';
 import {getUserLocation} from '../selectors/distanceSelectors';
 import {API_KEY} from '../../../api/yandex';
-import {hasLocation} from '../helpers/lib';
+import {getYaMapFeatures} from './selectors';
 
-
-// todo: memoize ?
-function concertToFeature(concert) {
-  const hint = concert.members.map(it => it.displayName).join(', '); // todo: persist ?
-
-  return {
-    type: 'Feature',
-    id: concert.id,
-    geometry: {
-      type: 'Point',
-      coordinates: makeYaPosition(concert.location)
-    },
-    properties: {
-      hintContent: hint,
-      balloonContentHeader: `${concert.start} ${hint}`,
-      balloonContentBody: concert.displayName,
-      balloonContentFooter: concert.location.city
-    }
-  };
-}
-
-const mapConcertsToFeatures = (concerts) => {
-  return concerts.filter(hasLocation).map(concertToFeature);
-};
+const renderHome = (location) => (
+  <Placemark geometry={makeYaPosition(location)}
+             options={{
+               preset: 'islands#redHomeCircleIcon'
+             }}/>
+);
 
 function ConcertMap({concerts, location}) {
 
   const mapState = location ?
     {center: [location.lat, location.lng], zoom: 6} :
     {center: [54, 16.5], zoom: 4};
-
-  const features = mapConcertsToFeatures(concerts);
 
   return (
     <div style={{height: 700}}>
@@ -62,10 +41,7 @@ function ConcertMap({concerts, location}) {
           defaultState={mapState}
         >
 
-          {location && <Placemark geometry={makeYaPosition(location)}
-                                  options={{
-                                    preset: 'islands#redHomeCircleIcon'
-                                  }}/>}
+          {location && renderHome(location)}
 
           <ObjectManager
             options={{
@@ -79,13 +55,12 @@ function ConcertMap({concerts, location}) {
             clusters={{
               preset: 'islands#invertedVioletClusterIcons'
             }}
-            features={features}
+            features={concerts}
             modules={[
               'objectManager.addon.objectsBalloon',
               'objectManager.addon.objectsHint'
             ]}
-          >
-          </ObjectManager>
+          />
 
           <ZoomControl/>
         </Map>
@@ -99,7 +74,7 @@ ConcertMap.propTypes = {
 };
 
 const mapStateToProps = (state) => ({
-  concerts: getFilteredConcerts(state),
+  concerts: getYaMapFeatures(state),
   location: getUserLocation(state)
 });
 
