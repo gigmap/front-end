@@ -7,7 +7,7 @@ import {makeYaPosition} from '../../header/location/yandex/helpers';
 import {groupBy} from 'lodash';
 
 const renderUri = (concert: Concert) =>
-  `<a href="${concert.uri}" rel="noreferrer noopener" target="_blank">See on Songkick</a>`;
+  `<a href="${concert.uri}" rel="noreferrer noopener" target="_blank">Go to Songkick</a>`;
 
 function concertToFeature(concerts: Concert[]) {
   const result = {
