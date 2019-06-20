@@ -1,0 +1,45 @@
+version: 2.1
+
+jobs:
+  test:
+    docker:
+      - image: circleci/node:latest
+    steps:
+      - checkout
+      - run: echo "Skipping tests for now"
+  build:
+    machine: true
+    steps:
+      - checkout
+      - run: >-
+          docker build
+          --build-arg GIGMAP_API_URL=${GIGMAP_API_URL}
+          --build-arg YANDEX_API_KEY=${YANDEX_API_KEY}
+          -t ${DOCKER_REGISTRY}/${DOCKER_USER}/gigmap/gigmap-front:latest .
+      - run: docker login -u ${DOCKER_USER} --password ${DOCKER_PASSWORD} ${DOCKER_REGISTRY}
+      - run: docker push ${DOCKER_REGISTRY}/${DOCKER_USER}/gigmap/gigmap-front:latest
+  deploy:
+      machine: true
+      steps:
+        - run: echo "not ready yet"
+        - run: >-
+            ssh ${DEPLOY_USER}@${DEPLOY_HOST}
+            "docker pull ${DOCKER_REGISTRY}/${DOCKER_USER}/gigmap/gigmap-front:latest
+            && docker service update --force gigmap-front"
+
+workflows:
+  version: 2
+  build_and_deploy:
+    jobs:
+      - test
+      - build:
+          context: GigMap
+          requires:
+            - test
+      - deploy:
+          context: GigMap
+          requires:
+            - build
+          filters:
+            branches:
+              only: master
