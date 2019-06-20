@@ -12,7 +12,10 @@ class InitialLoadBlock extends React.Component {
   buttonRef = React.createRef();
 
   componentDidMount() {
-    this.buttonRef.current.buttonNode.focus();
+    const {artistQty} = this.props;
+    if (artistQty > 0) {
+      this.buttonRef.current.buttonNode.focus();
+    }
   }
 
 
