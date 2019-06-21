@@ -4,8 +4,8 @@ import React from 'react';
 import {connect} from 'react-redux';
 import * as PropTypes from 'prop-types';
 import {Alert, Button, Divider, Spin} from 'antd';
-import {load} from '../../actions/data';
-import ConcertListControls from './list/ConcertListControls';
+import {load} from '../../store/actions/data';
+import ConcertListControls from './ConcertListControls';
 import ConcertTabs from './ConcertTabs';
 
 const renderLoading = () => {
@@ -29,18 +29,18 @@ const renderError = (error: string, username: string, load: Function) => {
     <Button type='primary' style={{marginTop: 20}}
             onClick={() => load({username})}>Try Again</Button>;
 
-  return <div>
+  return <>
     {notice}
     {button}
-  </div>;
+  </>;
 };
 
 const renderData = () => {
-  return <div>
+  return <>
     <ConcertListControls/>
     <Divider/>
     <ConcertTabs/>
-  </div>;
+  </>;
 };
 
 const ConcertPage = ({loading, finished, error, username, load}) => {

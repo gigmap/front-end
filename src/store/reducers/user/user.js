@@ -1,6 +1,6 @@
-import {TYPES} from '../actions/user';
+import {TYPES} from '../../actions/user';
 
-const initialState = {
+export const initialState = {
   name: null,
   artistQty: 0,
   location: null

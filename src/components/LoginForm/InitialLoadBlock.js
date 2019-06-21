@@ -1,8 +1,8 @@
 import * as PropTypes from 'prop-types';
 import {Alert, Button} from 'antd';
-import React from 'react';
+import React, {PureComponent} from 'react';
 
-class InitialLoadBlock extends React.Component {
+class InitialLoadBlock extends PureComponent {
 
   static propTypes = {
     artistQty: PropTypes.number.isRequired,
@@ -39,13 +39,13 @@ class InitialLoadBlock extends React.Component {
       'It shouldn\'t be long!' :
       'It can take a while.';
 
-    return <div>
+    return <>
       <Alert message={`${tracked} ${conclusion}`} type="info" showIcon/>
       <Button ref={this.buttonRef} type="primary" style={{marginTop: 20}}
               onClick={load}>
         Let's go!
       </Button>
-    </div>;
+    </>;
   }
 }
 

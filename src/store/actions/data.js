@@ -1,5 +1,5 @@
 import {makeAction, makeRequestTypes} from './lib';
-import {getConcerts} from '../api/gigmap';
+import {getConcerts} from '../../api/gigmap';
 
 export const TYPES = {
   LOADING: makeRequestTypes('DATA:LOADING')

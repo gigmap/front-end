@@ -28,19 +28,17 @@ const CountryFilter = createFilterForm(
 );
 
 function FilterBlock() {
-  return <div>
-    <Row>
-      <Col span={10}>
-        <CountryFilter/>
-      </Col>
-      <Col span={2}>
-        <Divider type='vertical'/>
-      </Col>
-      <Col span={10}>
-        <ArtistFilter/>
-      </Col>
-    </Row>
-  </div>;
+  return <Row>
+    <Col span={10}>
+      <CountryFilter/>
+    </Col>
+    <Col span={2}>
+      <Divider type='vertical'/>
+    </Col>
+    <Col span={10}>
+      <ArtistFilter/>
+    </Col>
+  </Row>;
 }
 
 export default FilterBlock;

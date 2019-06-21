@@ -28,12 +28,12 @@ export const createFilterForm = (
       items.push({...it, available: Boolean(availableItems[it.id])});
     }
 
-    return <div>
+    return <>
       <SelectAllElement/>
       <div>
         {items.map(renderField)}
       </div>
-    </div>;
+    </>;
   }
 
   FilterElement.propTypes = {

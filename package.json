@@ -1,6 +1,6 @@
 {
   "name": "@gigmap/front-end",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "private": true,
   "dependencies": {
     "antd": "^3.19.3",
@@ -42,6 +42,8 @@
     ]
   },
   "devDependencies": {
+    "@types/jest": "^24.0.15",
+    "coveralls": "^3.0.4",
     "flow-bin": "^0.101.0"
   }
 }

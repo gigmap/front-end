@@ -16,12 +16,10 @@ export const createSelectAllControl = (
       items.forEach(it => change(filterName, it.id, value));
     }
 
-    return <div>
-      <Checkbox checked={allSelected} onClick={handleClick}
-                indeterminate={!allSelected && selectedQty > 0}>
-        <b>All artists</b>
-      </Checkbox>
-    </div>;
+    return <Checkbox checked={allSelected} onClick={handleClick}
+                     indeterminate={!allSelected && selectedQty > 0}>
+      <b>All artists</b>
+    </Checkbox>;
   }
 
   SelectAllSwitch.propTypes = {

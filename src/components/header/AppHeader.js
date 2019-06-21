@@ -1,8 +1,8 @@
 import * as PropTypes from 'prop-types';
 import {connect} from 'react-redux';
-import {logout} from '../../actions/user';
-import {load} from '../../actions/data';
-import {toggleLocationDialog} from '../../actions/ui';
+import {logout} from '../../store/actions/user';
+import {load} from '../../store/actions/data';
+import {toggleLocationDialog} from '../../store/actions/ui';
 import SkLogo from './powered-by-songkick-white.svg';
 import React from 'react';
 import {Button, Icon} from 'antd';
@@ -38,7 +38,7 @@ function AppHeader({user, logout, load, loading, toggleLocationDialog}) {
        target='_blank'>
       <img src={SkLogo} alt='Powered by Songkick.com' height='50px'/>
     </a>
-    <LocationDialog/>}/>
+    <LocationDialog />
   </div>;
 }
 

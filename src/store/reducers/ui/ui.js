@@ -1,7 +1,7 @@
-import {TYPES} from '../actions/ui';
-import {SORTING} from '../components/concerts/sorting/Constants';
+import {TYPES} from '../../actions/ui';
+import {SORTING} from '../../../components/concerts/sorting/Constants';
 
-const initialState = {
+export const initialState = {
   filtersOut: true,
   locationDialogOpen: false,
   sorting: SORTING.date

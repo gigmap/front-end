@@ -6,7 +6,8 @@ jobs:
       - image: circleci/node:latest
     steps:
       - checkout
-      - run: echo "Skipping tests for now"
+      - run: npm ci
+      - run: npm test -- --coverage --coverageReporters=text-lcov | npx coveralls
   build:
     machine: true
     steps:

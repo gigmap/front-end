@@ -7,12 +7,14 @@ import {getSortedConcerts} from '../selectors/concertListSelector';
 
 
 function renderConcert(concert) {
-  return <Col xs={24} sm={8} md={6} key={concert.id}>
-    <ConcertCard concert={concert}/>
-  </Col>;
+  return (
+    <Col xs={24} sm={8} md={6} key={concert.id}>
+      <ConcertCard concert={concert}/>
+    </Col>
+  );
 }
 
-function ConcertList({concerts}) {
+const ConcertList = React.memo(function ConcertList({concerts}) {
   return (
     concerts.length === 0 ?
       <Empty image={Empty.PRESENTED_IMAGE_SIMPLE}/> :
@@ -21,7 +23,7 @@ function ConcertList({concerts}) {
         {concerts.map(renderConcert)}
       </Row>
   );
-}
+});
 
 ConcertList.propTypes = {
   concerts: PropTypes.array.isRequired
