@@ -14,7 +14,7 @@ const renderLoading = () => {
   </div>;
 };
 
-const renderError = (error: string, username: string, load: Function) => {
+const renderError = (error: string, load: Function) => {
 
   const notice = error ?
     <Alert type='error' showIcon
@@ -26,8 +26,9 @@ const renderError = (error: string, username: string, load: Function) => {
            message='Somehow concerts are not loaded.'/>;
 
   const button =
-    <Button type='primary' style={{marginTop: 20}}
-            onClick={() => load({username})}>Try Again</Button>;
+    <Button type='primary' style={{marginTop: 20}} onClick={load}>
+      Try Again
+    </Button>;
 
   return <>
     {notice}
@@ -43,29 +44,28 @@ const renderData = () => {
   </>;
 };
 
-const ConcertPage = ({loading, finished, error, username, load}) => {
+const ConcertPage = ({loading, finished, error, load}) => {
 
   if (loading) {
     return renderLoading();
   }
 
   if (!finished || error) {
-    return renderError(error, username, load);
+    return renderError(error, load);
   }
 
   return renderData();
 };
 
 ConcertPage.propTypes = {
-  username: PropTypes.string.isRequired,
   loading: PropTypes.bool.isRequired,
   finished: PropTypes.bool.isRequired,
   error: PropTypes.string,
   load: PropTypes.func.isRequired
 };
 
-const mapStateToProps = ({user, data: {loading, finished, error}}) =>
-  ({username: user.name, loading, finished, error});
+const mapStateToProps =
+  ({data: {loading, finished, error}}) => ({loading, finished, error});
 const mapDispatchToProps = {load};
 
 export default connect(mapStateToProps, mapDispatchToProps)(ConcertPage);

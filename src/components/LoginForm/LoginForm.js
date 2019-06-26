@@ -87,7 +87,7 @@ class LoginForm extends PureComponent {
     const loginData = {username, artistQty};
 
     login(loginData);
-    load(loginData);
+    load();
   }
 
   renderInitialLoadBlock() {

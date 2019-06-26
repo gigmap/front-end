@@ -25,5 +25,12 @@ export const api = createInstance(apiConfig, errorToString);
 export const getArtistQty = (username) =>
   api.get(`/songkick/artists/count?username=${username}`);
 
-export const getConcerts = ({username}) =>
-  api.get(`/songkick/concerts/list?username=${username}`);
+/**
+ * @param {Object} params
+ * @param {string} params.username
+ * @param {string} [params.from]
+ * @param {string} [params.to]
+ * @return {Promise<AxiosResponse<T>>}
+ */
+export const getConcerts =
+  (params) => api.get(`/songkick/concerts/list`, {params});

@@ -4,6 +4,7 @@ import {SORTING} from '../../../components/concerts/sorting/Constants';
 export const initialState = {
   filtersOut: true,
   locationDialogOpen: false,
+  dateDialogOpen: false,
   sorting: SORTING.date
 };
 
@@ -19,6 +20,12 @@ export const ui = (state = initialState, {type, payload}) => {
       return {
         ...state,
         locationDialogOpen: payload
+      };
+
+    case TYPES.TOGGLE_DATES:
+      return {
+        ...state,
+        dateDialogOpen: payload
       };
 
     case TYPES.SORT_BY:
