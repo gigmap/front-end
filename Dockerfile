@@ -7,7 +7,7 @@ RUN mkdir /app
 WORKDIR /app
 COPY . .
 COPY .env.example .env
-RUN npm i
+RUN npm ci
 RUN npm run build
 
 FROM nginx:stable

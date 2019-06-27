@@ -1,6 +1,6 @@
 import React from 'react';
 import {connect} from 'react-redux';
-import {Button, Icon} from 'antd/lib/index';
+import {Button, Icon} from 'antd';
 import * as PropTypes from 'prop-types';
 import {sortBy} from '../../../store/actions/ui';
 import styles from './SortingBlock.module.css';

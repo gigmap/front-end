@@ -37,6 +37,9 @@ workflows:
           context: GigMap
           requires:
             - test
+          filters:
+            branches:
+              only: master
       - deploy:
           context: GigMap
           requires:
