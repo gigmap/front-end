@@ -9,20 +9,16 @@ import {Button, Icon} from 'antd';
 import styles from './AppHeader.module.css';
 import LocationDialog from './location/LocationDialog';
 import DateDialog from './dates/DateDialog';
+import {composeDateText} from './dates/composeDateText';
+import {getUserWithMoment} from './dates/selectors/getUserWithMomentDates';
 
 function AppHeader({user, logout, load, loading, toggleLocationDialog, toggleDateDialog}) {
   let actionsBlock;
 
 
   if (user.name) {
-    const renderDates = dates => {
-      const {from, to} = dates;
-      if (from === to) {
-        return from;
-      }
-
-      return `${from}~${to}`;
-    };
+    const {dates} = user;
+    const dateLabel = dates ? composeDateText(dates) : 'When?';
 
     actionsBlock = <div>
       <Button onClick={logout} className={styles.action}>
@@ -40,11 +36,11 @@ function AppHeader({user, logout, load, loading, toggleLocationDialog, toggleDat
 
       <Button className={styles.action}
               onClick={() => toggleDateDialog(true)}>
-        <Icon type='calendar'/> {user.dates ? renderDates(user.dates) : 'When?'}
+        <Icon type='calendar'/> {dateLabel}
       </Button>
     </div>;
   } else {
-    actionsBlock = <div></div>;
+    actionsBlock = <div/>;
   }
 
   return <div className={styles.header}>
@@ -53,21 +49,30 @@ function AppHeader({user, logout, load, loading, toggleLocationDialog, toggleDat
        target='_blank'>
       <img src={SkLogo} alt='Powered by Songkick.com' height='50px'/>
     </a>
-    <LocationDialog />
-    <DateDialog />
+    <LocationDialog/>
+    <DateDialog/>
   </div>;
 }
 
 AppHeader.propTypes = {
-  user: PropTypes.shape({
-    name: PropTypes.string,
-    location: PropTypes.object
-  }).isRequired,
-  logout: PropTypes.func.isRequired
+  user: PropTypes.object.isRequired,
+  loading: PropTypes.bool.isRequired,
+  logout: PropTypes.func.isRequired,
+  load: PropTypes.func.isRequired,
+  toggleLocationDialog: PropTypes.func.isRequired,
+  toggleDateDialog: PropTypes.func.isRequired
 };
 
-const mapStateToProps = ({user, data}) => ({user, loading: data.loading});
+const mapStateToProps = (state) => ({
+  user: getUserWithMoment(state),
+  loading: state.data.loading
+});
 
-const mapDispatchToProps = {logout, load, toggleLocationDialog, toggleDateDialog};
+const mapDispatchToProps = {
+  logout,
+  load,
+  toggleLocationDialog,
+  toggleDateDialog
+};
 
 export default connect(mapStateToProps, mapDispatchToProps)(AppHeader);

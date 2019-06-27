@@ -8,6 +8,7 @@ import moment from 'moment';
 import {toggleDateDialog} from '../../../store/actions/ui';
 import {setDates, unsetDates} from '../../../store/actions/user';
 import {load} from '../../../store/actions/data';
+import {getUserWithMoment} from './selectors/getUserWithMomentDates';
 
 const {RangePicker} = DatePicker;
 
@@ -40,7 +41,7 @@ function isDateAvailable(
 
 function DateDialog({isOpen, dates, toggle, setDates, unsetDates, load}) {
 
-  const defaultValues = dates ? [moment(dates.from), moment(dates.to)] : [];
+  const defaultValues = dates ? [dates.from, dates.to] : [];
 
   const [firstDate, setFirstDate] = useState(null);
   const [selectedDates, setSelectedDates] = useState(defaultValues);
@@ -53,7 +54,13 @@ function DateDialog({isOpen, dates, toggle, setDates, unsetDates, load}) {
     close();
   };
   const confirm = () => {
-    setDates(selectedDates.map((it: moment.Moment) => it.format('YYYY-MM-DD')));
+    if (dates &&
+      dates.from.isSame(selectedDates[0]) && dates.to.isSame(selectedDates[1])) {
+      console.debug('Dates havent changed');
+      return close();
+    }
+
+    setDates(selectedDates);
     load();
     close();
   };
@@ -110,8 +117,10 @@ DateDialog.propTypes = {
 
 const MemoDateDialog = React.memo(DateDialog);
 
-const mapStateToProps = ({ui, user: {dates}}) =>
-  ({isOpen: ui.dateDialogOpen, dates});
+const mapStateToProps = (state) => ({
+  isOpen: state.ui.dateDialogOpen,
+  dates: getUserWithMoment(state).dates
+});
 
 const mapDispatchToProps = {
   load,

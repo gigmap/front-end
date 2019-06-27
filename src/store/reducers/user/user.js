@@ -1,4 +1,9 @@
+// @flow
+
 import {TYPES} from '../../actions/user';
+import {Moment} from 'moment';
+
+const STORE_DATE_FORMAT = 'YYYY-MM-DD';
 
 export const initialState = {
   name: null,
@@ -24,12 +29,20 @@ export const user = (state = initialState, {type, payload}) => {
 
 
     case TYPES.SET_DATES:
-      return {
-        ...state,
-        dates: Array.isArray(payload) && payload.length === 2 ?
-          {from: payload[0], to: payload[1]} :
-          null
-      };
+      const dates: Moment[] = payload;
+
+      // dates indeed
+      if (Array.isArray(dates) && dates.length === 2) {
+        return {
+          ...state, dates: {
+            from: dates[0].format(STORE_DATE_FORMAT),
+            to: dates[1].format(STORE_DATE_FORMAT)
+          }
+        };
+      }
+
+      // some other stuff
+      return {...state, dates: null};
 
     case TYPES.LOGOUT:
       return {
