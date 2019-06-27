@@ -1,6 +1,6 @@
 import React from 'react';
 import * as PropTypes from 'prop-types';
-import {Card, Icon, Popover} from 'antd/lib/index';
+import {Card, Icon, Popover} from 'antd';
 import styles from '../ConcertList.module.scss';
 
 function renderTitle(titleText) {

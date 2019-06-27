@@ -2,9 +2,8 @@ import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import * as PropTypes from 'prop-types';
 import {toggleLocationDialog} from '../../../store/actions/ui';
-import {Modal} from 'antd/lib/index';
+import {Modal, Button} from 'antd';
 import {setLocation, unsetLocation} from '../../../store/actions/user';
-import {Button} from 'antd';
 import YandexMapLocationPicker from './yandex/YandexMapLocationPicker';
 
 
