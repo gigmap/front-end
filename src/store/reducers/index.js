@@ -4,6 +4,7 @@ import {user} from './user/user'
 import {data} from './data/data'
 import {ui} from './ui/ui'
 import {filters} from './filters/filters';
+import {firstSteps} from './ui/first-steps';
 
 export default function createRootReducer() {
   return combineReducers({
@@ -11,6 +12,7 @@ export default function createRootReducer() {
     data,
     ui,
     filters,
+    firstSteps,
     form: formReducer
   });
 }

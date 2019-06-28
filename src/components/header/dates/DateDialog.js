@@ -1,36 +1,12 @@
-// @flow
-
 import React, {useState} from 'react';
 import {connect} from 'react-redux';
 import * as PropTypes from 'prop-types';
-import {Alert, Button, DatePicker, Modal} from 'antd';
-import moment from 'moment';
+import {Button, Modal} from 'antd';
 import {toggleDateDialog} from '../../../store/actions/ui';
 import {setDates} from '../../../store/actions/user';
 import {load} from '../../../store/actions/data';
 import {getUserWithMoment} from './selectors/getUserWithMomentDates';
-
-const {RangePicker} = DatePicker;
-
-const RANGE_WARNING = `Please think carefully before selecting a wide 
-date range (more than 3 months). 
-It can be really slow if you have a lot of bands tracked.`;
-
-const PRESET_RANGES = {
-  Today: [moment(), moment()],
-  Week: [moment(), moment().add(1, 'week')],
-  Month: [moment(), moment().add(1, 'month')],
-  '2 months': [moment(), moment().add(2, 'month')],
-  '3 months': [moment(), moment().add(3, 'month')]
-};
-
-function isDateDisabled(date: moment.Moment): boolean {
-  if (!date) {
-    return false;
-  }
-
-  return date < moment().startOf('day');
-}
+import DateRangePicker from './DateRangePicker';
 
 function DateDialog({isOpen, dates, toggle, setDates, load}) {
 
@@ -60,23 +36,9 @@ function DateDialog({isOpen, dates, toggle, setDates, load}) {
     </Button>
   ];
 
-  const handleRangeSelected = (dates) => setSelectedDates(dates);
-
   return (
     <Modal title="Select time period" visible={isOpen} footer={footer}>
-      <RangePicker
-        defaultValue={defaultValues}
-        // value={selectedDates} // TODO: bug with value after logout
-        disabledDate={isDateDisabled}
-        onChange={handleRangeSelected}
-        ranges={PRESET_RANGES}
-      />
-
-      <Alert message={RANGE_WARNING}
-             type={'warning'}
-             showIcon
-             style={{marginTop: 20}}/>
-
+      <DateRangePicker setSelectedDates={setSelectedDates} defaultValues={defaultValues} />
     </Modal>
   );
 }

@@ -1,0 +1,1 @@
+export const STORE_DATE_FORMAT = 'YYYY-MM-DD';

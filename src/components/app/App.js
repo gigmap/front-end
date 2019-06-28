@@ -7,7 +7,7 @@ import styles from './App.module.css';
 import Loading from '../common/Loading';
 
 const {Header, Footer, Content} = Layout;
-const LazyLoginForm = React.lazy(() => import('../LoginForm/LoginForm'));
+const LazyFirstSteps = React.lazy(() => import('../first-steps/FirstSteps'));
 const LazyConcertPage = React.lazy(() => import('../concerts/ConcertPage'));
 
 function App({authenticated}) {
@@ -16,18 +16,16 @@ function App({authenticated}) {
       <Header>
         <AppHeader/>
       </Header>
-      <Layout>
-        <Content className={styles.content}>
-          <Suspense fallback={<Loading/>}>
-            {
-              authenticated ?
-                <LazyConcertPage/> :
-                <LazyLoginForm/>
-            }
-          </Suspense>
-        </Content>
-      </Layout>
-      <Footer>
+      <Content className={styles.content}>
+        <Suspense fallback={<Loading/>}>
+          {
+            authenticated ?
+              <LazyConcertPage/> :
+              <LazyFirstSteps/>
+          }
+        </Suspense>
+      </Content>
+      <Footer className={styles.footer}>
         <span role="img" aria-label="Heavy metal">🤟</span>
         <span role="img" aria-label="Coll face">😎</span>
         <span role="img" aria-label="Rock'n'Roll">🎸</span>

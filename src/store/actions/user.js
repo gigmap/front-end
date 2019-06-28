@@ -7,8 +7,10 @@ export const TYPES = {
   SET_DATES: 'USER:DATES:SET'
 };
 
-export const login =
-  ({username, artistQty}) => makeAction(TYPES.LOGIN, {username, artistQty});
+export const login = () => (dispatch, getState) => {
+  const {firstSteps: {data}} = getState();
+  dispatch(makeAction(TYPES.LOGIN, data));
+};
 
 export const logout = () => makeAction(TYPES.LOGOUT);
 

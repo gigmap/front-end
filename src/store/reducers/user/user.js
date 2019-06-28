@@ -2,12 +2,10 @@
 
 import {TYPES} from '../../actions/user';
 import moment, {Moment} from 'moment';
-
-const STORE_DATE_FORMAT = 'YYYY-MM-DD';
+import {STORE_DATE_FORMAT} from '../Constants';
 
 export const initialState = {
   name: null,
-  artistQty: 0,
   location: null,
   dates: {
     from: moment().format(STORE_DATE_FORMAT),
@@ -20,8 +18,7 @@ export const user = (state = initialState, {type, payload}) => {
     case TYPES.LOGIN:
       return {
         ...state,
-        name: payload.username,
-        artistQty: payload.artistQty
+        ...payload
       };
 
     case TYPES.SET_LOCATION:

@@ -25,16 +25,4 @@ describe('user reducer', function () {
     expect(user(state, makeAction(TYPES.SET_LOCATION, {lat: 3, lng: 4})))
       .toStrictEqual({some: 'state', location: {lat: 3, lng: 4}});
   });
-
-  it('should updatet user data on login', () => {
-    const state = {some: 'state', name: null};
-    const userData = {username: 'john', artistQty: 123};
-
-    expect(user(state, makeAction(TYPES.LOGIN, userData)))
-      .toStrictEqual({
-        some: 'state',
-        name: 'john',
-        artistQty: 123
-      });
-  });
 });
