@@ -18,7 +18,7 @@ export const createSelectAllControl = (
 
     return <Checkbox checked={allSelected} onClick={handleClick}
                      indeterminate={!allSelected && selectedQty > 0}>
-      <b>All artists</b>
+      <b>Select all</b>
     </Checkbox>;
   }
 
