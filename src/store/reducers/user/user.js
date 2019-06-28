@@ -1,7 +1,7 @@
 // @flow
 
 import {TYPES} from '../../actions/user';
-import {Moment} from 'moment';
+import moment, {Moment} from 'moment';
 
 const STORE_DATE_FORMAT = 'YYYY-MM-DD';
 
@@ -9,7 +9,10 @@ export const initialState = {
   name: null,
   artistQty: 0,
   location: null,
-  dates: null
+  dates: {
+    from: moment().format(STORE_DATE_FORMAT),
+    to: moment().add(1, 'month').format(STORE_DATE_FORMAT)
+  }
 };
 
 export const user = (state = initialState, {type, payload}) => {

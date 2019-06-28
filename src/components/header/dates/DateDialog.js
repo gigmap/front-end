@@ -3,56 +3,41 @@
 import React, {useState} from 'react';
 import {connect} from 'react-redux';
 import * as PropTypes from 'prop-types';
-import {Modal, Button, DatePicker, Alert} from 'antd';
+import {Alert, Button, DatePicker, Modal} from 'antd';
 import moment from 'moment';
 import {toggleDateDialog} from '../../../store/actions/ui';
-import {setDates, unsetDates} from '../../../store/actions/user';
+import {setDates} from '../../../store/actions/user';
 import {load} from '../../../store/actions/data';
 import {getUserWithMoment} from './selectors/getUserWithMomentDates';
 
 const {RangePicker} = DatePicker;
 
-// TODO: load from config or env
-const MAX_DAYS = 90;
+const RANGE_WARNING = `Please think carefully before selecting a wide 
+date range (more than 3 months). 
+It can be really slow if you have a lot of bands tracked.`;
 
 const PRESET_RANGES = {
   Today: [moment(), moment()],
   Week: [moment(), moment().add(1, 'week')],
-  Month: [moment(), moment().add(1, 'month')]
+  Month: [moment(), moment().add(1, 'month')],
+  '2 months': [moment(), moment().add(2, 'month')],
+  '3 months': [moment(), moment().add(3, 'month')]
 };
 
-function isDateAvailable(
-  date: moment.Moment,
-  firstPickedDate: moment.Moment): boolean {
-
+function isDateDisabled(date: moment.Moment): boolean {
   if (!date) {
     return false;
   }
 
-  const isInThePast = date < moment().startOf('day');
-  if (!firstPickedDate) {
-    return isInThePast;
-  }
-
-  const diff = Math.abs(date.diff(firstPickedDate, 'days'));
-
-  return isInThePast || diff > MAX_DAYS;
+  return date < moment().startOf('day');
 }
 
-function DateDialog({isOpen, dates, toggle, setDates, unsetDates, load}) {
+function DateDialog({isOpen, dates, toggle, setDates, load}) {
 
   const defaultValues = dates ? [dates.from, dates.to] : [];
-
-  const [firstDate, setFirstDate] = useState(null);
   const [selectedDates, setSelectedDates] = useState(defaultValues);
 
   const close = () => toggle(false);
-  const disabledDate = (current) => isDateAvailable(current, firstDate);
-  const unset = () => {
-    unsetDates();
-    load();
-    close();
-  };
   const confirm = () => {
     if (dates &&
       dates.from.isSame(selectedDates[0]) && dates.to.isSame(selectedDates[1])) {
@@ -66,9 +51,6 @@ function DateDialog({isOpen, dates, toggle, setDates, unsetDates, load}) {
   };
 
   const footer = [
-    <Button key='unset' type='danger' onClick={unset} disabled={!dates}>
-      Unset
-    </Button>,
     <Button key='back' onClick={close}>
       Cancel
     </Button>,
@@ -79,27 +61,20 @@ function DateDialog({isOpen, dates, toggle, setDates, unsetDates, load}) {
   ];
 
   const handleRangeSelected = (dates) => setSelectedDates(dates);
-  const resetSelected = () => setFirstDate(null);
-  const handleSelectionChange = (values) => {
-    if (values.length === 1) {
-      setFirstDate(values[0]);
-    }
-  };
 
   return (
     <Modal title="Select time period" visible={isOpen} footer={footer}>
       <RangePicker
         defaultValue={defaultValues}
         // value={selectedDates} // TODO: bug with value after logout
-        disabledDate={disabledDate}
+        disabledDate={isDateDisabled}
         onChange={handleRangeSelected}
-        onOpenChange={resetSelected}
-        onCalendarChange={handleSelectionChange}
         ranges={PRESET_RANGES}
       />
 
-      <Alert message={`Maximum time period is ${MAX_DAYS} days for now`}
-             type={'info'}
+      <Alert message={RANGE_WARNING}
+             type={'warning'}
+             showIcon
              style={{marginTop: 20}}/>
 
     </Modal>
@@ -111,7 +86,6 @@ DateDialog.propTypes = {
   dates: PropTypes.object,
   toggle: PropTypes.func.isRequired,
   setDates: PropTypes.func.isRequired,
-  unsetDates: PropTypes.func.isRequired,
   load: PropTypes.func.isRequired
 };
 
@@ -125,7 +99,6 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = {
   load,
   setDates,
-  unsetDates,
   toggle: toggleDateDialog
 };
 
