@@ -1,18 +1,14 @@
 // @flow
 
-import React from 'react';
+import React, {Suspense} from 'react';
 import {connect} from 'react-redux';
 import * as PropTypes from 'prop-types';
-import {Alert, Button, Divider, Spin} from 'antd';
+import {Alert, Button, Divider} from 'antd';
 import {load} from '../../store/actions/data';
-import ConcertListControls from './ConcertListControls';
 import ConcertTabs from './ConcertTabs';
+import Loading from '../common/Loading';
 
-const renderLoading = () => {
-  return <div style={{textAlign: 'center'}}>
-    <Spin size="large" tip="Loading artists and concerts..."/>
-  </div>;
-};
+const LazyConcertListControls = React.lazy(() => import('./ConcertListControls'));
 
 const renderError = (error: string, load: Function) => {
 
@@ -38,7 +34,9 @@ const renderError = (error: string, load: Function) => {
 
 const renderData = () => {
   return <>
-    <ConcertListControls/>
+    <Suspense fallback={<Loading/>}>
+      <LazyConcertListControls/>
+    </Suspense>
     <Divider/>
     <ConcertTabs/>
   </>;
@@ -47,7 +45,9 @@ const renderData = () => {
 const ConcertPage = ({loading, finished, error, load}) => {
 
   if (loading) {
-    return renderLoading();
+    return (
+      <Loading tip={'Loading concerts and artists'}/>
+    );
   }
 
   if (!finished || error) {
