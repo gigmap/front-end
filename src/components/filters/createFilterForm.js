@@ -15,7 +15,8 @@ export const createFilterForm = (
   getItems,
   countItems,
   getAvailableItems,
-  countSelectedItems
+  countSelectedItems,
+  getInitialValues
 ) => {
 
   const SelectAllElement = createSelectAllControl(
@@ -44,10 +45,7 @@ export const createFilterForm = (
   const mapStateToProps = (state) => ({
     allItems: getItems(state),
     availableItems: getAvailableItems(state),
-    initialValues: getItems(state).reduce((sum, it) => {
-      sum[it.id] = true;
-      return sum;
-    }, {})
+    initialValues: getInitialValues(state)
   });
 
   const ReduxFormFilterElement = reduxForm({

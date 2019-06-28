@@ -1,7 +1,11 @@
 import {createSelector} from 'reselect/lib/index';
 import {getFormValues} from 'redux-form';
 import {ARTIST_FILTER_NAME, COUNTRY_FILTER_NAME} from '../Constants';
-import {getConcerts} from '../../concerts/selectors/basicData';
+import {
+  getConcerts,
+  getArtists,
+  getCountries
+} from '../../concerts/selectors/basicData';
 
 const createFilterSelector = (name) => createSelector(
   [getFormValues(name)],
@@ -14,6 +18,10 @@ const createFilterSelector = (name) => createSelector(
 export const countCountries = (state) => state.data.countries.length;
 
 export const countArtists = (state) => state.data.artists.length;
+
+export const getUnsetCountries = (state) => state.filters.unsetCountries;
+
+export const getUnsetArtists = (state) => state.filters.unsetArtists;
 
 export const getSelectedCountries = createFilterSelector(COUNTRY_FILTER_NAME);
 
@@ -47,4 +55,21 @@ export const getAvailableArtists = createSelector(
       return sum;
     }, {});
   }
+);
+
+const getInitialValues = (allItems, unsetItems) => {
+  return allItems.reduce((sum, it) => {
+    sum[it.id] = !unsetItems[it.id];
+    return sum;
+  }, {});
+};
+
+export const getInitialArtists = createSelector(
+  getArtists, getUnsetArtists,
+  getInitialValues
+);
+
+export const getInitialCountries = createSelector(
+  getCountries, getUnsetCountries,
+  getInitialValues
 );

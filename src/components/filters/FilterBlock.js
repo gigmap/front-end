@@ -14,17 +14,19 @@ import {
   countArtists,
   countCountries,
   countSelectedArtists,
-  countSelectedCountries
+  countSelectedCountries,
+  getInitialArtists,
+  getInitialCountries
 } from './selectors/filterSelectors';
 
 const ArtistFilter = createFilterForm(
   ARTIST_FILTER_NAME, getArtists, countArtists,
-  getAvailableArtists, countSelectedArtists
+  getAvailableArtists, countSelectedArtists, getInitialArtists
 );
 
 const CountryFilter = createFilterForm(
   COUNTRY_FILTER_NAME, getCountries, countCountries,
-  getAvailableCountries, countSelectedCountries
+  getAvailableCountries, countSelectedCountries, getInitialCountries
 );
 
 function FilterBlock() {
