@@ -37,7 +37,7 @@ function DateDialog({isOpen, dates, toggle, setDates, load}) {
   ];
 
   return (
-    <Modal title="Select time period" visible={isOpen} footer={footer}>
+    <Modal title="Select time period" visible={isOpen} footer={footer} onCancel={close}>
       <DateRangePicker setSelectedDates={setSelectedDates} defaultValues={defaultValues} />
     </Modal>
   );
