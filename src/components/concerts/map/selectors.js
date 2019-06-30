@@ -26,7 +26,7 @@ function concertToFeature(concerts: Concert[]) {
       ...result,
       id: String(concert.id), // Yandex.Map requires all ids to be the same type
       properties: {
-        hintContent: concert.memberNames,
+        hintContent: `${concert.start}: ${concert.memberNames}`,
         balloonContentHeader: `${concert.start} ${concert.memberNames}`,
         balloonContentBody: `${concert.displayName}<br/>${renderUri(concert)}`,
         balloonContentFooter: concert.location.city
@@ -34,11 +34,13 @@ function concertToFeature(concerts: Concert[]) {
     };
   }
 
-  let ids = [];
-  let details = [];
+  const ids = [];
+  const details = [];
+  const titles = [];
   for (const it of concerts.sort((a, b) => a.start > b.start ? 1 : -1)) {
     ids.push(it.id);
     details.push(`<li>${it.start} ${it.memberNames} ${renderUri(it)}</li>`);
+    titles.push(`${it.start}: ${it.memberNames}`);
   }
 
   return {
@@ -49,10 +51,12 @@ function concertToFeature(concerts: Concert[]) {
     },
     properties: {
       iconContent: qty,
-      hintContent: `${qty} concerts here`,
+      hintContent: titles.map(it => `- ${it}`).join('<br/>'),
       balloonContentHeader: `${qty} concerts here`,
       balloonContentBody: `<ul>${details.join('')}</ul>`,
-      balloonContentFooter: concerts[0].location.city
+      balloonContentFooter: concerts[0].location.city,
+      many: true,
+      titles
     }
   };
 }

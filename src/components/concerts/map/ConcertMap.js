@@ -3,7 +3,6 @@ import * as PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 import {
   Map,
-  ObjectManager,
   Placemark,
   YMaps,
   ZoomControl
@@ -12,6 +11,7 @@ import {makeYaPosition} from '../../header/location/yandex/helpers';
 import {getUserLocation} from '../selectors/distanceSelectors';
 import {API_KEY} from '../../../api/yandex';
 import {getYaMapFeatures} from './selectors';
+import ConcertObjectManager from './ConcertObjectManager';
 
 const renderHome = (location) => (
   <Placemark geometry={makeYaPosition(location)}
@@ -42,27 +42,9 @@ function ConcertMap({concerts, location}) {
         >
 
           {location && renderHome(location)}
-
-          <ObjectManager
-            options={{
-              clusterize: true,
-              gridSize: 128
-            }}
-            objects={{
-              openBalloonOnClick: true,
-              preset: 'islands#violetNightClubIcon'
-            }}
-            clusters={{
-              preset: 'islands#invertedVioletClusterIcons'
-            }}
-            features={concerts}
-            modules={[
-              'objectManager.addon.objectsBalloon',
-              'objectManager.addon.objectsHint'
-            ]}
-          />
-
+          <ConcertObjectManager concerts={concerts}/>
           <ZoomControl/>
+
         </Map>
       </YMaps>
     </div>
