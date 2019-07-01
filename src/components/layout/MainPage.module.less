@@ -1,0 +1,55 @@
+@import "../../theme";
+
+@footer-height: 70px;
+@footer-bar-height: 6px;
+
+.fullHeight {
+    height: 100%;
+}
+
+.sidebar {
+    .fullHeight;
+    z-index: 1;
+    box-shadow: 0 0 10px rgba(0,0,0,0.5); /* Параметры тени */
+}
+
+.header {
+    background-color: transparent;
+    padding: 0;
+    height: auto;
+}
+
+.controls {
+    .fullHeight;
+    padding: 0 28px @footer-height;
+}
+
+.content {
+    .fullHeight;
+    position: relative;
+}
+
+.footer{
+    position: absolute;
+    bottom: 0;
+    height: @footer-height - @footer-bar-height;
+    width: 100%;
+    padding: @footer-bar-height 0 0 0;
+
+    background-color: #1e2126;
+    color: #fff;
+
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    box-sizing: content-box;
+}
+
+.footer:before {
+    content: '';
+    height: @footer-bar-height;
+    position: absolute;
+    top: 0;
+    width: 100%;
+    background-color: @primary-color;
+}

@@ -4,4 +4,5 @@ export const makeRequestTypes = (prefix) => ({
   FAILED: `${prefix}:FAILED`
 });
 
-export const makeAction = (type, payload) => ({type, payload});
+export const makeAction =
+  (type, payload, meta) => (meta ? {type, payload, meta} : {type, payload});

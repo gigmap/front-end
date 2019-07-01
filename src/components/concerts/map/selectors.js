@@ -1,10 +1,13 @@
 // @flow
 
+// TODO: review
+
 import {createSelector} from 'reselect';
-import {getFilteredConcerts} from '../selectors/concertListSelector';
-import {hasLocation} from '../helpers/lib';
-import {makeYaPosition} from '../../header/location/yandex/helpers';
 import {groupBy} from 'lodash';
+import {makeYaPosition} from '../../../api/yandex';
+import {getFilteredConcerts} from '../../_old/concerts/selectors/concertListSelector';
+import {getConcerts} from '../../../store/selectors/basic';
+import type {Concert} from '../../../types';
 
 const renderUri = (concert: Concert) =>
   `<a href="${concert.uri}" rel="noreferrer noopener" target="_blank">Go to Songkick</a>`;
@@ -24,7 +27,7 @@ function concertToFeature(concerts: Concert[]) {
     const [concert] = concerts;
     return {
       ...result,
-      id: String(concert.id), // Yandex.Map requires all ids to be the same type
+      id: String(concert.id), // Yandex.Map requires all ids to be the same type // TODO: during mapping?
       properties: {
         hintContent: `${concert.start}: ${concert.memberNames}`,
         balloonContentHeader: `${concert.start} ${concert.memberNames}`,
@@ -63,8 +66,10 @@ function concertToFeature(concerts: Concert[]) {
 
 export const getYaMapFeatures = createSelector(
   getFilteredConcerts,
+  // getConcerts, // TODO: TMP!!!
+
   (concerts: Concert[]) => {
-    const concertsWithLocation = concerts.filter(hasLocation);
+    const concertsWithLocation = concerts.filter(it => it.isWithCoordinates);
     const locations: Concert[][] = Object.values(groupBy(
       concertsWithLocation, (it) => `${it.location.lat},${it.location.lng}`));
 

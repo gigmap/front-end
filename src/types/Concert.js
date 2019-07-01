@@ -1,6 +1,6 @@
 // @flow
 
-type Concert = {
+export type Concert = {
   id: number,
   displayName: string,
   uri: string,
@@ -11,6 +11,8 @@ type Concert = {
     lng: ?number
   },
   start: string,
+  isWithCoordinates: boolean,
+  memberNames: string,
   members: Array<{
     id: string,
     displayName: string

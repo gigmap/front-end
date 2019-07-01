@@ -4,26 +4,23 @@ import {
   ObjectManager,
   withYMaps
 } from 'react-yandex-maps';
+import CLUSTER_HINT_TEMPLATE from './ClusterHintTemplate';
 
-const MAX_HINT_QTY = 5;
+const OBJECT_OPTIONS = {
+  openBalloonOnClick: true,
+  preset: 'islands#violetNightClubIcon'
+};
 
-const CLUSTER_HINT_TEMPLATE = `
-          {% if object.features.length > ${MAX_HINT_QTY} %}
-            Click to zoom in and see the details
-          {% else %}
-            <div style="padding: 5px">
-            {% for geoObject in object.features %} 
-              {% if geoObject.properties.many %}
-                {% for title in geoObject.properties.titles %}
-                  - {{ title }}<br/>
-                {% endfor %}
-              {% else %}
-                - {{ geoObject.properties.hintContent }}<br/>
-              {% endif %}
-            {% endfor %}
-            </div>
-          {% endif %}
-        `;
+const CLUSTER_OPTIONS = {
+  preset: 'islands#invertedVioletClusterIcons',
+  hasHint: true
+};
+
+const MODULES_LIST = [
+  'objectManager.addon.objectsBalloon',
+  'objectManager.addon.objectsHint',
+  'objectManager.addon.clustersHint'
+];
 
 function ConcertObjectManager({ymaps, concerts}) {
   return (
@@ -34,30 +31,26 @@ function ConcertObjectManager({ymaps, concerts}) {
         clusterHintContentLayout:
           ymaps.templateLayoutFactory.createClass(CLUSTER_HINT_TEMPLATE)
       }}
-      objects={{
-        openBalloonOnClick: true,
-        preset: 'islands#violetNightClubIcon'
-      }}
-      clusters={{
-        preset: 'islands#invertedVioletClusterIcons',
-        hasHint: true
-      }}
+      objects={OBJECT_OPTIONS}
+      clusters={CLUSTER_OPTIONS}
       features={concerts}
-      modules={[
-        'objectManager.addon.objectsBalloon',
-        'objectManager.addon.objectsHint',
-        'objectManager.addon.clustersHint'
-      ]}
+      modules={MODULES_LIST}
     />
   );
 }
 
-const ConcertYandexObjectManager =
-  withYMaps(ConcertObjectManager, true, ['templateLayoutFactory']);
-
-ConcertYandexObjectManager.propTypes = {
+ConcertObjectManager.propTypes = {
   concerts: PropTypes.array.isRequired,
   ymaps: PropTypes.object.isRequired
 };
 
-export default ConcertYandexObjectManager;
+const ConcertYandexObjectManager = withYMaps(
+  React.memo(ConcertObjectManager),
+  true,
+  ['templateLayoutFactory']);
+
+ConcertYandexObjectManager.propTypes = {
+  concerts: PropTypes.array.isRequired
+};
+
+export default React.memo(ConcertYandexObjectManager);

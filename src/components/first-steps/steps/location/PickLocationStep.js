@@ -9,7 +9,7 @@ import Loading from '../../../common/Loading';
 import styles from '../steps.module.css';
 
 const YandexMapLocationPicker =
-  React.lazy(() => import('../../../header/location/yandex/YandexMapLocationPicker'));
+  React.lazy(() => import('../../../_old/header/location/yandex/YandexMapLocationPicker'));
 
 function renderControls(location, proceed, skip, goBack) {
   return (

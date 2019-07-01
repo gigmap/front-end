@@ -6,6 +6,7 @@ import createRootReducer from './reducers';
 import {persistStore, persistReducer} from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
 
+// TODO: don't persist data.loading
 const persistConfig = {
   key: 'root',
   storage

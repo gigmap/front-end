@@ -6,7 +6,7 @@ import {
   moveToPrevStep,
   updateUserData
 } from '../../../../store/actions/first-steps';
-import DateRangePicker from '../../../header/dates/DateRangePicker';
+import DateRangePicker from '../../../filters/dates/DateRangePicker';
 import {login} from '../../../../store/actions/user';
 import {load} from '../../../../store/actions/data';
 import styles from '../steps.module.css';

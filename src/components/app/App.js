@@ -2,15 +2,18 @@ import React, {Suspense} from 'react';
 import {connect} from 'react-redux';
 import * as PropTypes from 'prop-types';
 import {Layout} from 'antd';
-import AppHeader from '../header/AppHeader';
+import AppHeader from '../_old/header/AppHeader';
 import styles from './App.module.css';
 import Loading from '../common/Loading';
 
 const {Header, Footer, Content} = Layout;
 const LazyFirstSteps = React.lazy(() => import('../first-steps/FirstSteps'));
-const LazyConcertPage = React.lazy(() => import('../concerts/ConcertPage'));
+const LazyConcertPage = React.lazy(() => import('../_old/concerts/ConcertPage'));
+const LazyMainPage = React.lazy(() => import('../layout/MainPage'));
 
-function App({authenticated}) {
+// TODO: temporary (css too)
+
+function renderWelcome() {
   return (
     <Layout>
       <Header>
@@ -18,11 +21,7 @@ function App({authenticated}) {
       </Header>
       <Content className={styles.content}>
         <Suspense fallback={<Loading/>}>
-          {
-            authenticated ?
-              <LazyConcertPage/> :
-              <LazyFirstSteps/>
-          }
+          <LazyFirstSteps/>
         </Suspense>
       </Content>
       <Footer className={styles.footer}>
@@ -33,6 +32,21 @@ function App({authenticated}) {
       </Footer>
     </Layout>
   );
+}
+
+function renderContent() {
+  return (
+    <Suspense fallback={<Loading/>}>
+      <LazyMainPage/>
+      {/*<LazyConcertPage />*/}
+    </Suspense>
+  );
+}
+
+function App({authenticated}) {
+  return authenticated ?
+    renderContent() :
+    renderWelcome();
 }
 
 App.propTypes = {

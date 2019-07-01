@@ -1,6 +1,6 @@
 import {TYPES as USER} from '../../actions/user';
 import {TYPES as DATA} from '../../actions/data';
-import {addMemberNames} from './mappers';
+import {prepareConcert} from './mappers';
 
 const initialState = {
   loading: false,
@@ -30,7 +30,7 @@ export const data = (state = initialState, {type, payload}) => {
         finished: true,
         countries,
         artists,
-        concerts: concerts.map(addMemberNames)
+        concerts: concerts.map(prepareConcert)
       };
 
 

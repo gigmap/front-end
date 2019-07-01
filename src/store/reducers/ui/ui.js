@@ -1,5 +1,5 @@
 import {TYPES} from '../../actions/ui';
-import {SORTING} from '../../../components/concerts/sorting/Constants';
+import {SORTING} from '../../../components/_old/concerts/sorting/Constants';
 
 export const initialState = {
   filtersOut: true,
