@@ -5,7 +5,7 @@ import {connect} from 'react-redux';
 import {AutoComplete, Button} from 'antd';
 import styles from './MultiSelectFilter.module.less';
 import {toggleAll, toggleItem} from '../../../store/actions/filters';
-import FilterItemTag from './tags/FilterItemTag';
+import {default as FilterTagList,} from './tags/FilterTagList';
 
 const {Option} = AutoComplete;
 
@@ -71,14 +71,7 @@ export const MultiSelectFilter = (props: MultiSelectFilterProps) => {
         <Button type={'link'} disabled={true}>See All</Button>
       </div>
 
-      <div className={styles.tags}>
-        {
-          selectedItems.map(it => (
-            <FilterItemTag key={it.id} id={it.id} title={it.displayName}
-                           onClose={deselectItem}/>
-          ))
-        }
-      </div>
+      <FilterTagList items={selectedItems} close={deselectItem}/>
     </>
   );
 };

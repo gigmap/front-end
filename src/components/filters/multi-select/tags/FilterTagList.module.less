@@ -1,0 +1,21 @@
+@import "../../../../theme";
+
+.wrapper {
+    position: relative;
+    margin-top: 15px;
+}
+
+.tags {
+    max-height: 144px;
+    overflow-y: scroll;
+}
+
+.gradient {
+    content: '';
+    background: transparent;
+    background: linear-gradient(0deg, @primary-bg 0, @primary-bg-transparent 100%);
+    position: absolute;
+    bottom: -5px    ;
+    width: 100%;
+    height: 20px;
+}
