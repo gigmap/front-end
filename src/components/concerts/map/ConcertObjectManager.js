@@ -8,11 +8,11 @@ import CLUSTER_HINT_TEMPLATE from './ClusterHintTemplate';
 
 const OBJECT_OPTIONS = {
   openBalloonOnClick: true,
-  preset: 'islands#violetNightClubIcon'
+  preset: 'islands#redNightClubIcon'
 };
 
 const CLUSTER_OPTIONS = {
-  preset: 'islands#invertedVioletClusterIcons',
+  preset: 'islands#invertedRedClusterIcons',
   hasHint: true
 };
 

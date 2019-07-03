@@ -8,8 +8,7 @@ import {
   SearchControl,
   YMaps
 } from 'react-yandex-maps';
-import {makeLatLng} from './helpers';
-import {API_KEY} from '../../../../../api/yandex';
+import {API_KEY, makeLatLng} from '../../../../api/yandex';
 
 const YandexMapLocationPicker = ({location, setLocation}) => {
 

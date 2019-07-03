@@ -1,19 +1,10 @@
 import {createSelector} from 'reselect';
-import {getConcertsWithDistance, getUserLocation} from './distanceSelectors';
+import {getConcertsWithDistance} from './getConcertsWithDistance';
 import {
-  countArtists,
-  countCountries,
   getSelectedArtists,
   getSelectedCountries
-} from '../../filters/selectors/filterSelectors';
-import {SORTING} from '../sorting/Constants';
-
-const sortingFunctions = new Map([
-  [SORTING.date, (a, b) => a.start > b.start ? 1 : -1],
-  [SORTING.distance, (a, b) => a.distance > b.distance ? 1 : -1]
-]);
-
-export const getSorting = state => state.ui.sorting;
+} from '../../filters/selectors/_filterSelectors';
+import {countArtists, countCountries} from '../../../store/selectors/basic';
 
 export const getFilteredConcerts = createSelector(
   getConcertsWithDistance,
@@ -47,13 +38,3 @@ export const getFilteredConcerts = createSelector(
 
     return concerts.filter(it => checkArtist(it) && checkCountry(it));
   });
-
-export const getSortedConcerts = createSelector(
-  getFilteredConcerts,
-  getSorting,
-  getUserLocation,
-  (concerts, sorting, location) => {
-    const sortFn = sortingFunctions.get(location ? sorting : SORTING.date);
-    return concerts.sort(sortFn).slice();
-  }
-);

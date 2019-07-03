@@ -8,6 +8,8 @@ export const getCountries = (state) => state.data.countries;
 
 export const getArtists = (state) => state.data.artists;
 
-export const getData = (state, key) => state.data[key];
+export const countCountries = (state) => state.data.countries.length;
 
-// TODO: move other basic selectors here
+export const countArtists = (state) => state.data.artists.length;
+
+export const getData = (state, key) => state.data[key];

@@ -8,7 +8,7 @@ import {
   ZoomControl
 } from 'react-yandex-maps';
 import {API_KEY} from '../../../api/yandex';
-import {getYaMapFeatures} from './selectors';
+import {getYaMapFeatures} from './selectors/geoObjects';
 import ConcertObjectManager from './ConcertObjectManager';
 import {getUserLocation} from '../../../store/selectors/basic';
 import HomePlacemark from './HomePlacemark';

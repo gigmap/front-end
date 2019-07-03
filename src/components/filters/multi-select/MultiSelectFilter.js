@@ -6,8 +6,8 @@ import {AutoComplete, Button} from 'antd';
 import styles from './MultiSelectFilter.module.less';
 import {toggleAll, toggleItem} from '../../../store/actions/filters';
 import {default as FilterTagList,} from './tags/FilterTagList';
+import {FilterSelectOption} from './FilterSelectOption';
 
-const {Option} = AutoComplete;
 
 type MultiSelectFilterProps = {
   allItems: [],
@@ -41,9 +41,7 @@ export const MultiSelectFilter = (props: MultiSelectFilterProps) => {
   const selectAll = () => toggleAll(filterName, true);
   const deselectAll = () => toggleAll(filterName, false);
 
-  const options = allItems.map(({id, displayName}) => (
-    <Option key={id}>{displayName}</Option>
-  ));
+  const options = allItems.map(FilterSelectOption);
 
   // TODO: use object for onChange
   return (
@@ -64,7 +62,7 @@ export const MultiSelectFilter = (props: MultiSelectFilterProps) => {
 
       <div className={styles.controls}>
         <div className={styles.left}>
-          <Button type={'link'} onClick={selectAll}>Select All</Button>
+          <Button type={'link'} onClick={selectAll}>All contries/artists</Button>
           <Button type={'link'} onClick={deselectAll}>Clear</Button>
         </div>
 

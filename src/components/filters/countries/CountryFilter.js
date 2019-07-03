@@ -4,7 +4,7 @@ import React from 'react';
 import {default as MultiSelectFilter} from '../multi-select/MultiSelectFilter';
 import {COUNTRY_FILTER_NAME} from '../Constants';
 import {getCountries} from '../../../store/selectors/basic';
-import {getSelectedCountries} from '../selectors/selectors';
+import {getSelectedCountries} from '../selectors/filterState';
 import {connect} from 'react-redux';
 
 type CountryFilterProps = {

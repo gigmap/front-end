@@ -1,13 +1,16 @@
+// @flow
+
 import {createSelector} from 'reselect';
-import {getConcerts} from './basicData';
-import {hasLocation} from '../helpers/lib';
+import {getConcerts, getUserLocation} from '../../../store/selectors/basic';
+import type {Concert} from '../../../types';
 
 const toRad = (n) => {
   return n * Math.PI / 180;
 };
 
 // Distance in kilometers between two points using the Haversine algo.
-export function haversine({lat: lat1, lng: lon1}, {lat: lat2, lng: lon2}) {
+// TODO: memo ?
+function haversine({lat: lat1, lng: lon1}, {lat: lat2, lng: lon2}) {
   const R = 6371;
   const dLat = toRad(lat2 - lat1);
   const dLong = toRad(lon2 - lon1);
@@ -20,11 +23,9 @@ export function haversine({lat: lat1, lng: lon1}, {lat: lat2, lng: lon2}) {
   return Math.round(d);
 }
 
-export const getUserLocation = (state) => state.user.location;
-
 export const getConcertsWithDistance = createSelector(
   getConcerts, getUserLocation,
-  (concerts, userLocation) => {
+  (concerts: Concert[], userLocation) => {
     if (!userLocation) {
       return concerts;
     }
@@ -32,7 +33,7 @@ export const getConcertsWithDistance = createSelector(
     return concerts.map(it => {
       return {
         ...it,
-        distance: hasLocation(it) ? haversine(it.location, userLocation) : null
+        distance: it.isWithCoordinates ? haversine(it.location, userLocation) : null
       };
     })
   }

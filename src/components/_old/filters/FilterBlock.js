@@ -5,19 +5,17 @@ import {Col, Divider, Row} from 'antd';
 import {createFilterForm} from './createFilterForm';
 import {ARTIST_FILTER_NAME, COUNTRY_FILTER_NAME} from './Constants';
 import {
-  getArtists,
-  getCountries
-} from '../concerts/selectors/basicData';
-import {
   getAvailableArtists,
   getAvailableCountries,
-  countArtists,
-  countCountries,
   countSelectedArtists,
   countSelectedCountries,
   getInitialArtists,
   getInitialCountries, getSearchedArtists, getSearchedCountries
-} from './selectors/filterSelectors';
+} from '../../filters/selectors/_filterSelectors';
+import {
+  getArtists,
+  getCountries, countArtists, countCountries
+} from '../../../store/selectors/basic';
 
 const ArtistFilter = createFilterForm(
   ARTIST_FILTER_NAME, getArtists, countArtists,

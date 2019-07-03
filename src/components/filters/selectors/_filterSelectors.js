@@ -1,14 +1,15 @@
+// TODO: review & refactor
+
 import {createSelector} from 'reselect/lib/index';
-import {getFormValues} from 'redux-form';
-import {ARTIST_FILTER_NAME, COUNTRY_FILTER_NAME} from '../Constants';
 import {
   getConcerts,
+  getCountries,
   getArtists,
-  getCountries
-} from '../../concerts/selectors/basicData';
+  countArtists, countCountries
+} from '../../../store/selectors/basic';
+import {ARTIST_FILTER_NAME, COUNTRY_FILTER_NAME} from '../Constants';
 
 const createFilterSelector = (name) => createSelector(
-  // [getFormValues(name)],
   (state) => state.filters.selected[name],
 
   (formValues) => {
@@ -16,10 +17,6 @@ const createFilterSelector = (name) => createSelector(
       .filter(([name, checked]) => checked));
   }
 );
-
-export const countCountries = (state) => state.data.countries.length;
-
-export const countArtists = (state) => state.data.artists.length;
 
 export const getUnsetCountries = (state) => state.filters.unsetCountries;
 

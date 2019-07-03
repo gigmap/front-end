@@ -14,8 +14,8 @@ export const login = () => (dispatch, getState) => {
 
 export const logout = () => makeAction(TYPES.LOGOUT);
 
-export const setLocation =
-  ({lat, lng}) => makeAction(TYPES.SET_LOCATION, {lat, lng});
+// export const setLocation =
+//   ({lat, lng}) => makeAction(TYPES.SET_LOCATION, {lat, lng});
 
 export const unsetLocation = () => makeAction(TYPES.SET_LOCATION, null);
 

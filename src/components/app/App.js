@@ -8,7 +8,6 @@ import Loading from '../common/Loading';
 
 const {Header, Footer, Content} = Layout;
 const LazyFirstSteps = React.lazy(() => import('../first-steps/FirstSteps'));
-const LazyConcertPage = React.lazy(() => import('../_old/concerts/ConcertPage'));
 const LazyMainPage = React.lazy(() => import('../layout/MainPage'));
 
 // TODO: temporary (css too)
@@ -38,7 +37,6 @@ function renderContent() {
   return (
     <Suspense fallback={<Loading/>}>
       <LazyMainPage/>
-      {/*<LazyConcertPage />*/}
     </Suspense>
   );
 }

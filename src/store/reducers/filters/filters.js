@@ -51,6 +51,7 @@ export const filters = (state = initialState, {type, payload, meta}) => {
         }
       };
 
+      // TODO (!)
     case CHANGE:
       const propName = PROPS[meta.form];
       if (!propName) {

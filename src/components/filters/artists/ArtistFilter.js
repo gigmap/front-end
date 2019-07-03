@@ -4,7 +4,7 @@ import React from 'react';
 import {default as MultiSelectFilter} from '../multi-select/MultiSelectFilter';
 import {ARTIST_FILTER_NAME} from '../Constants';
 import {getArtists} from '../../../store/selectors/basic';
-import {getSelectedArtists} from '../selectors/selectors';
+import {getSelectedArtists} from '../selectors/filterState';
 import {connect} from 'react-redux';
 
 type ArtistFilterProps = {

@@ -2,11 +2,11 @@
 
 import React from 'react';
 import DateRangePicker from './DateRangePicker';
-import {getUserWithMoment} from '../../_old/header/dates/selectors/getUserWithMomentDates';
 import {setDates} from '../../../store/actions/user';
 import {load} from '../../../store/actions/data';
 import {connect} from 'react-redux';
 import type {DateRange} from '../../../types';
+import {getUserWithMoment} from '../selectors/getUserWithMomentDates';
 
 type DateFilterProps = {
   dates: ?DateRange,

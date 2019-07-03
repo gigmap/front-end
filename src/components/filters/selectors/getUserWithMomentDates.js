@@ -1,6 +1,6 @@
 import {createSelector} from 'reselect';
 import moment from 'moment';
-import {getUser} from '../../../../../store/selectors/basic';
+import {getUser} from '../../../store/selectors/basic';
 
 export const getUserWithMoment = createSelector(
   getUser,

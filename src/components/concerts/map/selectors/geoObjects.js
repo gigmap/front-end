@@ -4,10 +4,9 @@
 
 import {createSelector} from 'reselect';
 import {groupBy} from 'lodash';
-import {makeYaPosition} from '../../../api/yandex';
-import {getFilteredConcerts} from '../../_old/concerts/selectors/concertListSelector';
-import {getConcerts} from '../../../store/selectors/basic';
-import type {Concert} from '../../../types';
+import {makeYaPosition} from '../../../../api/yandex';
+import {getFilteredConcerts} from '../../selectors/getFilteredConcerts';
+import type {Concert} from '../../../../types';
 
 const renderUri = (concert: Concert) =>
   `<a href="${concert.uri}" rel="noreferrer noopener" target="_blank">Go to Songkick</a>`;
@@ -50,7 +49,7 @@ function concertToFeature(concerts: Concert[]) {
     ...result,
     id: ids.join('.'),
     options: {
-      preset: 'islands#violetIcon'
+      preset: 'islands#redIcon'
     },
     properties: {
       iconContent: qty,
@@ -66,7 +65,6 @@ function concertToFeature(concerts: Concert[]) {
 
 export const getYaMapFeatures = createSelector(
   getFilteredConcerts,
-  // getConcerts, // TODO: TMP!!!
 
   (concerts: Concert[]) => {
     const concertsWithLocation = concerts.filter(it => it.isWithCoordinates);
