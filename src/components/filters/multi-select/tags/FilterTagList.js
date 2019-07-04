@@ -6,17 +6,18 @@ import styles from './FilterTagList.module.less';
 
 type FilterTagListProps = {
   items: FilterItem[],
+  availability: {[string]: boolean},
   close: Function
 };
 
-export const FilterTagList = ({items, close}: FilterTagListProps) => {
+export const FilterTagList = ({items, close, availability}: FilterTagListProps) => {
   return (
     <div className={styles.wrapper}>
       <div className={styles.tags}>
         {
           items.map(it => (
             <FilterItemTag key={it.id} id={it.id} title={it.displayName}
-                           onClose={close}/>
+                           onClose={close} available={availability[it.id]} />
           ))
         }
       </div>

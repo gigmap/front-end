@@ -5,8 +5,9 @@ import {toggleAll, toggleItem} from '../../../store/actions/filters';
 import {
   ChosenFilterItemsSelectors,
   FilterStateSelectors
-} from '../selectors/filterState';
+} from '../selectors/selection';
 import {DataIdSelectors, DataSelectors} from '../../../store/selectors/data';
+import {FilterAvailabilitySelectors} from '../selectors/availability';
 
 export const connectFilter = (dataKey: string) => (Component) => {
 
@@ -14,6 +15,7 @@ export const connectFilter = (dataKey: string) => (Component) => {
     allItems: DataSelectors[dataKey](state),
     itemsIdMap: DataIdSelectors[dataKey](state),
     selectedItems: ChosenFilterItemsSelectors[dataKey](state),
+    availableItems: FilterAvailabilitySelectors[dataKey](state),
     filterState: FilterStateSelectors[dataKey](state)
   });
 

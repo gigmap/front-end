@@ -6,7 +6,7 @@ import {
   countChosenCountries,
   getArtistFilterState,
   getCountryFilterState
-} from '../../filters/selectors/filterState';
+} from '../../filters/selectors/selection';
 import type {Concert} from '../../../types';
 import {
   countArtists,

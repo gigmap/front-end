@@ -1,7 +1,7 @@
 import {makeAction} from './lib';
 import {
   FilterStateSelectors
-} from '../../components/filters/selectors/filterState';
+} from '../../components/filters/selectors/selection';
 import {DataSelectors} from '../selectors/data';
 
 export const TYPES = {

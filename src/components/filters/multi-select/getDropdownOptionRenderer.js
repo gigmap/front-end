@@ -6,7 +6,8 @@ import type {FilterItem} from '../../../types/FilterItem';
 const {Option} = AutoComplete;
 
 type FilterSelectOptionProps = FilterItem & {
-  isSelected: boolean
+  isSelected: boolean,
+  isAvailable: boolean,
 }
 
 function CheckIcon(props) {
@@ -16,10 +17,12 @@ function CheckIcon(props) {
 }
 
 export const getDropdownOptionRenderer = (iconClass) => (props: FilterSelectOptionProps) => {
-  const {id, displayName, isSelected} = props;
+  const {id, displayName, isSelected, isAvailable} = props;
+
+  const style = isAvailable ? {} : {color: '#ccc'};
 
   return (
-    <Option key={id} uppercase={displayName.toUpperCase()}>
+    <Option key={id} uppercase={displayName.toUpperCase()} style={style}>
       {isSelected && <CheckIcon className={iconClass}/>}
       &nbsp;&nbsp;
       {displayName}

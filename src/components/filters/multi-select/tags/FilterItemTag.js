@@ -7,14 +7,20 @@ import styles from './FilterItemTag.module.css';
 type FilterItemTagProps = {
   title: string,
   id: string,
-  onClose: (string) => void
+  onClose: (string) => void,
+  available: boolean
 };
 
 const FilterItemTag = (props: FilterItemTagProps) => {
-  const {id, title, onClose} = props;
+  const {id, title, onClose, available} = props;
+
+  const classNames = [styles.tag];
+  if (!available) {
+    classNames.push(styles.notAvailable);
+  }
 
   return (
-    <Tag className={styles.tag} closable onClose={() => onClose(id)}>
+    <Tag className={classNames.join(' ')} closable onClose={() => onClose(id)}>
       {title}
     </Tag>
   );

@@ -22,7 +22,6 @@ const createDataIdSelector = (key) => createSelector(
   DataSelectors[key],
 
   (items) => items.reduce((map, it) => {
-    console.warn('map id', key);
     map[it.id] = true;
     return map;
   }, {})

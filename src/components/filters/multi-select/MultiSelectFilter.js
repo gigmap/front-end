@@ -19,6 +19,7 @@ type MultiSelectFilterProps = {
   itemsIdMap: { [string]: boolean },
   selectedItems: FilterItem[],
   filterState: { [string]: boolean },
+  availableItems: { [string]: boolean },
   wording: FilterWording,
   dataKey: string,
   toggleItem: (string, string, boolean) => void,
@@ -38,6 +39,7 @@ export const MultiSelectFilter = (props: MultiSelectFilterProps) => {
     itemsIdMap,
     selectedItems,
     filterState,
+    availableItems,
     wording,
     dataKey,
     toggleItem,
@@ -57,7 +59,11 @@ export const MultiSelectFilter = (props: MultiSelectFilterProps) => {
   };
 
   const options = allItems
-    .map(it => ({...it, isSelected: filterState[it.id]}))
+    .map(it => ({
+      ...it,
+      isSelected: filterState[it.id],
+      isAvailable: availableItems[it.id]
+    }))
     .map(renderOption);
 
   return (
@@ -84,7 +90,7 @@ export const MultiSelectFilter = (props: MultiSelectFilterProps) => {
         <Button type={'link'} disabled={true}>See All</Button>
       </div>
 
-      <FilterTagList items={selectedItems} close={deselectItem}/>
+      <FilterTagList items={selectedItems} availability={availableItems} close={deselectItem}/>
     </>
   );
 };

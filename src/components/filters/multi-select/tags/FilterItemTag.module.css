@@ -1,3 +1,8 @@
 .tag {
     margin-bottom: 4px;
 }
+
+.notAvailable {
+    border-style: dashed;
+    color: #ccc;
+}
