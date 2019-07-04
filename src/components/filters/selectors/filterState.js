@@ -1,20 +1,43 @@
-import {createSelector} from 'reselect/lib/index';
-import {ARTIST_FILTER_NAME, COUNTRY_FILTER_NAME} from '../Constants';
-import {getArtists, getCountries} from '../../../store/selectors/basic';
+import {createSelector} from 'reselect';
+import {DataSelectors} from '../../../store/selectors/data';
+import {DATA_KEYS} from '../../../store/reducers/Constants';
+import {createLengthSelector} from '../../../store/selectors/lib';
 
-export const createFilterStateSelector =
-  (name) => (state) => state.filters.selected[name];
+const {ARTISTS, COUNTRIES} = DATA_KEYS;
 
-export const getSelectedArtists = createSelector(
-  getArtists,
-  createFilterStateSelector(ARTIST_FILTER_NAME),
+// Filter state map
+const createFilterStateSelector =
+  (key) => (state) => state.filters.selected[key];
 
-  (artists, filterState) => artists.filter(({id}) => filterState[id])
+export const getArtistFilterState = createFilterStateSelector(ARTISTS);
+export const getCountryFilterState = createFilterStateSelector(COUNTRIES);
+
+export const FilterStateSelectors = {
+  [ARTISTS]: getArtistFilterState,
+  [COUNTRIES]: getCountryFilterState
+};
+
+// Chosen filter items
+const createChosenFilterItemsSelector = (key) => createSelector(
+  DataSelectors[key],
+  createFilterStateSelector(key),
+
+  (items, filterState) => items.filter(({id}) => filterState[id])
 );
 
-export const getSelectedCountries = createSelector(
-  getCountries,
-  createFilterStateSelector(COUNTRY_FILTER_NAME),
+export const getChosenArtists = createChosenFilterItemsSelector(ARTISTS);
+export const getChosenCountries = createChosenFilterItemsSelector(COUNTRIES);
 
-  (countries, filterState) => countries.filter(({id}) => filterState[id])
-);
+export const ChosenFilterItemsSelectors = {
+  [ARTISTS]: getChosenArtists,
+  [COUNTRIES]: getChosenCountries
+};
+
+// Chosen items qty
+export const countChosenCountries = createLengthSelector(getChosenCountries);
+export const countChosenArtists = createLengthSelector(getChosenArtists);
+
+export const CountChosenItemsSelectors = {
+  [ARTISTS]: countChosenArtists,
+  [COUNTRIES]: countChosenCountries
+};

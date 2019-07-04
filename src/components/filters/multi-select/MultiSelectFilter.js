@@ -1,25 +1,33 @@
 // @flow
 
 import React, {useState} from 'react';
-import {connect} from 'react-redux';
 import {AutoComplete, Button} from 'antd';
 import styles from './MultiSelectFilter.module.less';
-import {toggleAll, toggleItem} from '../../../store/actions/filters';
-import {default as FilterTagList,} from './tags/FilterTagList';
-import {FilterSelectOption} from './FilterSelectOption';
+import {default as FilterTagList} from './tags/FilterTagList';
+import {getDropdownOptionRenderer} from './getDropdownOptionRenderer';
+import type {FilterItem} from '../../../types/FilterItem';
 
+const renderOption = getDropdownOptionRenderer(styles.itemIcon);
+
+export type FilterWording = {
+  singular: string,
+  plural: string
+};
 
 type MultiSelectFilterProps = {
-  allItems: [],
-  selectedItems: [],
-  entityName: string,
-  filterName: string,
+  allItems: FilterItem[],
+  itemsIdMap: { [string]: boolean },
+  selectedItems: FilterItem[],
+  filterState: { [string]: boolean },
+  wording: FilterWording,
+  dataKey: string,
   toggleItem: (string, string, boolean) => void,
   toggleAll: (string, boolean) => void
 };
 
-const filterFunction = (inputValue, option) =>
-  option.props.children.toUpperCase().indexOf(inputValue.toUpperCase()) !== -1;
+const filterFunction = (inputValue, option) => {
+  return option.props.uppercase.indexOf(inputValue.toUpperCase()) !== -1;
+};
 
 // TODO: decompose
 
@@ -27,34 +35,39 @@ export const MultiSelectFilter = (props: MultiSelectFilterProps) => {
 
   const {
     allItems,
+    itemsIdMap,
     selectedItems,
-    entityName,
-    filterName,
+    filterState,
+    wording,
+    dataKey,
     toggleItem,
     toggleAll
   } = props;
 
   const [input, setInput] = useState('');
 
-  const selectItem = (id) => toggleItem(filterName, id, true);
-  const deselectItem = (id) => toggleItem(filterName, id, false);
-  const selectAll = () => toggleAll(filterName, true);
-  const deselectAll = () => toggleAll(filterName, false);
+  const selectItem = (id) => toggleItem(dataKey, id, true);
+  const deselectItem = (id) => toggleItem(dataKey, id, false);
+  const selectAll = () => toggleAll(dataKey, true);
+  const deselectAll = () => toggleAll(dataKey, false);
 
-  const options = allItems.map(FilterSelectOption);
+  const handleTextChange = (value) => {
+    // clear input on option selected
+    setInput(itemsIdMap[value] ? '' : value);
+  };
 
-  // TODO: use object for onChange
+  const options = allItems
+    .map(it => ({...it, isSelected: filterState[it.id]}))
+    .map(renderOption);
+
   return (
     <>
       <AutoComplete
         className={styles.input}
         value={input}
-        placeholder={`Start typing ${entityName} name`}
+        placeholder={`Start typing ${wording.singular} name`}
         filterOption={filterFunction}
-        onChange={(value) => {
-          const isSelected = allItems.some(it => it.id === value);
-          setInput(isSelected ? '' : value);
-        }}
+        onChange={handleTextChange}
         onSelect={selectItem}
       >
         {options}
@@ -62,7 +75,9 @@ export const MultiSelectFilter = (props: MultiSelectFilterProps) => {
 
       <div className={styles.controls}>
         <div className={styles.left}>
-          <Button type={'link'} onClick={selectAll}>All contries/artists</Button>
+          <Button type={'link'} onClick={selectAll}>
+            Select all {wording.plural}
+          </Button>
           <Button type={'link'} onClick={deselectAll}>Clear</Button>
         </div>
 
@@ -74,10 +89,4 @@ export const MultiSelectFilter = (props: MultiSelectFilterProps) => {
   );
 };
 
-const MemoMultiSelectFilter = React.memo(MultiSelectFilter);
-
-const mapDispatchToProps = {
-  toggleItem, toggleAll
-};
-
-export default connect(null, mapDispatchToProps)(MemoMultiSelectFilter);
+export default React.memo(MultiSelectFilter);

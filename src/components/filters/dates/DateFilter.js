@@ -6,7 +6,7 @@ import {setDates} from '../../../store/actions/user';
 import {load} from '../../../store/actions/data';
 import {connect} from 'react-redux';
 import type {DateRange} from '../../../types';
-import {getUserWithMoment} from '../selectors/getUserWithMomentDates';
+import {getUserWithMoment} from './getUserWithMomentDates';
 
 type DateFilterProps = {
   dates: ?DateRange,

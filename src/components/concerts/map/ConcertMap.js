@@ -10,7 +10,7 @@ import {
 import {API_KEY} from '../../../api/yandex';
 import {getYaMapFeatures} from './selectors/geoObjects';
 import ConcertObjectManager from './ConcertObjectManager';
-import {getUserLocation} from '../../../store/selectors/basic';
+import {getUserLocation} from '../../../store/selectors/user';
 import HomePlacemark from './HomePlacemark';
 import type {GeoPoint, Concert} from '../../../types';
 

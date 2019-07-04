@@ -2,34 +2,17 @@
 
 import React from 'react';
 import {default as MultiSelectFilter} from '../multi-select/MultiSelectFilter';
-import {ARTIST_FILTER_NAME} from '../Constants';
-import {getArtists} from '../../../store/selectors/basic';
-import {getSelectedArtists} from '../selectors/filterState';
-import {connect} from 'react-redux';
+import {ARTISTS_DATA_KEY} from '../../../store/reducers/Constants';
+import {connectFilter} from '../multi-select/connectFilter';
 
-type ArtistFilterProps = {
-  allItems: [],
-  selectedItems: []
-}
-
-const ArtistFilter = (props: ArtistFilterProps) => {
-  const {allItems, selectedItems} = props;
-
+const ArtistFilter = () => {
+  const ConnectedFilter = connectFilter(ARTISTS_DATA_KEY)(MultiSelectFilter);
   return (
-    <MultiSelectFilter
-      entityName={'artist'}
-      filterName={ARTIST_FILTER_NAME}
-      allItems={allItems}
-      selectedItems={selectedItems}
+    <ConnectedFilter
+      wording={{singular: 'artist', plural: 'artists'}}
+      dataKey={ARTISTS_DATA_KEY}
     />
   );
 };
 
-
-const mapStateToProps = (state) => ({
-  allItems: getArtists(state),
-  selectedItems: getSelectedArtists(state)
-});
-
-
-export default connect(mapStateToProps)(ArtistFilter);
+export default ArtistFilter;

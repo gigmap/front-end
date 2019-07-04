@@ -1,7 +1,8 @@
 // @flow
 
 import {createSelector} from 'reselect';
-import {getConcerts, getUserLocation} from '../../../store/selectors/basic';
+import {getUserLocation} from '../../../store/selectors/user';
+import {getConcerts} from '../../../store/selectors/data';
 import type {Concert} from '../../../types';
 
 const toRad = (n) => {

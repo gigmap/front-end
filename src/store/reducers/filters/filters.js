@@ -2,19 +2,20 @@ import {CHANGE} from 'redux-form/lib/actionTypes';
 import {TYPES as USER_TYPES} from '../../actions/user';
 import {TYPES} from '../../actions/filters';
 import {
-  COUNTRY_FILTER_NAME as COUNTRIES,
-  ARTIST_FILTER_NAME as ARTISTS
-} from '../../../components/_old/filters/Constants';
+  ARTISTS_DATA_KEY as ARTISTS,
+  COUNTRIES_DATA_KEY as COUNTRIES
+} from '../Constants';
 import {omit} from 'lodash';
 
 const initialState = {
-  unsetCountries: {},
-  unsetArtists: {},
-
   selected: {
     [COUNTRIES]: {},
     [ARTISTS]: {}
   },
+
+  // TODO: review
+  unsetCountries: {},
+  unsetArtists: {},
 
   search: {
     [COUNTRIES]: '',
@@ -51,7 +52,7 @@ export const filters = (state = initialState, {type, payload, meta}) => {
         }
       };
 
-      // TODO (!)
+    // TODO (!)
     case CHANGE:
       const propName = PROPS[meta.form];
       if (!propName) {

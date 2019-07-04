@@ -1,40 +1,51 @@
+// @flow
+
 import {createSelector} from 'reselect';
-import {getConcertsWithDistance} from './getConcertsWithDistance';
 import {
-  getSelectedArtists,
-  getSelectedCountries
-} from '../../filters/selectors/_filterSelectors';
-import {countArtists, countCountries} from '../../../store/selectors/basic';
+  countChosenArtists,
+  countChosenCountries,
+  getArtistFilterState,
+  getCountryFilterState
+} from '../../filters/selectors/filterState';
+import type {Concert} from '../../../types';
+import {
+  countArtists,
+  countCountries,
+  getConcerts
+} from '../../../store/selectors/data';
 
 export const getFilteredConcerts = createSelector(
-  getConcertsWithDistance,
+  getConcerts,
   countCountries,
   countArtists,
-  getSelectedCountries,
-  getSelectedArtists,
-  /**
-   * @param {Array} concerts
-   * @param {number} countriesQty
-   * @param {number} artistsQty
-   * @param {Map} selectedCountries
-   * @param {Map} selectedArtists
-   * @return {T[]|Validator<NonNullable<any[]>> | any | Array}
-   */
-  (concerts, countriesQty, artistsQty, selectedCountries, selectedArtists) => {
+  getCountryFilterState,
+  getArtistFilterState,
+  countChosenCountries,
+  countChosenArtists,
 
-    const allCountriesSelected = selectedCountries.size === countriesQty;
-    const allArtistsSelected = selectedArtists.size === artistsQty;
+  (
+    concerts: Concert[],
+    countryQty: number,
+    artistQty: number,
+    countryFilter: { [string]: boolean },
+    artistFilter: { [string]: boolean },
+    selectedCountryQty: number,
+    selectedArtistQty: number
+  ) => {
+
+    const allCountriesSelected = selectedCountryQty === countryQty;
+    const allArtistsSelected = selectedArtistQty === artistQty;
     if (allArtistsSelected && allCountriesSelected) {
       return concerts;
     }
 
     const checkArtist = allArtistsSelected ?
       () => true :
-      concert => concert.members.some(artist => selectedArtists.has(artist.id));
+      concert => concert.members.some(artist => artistFilter[artist.id]);
 
     const checkCountry = allCountriesSelected ?
       () => true :
-      concert => selectedCountries.has(concert.location.country);
+      concert => countryFilter[concert.location.country];
 
     return concerts.filter(it => checkArtist(it) && checkCountry(it));
   });

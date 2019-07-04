@@ -2,34 +2,17 @@
 
 import React from 'react';
 import {default as MultiSelectFilter} from '../multi-select/MultiSelectFilter';
-import {COUNTRY_FILTER_NAME} from '../Constants';
-import {getCountries} from '../../../store/selectors/basic';
-import {getSelectedCountries} from '../selectors/filterState';
-import {connect} from 'react-redux';
+import {COUNTRIES_DATA_KEY} from '../../../store/reducers/Constants';
+import {connectFilter} from '../multi-select/connectFilter';
 
-type CountryFilterProps = {
-  allItems: [],
-  selectedItems: []
-}
-
-const CountryFilter = (props: CountryFilterProps) => {
-  const {allItems, selectedItems} = props;
-
+const CountryFilter = () => {
+  const ConnectedFilter = connectFilter(COUNTRIES_DATA_KEY)(MultiSelectFilter);
   return (
-    <MultiSelectFilter
-      entityName={'country'}
-      filterName={COUNTRY_FILTER_NAME}
-      allItems={allItems}
-      selectedItems={selectedItems}
+    <ConnectedFilter
+      wording={{singular: 'country', plural: 'countries'}}
+      dataKey={COUNTRIES_DATA_KEY}
     />
   );
 };
 
-
-const mapStateToProps = (state) => ({
-  allItems: getCountries(state),
-  selectedItems: getSelectedCountries(state)
-});
-
-
-export default connect(mapStateToProps)(CountryFilter);
+export default CountryFilter;
