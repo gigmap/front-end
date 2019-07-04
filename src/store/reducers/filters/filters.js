@@ -11,11 +11,21 @@ const initialState = {
     [ARTISTS]: {}
   },
 
+  ui: {
+    dialogShown: {
+      [COUNTRIES]: false,
+      [ARTISTS]: false
+    }
+  },
+
+  // TODO: unused ?
   search: {
     [COUNTRIES]: '',
     [ARTISTS]: ''
   }
 };
+
+// TODO: decompose
 
 export const filters = (state = initialState, {type, payload, meta}) => {
   switch (type) {
@@ -51,6 +61,19 @@ export const filters = (state = initialState, {type, payload, meta}) => {
         search: {
           ...state.search,
           [meta.name]: payload
+        }
+      };
+
+    case TYPES.TOGGLE_DIALOG:
+      return {
+        ...state,
+        ui: {
+          ...state.ui,
+          dialogShown: {
+            [COUNTRIES]: false,
+            [ARTISTS]: false,
+            [meta.dataKey]: payload
+          }
         }
       };
 

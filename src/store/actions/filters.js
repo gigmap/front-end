@@ -7,11 +7,14 @@ import {DataSelectors} from '../selectors/data';
 export const TYPES = {
   SEARCH: 'FILTERS:SEARCH:CHANGE',
   TOGGLE: 'FILTERS:ITEM:TOGGLE',
-  TOGGLE_ALL: 'FILTERS:ITEM:TOGGLE_ALL'
+  TOGGLE_ALL: 'FILTERS:ITEM:TOGGLE_ALL',
+  TOGGLE_DIALOG: 'FILTERS:DIALOG:TOGGLE'
 };
 
-export const toggleItem = (entityName, itemId, value) => (dispatch, getState) => {
-  const selectedItems = FilterStateSelectors[entityName](getState());
+export type ToggleItemFn = (string, string, boolean) => void;
+
+export const toggleItem = (dataKey, itemId, value) => (dispatch, getState) => {
+  const selectedItems = FilterStateSelectors[dataKey](getState());
 
   // deselect already selected item
   if (value && selectedItems[itemId]) {
@@ -19,22 +22,25 @@ export const toggleItem = (entityName, itemId, value) => (dispatch, getState) =>
   }
 
   dispatch(makeAction(TYPES.TOGGLE, value, {
-    name: entityName,
+    name: dataKey,
     itemId
   }));
 };
 
-export const toggleAll = (entityName, value) => (dispatch, getState) => {
+export const toggleAll = (dataKey, value) => (dispatch, getState) => {
   const state = getState();
 
-  const values = DataSelectors[entityName](state).reduce((sum, {id}) => {
+  const values = DataSelectors[dataKey](state).reduce((sum, {id}) => {
     sum[id] = value;
     return sum;
   }, {});
-  dispatch(makeAction(TYPES.TOGGLE_ALL, values, {name: entityName}));
+  dispatch(makeAction(TYPES.TOGGLE_ALL, values, {name: dataKey}));
 };
 
-// TODO: review
+export const toggleFilterDialog = (dataKey, value) =>
+  makeAction(TYPES.TOGGLE_DIALOG, value, {dataKey});
+
+// TODO: unused ?
 export const searchFilters =
   (formName, value) => makeAction(TYPES.SEARCH, value, {name: formName});
 

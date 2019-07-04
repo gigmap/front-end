@@ -1,13 +1,13 @@
 // @flow
 
-import React, {useState} from 'react';
-import {AutoComplete, Button} from 'antd';
+import React from 'react';
 import styles from './MultiSelectFilter.module.less';
 import {default as FilterTagList} from './tags/FilterTagList';
-import {getDropdownOptionRenderer} from './getDropdownOptionRenderer';
+import {default as BatchFilterControls} from './controls/BatchFilterControls';
+import {default as FilterInput} from './input/FilterInput';
+import {default as SeeAllButton} from './checkbox-list/SeeAllButton';
 import type {FilterItem} from '../../../types/FilterItem';
-
-const renderOption = getDropdownOptionRenderer(styles.itemIcon);
+import type {ToggleItemFn} from '../../../store/actions/filters';
 
 export type FilterWording = {
   singular: string,
@@ -22,15 +22,8 @@ type MultiSelectFilterProps = {
   availableItems: { [string]: boolean },
   wording: FilterWording,
   dataKey: string,
-  toggleItem: (string, string, boolean) => void,
-  toggleAll: (string, boolean) => void
+  toggleItem: ToggleItemFn
 };
-
-const filterFunction = (inputValue, option) => {
-  return option.props.uppercase.indexOf(inputValue.toUpperCase()) !== -1;
-};
-
-// TODO: decompose
 
 export const MultiSelectFilter = (props: MultiSelectFilterProps) => {
 
@@ -42,55 +35,29 @@ export const MultiSelectFilter = (props: MultiSelectFilterProps) => {
     availableItems,
     wording,
     dataKey,
-    toggleItem,
-    toggleAll
+    toggleItem
   } = props;
 
-  const [input, setInput] = useState('');
-
-  const selectItem = (id) => toggleItem(dataKey, id, true);
   const deselectItem = (id) => toggleItem(dataKey, id, false);
-  const selectAll = () => toggleAll(dataKey, true);
-  const deselectAll = () => toggleAll(dataKey, false);
-
-  const handleTextChange = (value) => {
-    // clear input on option selected
-    setInput(itemsIdMap[value] ? '' : value);
-  };
-
-  const options = allItems
-    .map(it => ({
-      ...it,
-      isSelected: filterState[it.id],
-      isAvailable: availableItems[it.id]
-    }))
-    .map(renderOption);
 
   return (
     <>
-      <AutoComplete
-        className={styles.input}
-        value={input}
-        placeholder={`Start typing ${wording.singular} name`}
-        filterOption={filterFunction}
-        onChange={handleTextChange}
-        onSelect={selectItem}
-      >
-        {options}
-      </AutoComplete>
+      <div className={styles.inputWrapper}>
+        <FilterInput
+          allItems={allItems}
+          itemsIdMap={itemsIdMap}
+          filterState={filterState}
+          availableItems={availableItems}
+          wording={wording}
+          dataKey={dataKey}
+          toggleItem={toggleItem}/>
 
-      <div className={styles.controls}>
-        <div className={styles.left}>
-          <Button type={'link'} onClick={selectAll}>
-            Select all {wording.plural}
-          </Button>
-          <Button type={'link'} onClick={deselectAll}>Clear</Button>
-        </div>
-
-        <Button type={'link'} disabled={true}>See All</Button>
+        <SeeAllButton dataKey={dataKey} />
       </div>
 
-      <FilterTagList items={selectedItems} availability={availableItems} close={deselectItem}/>
+      <BatchFilterControls dataKey={dataKey} word={wording.plural}/>
+      <FilterTagList items={selectedItems} availability={availableItems}
+                     close={deselectItem}/>
     </>
   );
 };

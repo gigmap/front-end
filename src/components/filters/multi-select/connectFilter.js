@@ -1,7 +1,7 @@
 // @flow
 
 import {connect} from 'react-redux';
-import {toggleAll, toggleItem} from '../../../store/actions/filters';
+import {toggleItem} from '../../../store/actions/filters';
 import {
   ChosenFilterItemsSelectors,
   FilterStateSelectors
@@ -19,9 +19,7 @@ export const connectFilter = (dataKey: string) => (Component) => {
     filterState: FilterStateSelectors[dataKey](state)
   });
 
-  const mapDispatchToProps = {
-    toggleItem, toggleAll
-  };
+  const mapDispatchToProps = {toggleItem};
 
   return connect(mapStateToProps, mapDispatchToProps)(Component);
 };

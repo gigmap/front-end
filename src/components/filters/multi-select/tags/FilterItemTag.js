@@ -2,7 +2,7 @@
 
 import React from 'react';
 import {Tag} from 'antd';
-import styles from './FilterItemTag.module.css';
+import styles from './FilterItemTag.module.less';
 
 type FilterItemTagProps = {
   title: string,

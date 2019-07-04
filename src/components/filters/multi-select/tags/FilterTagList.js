@@ -27,6 +27,4 @@ export const FilterTagList = ({items, close, availability}: FilterTagListProps) 
 };
 
 
-const MemoFilterTagList = React.memo(FilterTagList);
-
-export default MemoFilterTagList;
+export default React.memo(FilterTagList);
