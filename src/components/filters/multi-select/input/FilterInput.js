@@ -10,8 +10,6 @@ import type {FilterWording} from '../MultiSelectFilter';
 type MultiSelectFilterProps = {
   allItems: FilterItem[],
   itemsIdMap: { [string]: boolean },
-  filterState: { [string]: boolean },
-  availableItems: { [string]: boolean },
   wording: FilterWording,
   dataKey: string,
   toggleItem: (string, string, boolean) => void
@@ -26,8 +24,6 @@ export const FilterInput = (props: MultiSelectFilterProps) => {
   const {
     allItems,
     itemsIdMap,
-    filterState,
-    availableItems,
     wording,
     dataKey,
     toggleItem
@@ -41,14 +37,7 @@ export const FilterInput = (props: MultiSelectFilterProps) => {
     setInput(itemsIdMap[value] ? '' : value);
   };
 
-  // TODO: selector (?) this shit re-renders all the time
-  const options = allItems
-    .map(it => ({
-      ...it,
-      isSelected: filterState[it.id],
-      isAvailable: availableItems[it.id]
-    }))
-    .map(renderDropdownOption);
+  const options = allItems.map(renderDropdownOption);
 
   return (
     <AutoComplete

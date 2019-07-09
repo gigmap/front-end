@@ -2,25 +2,14 @@ import {createSelector} from 'reselect';
 import {DataSelectors} from '../../../store/selectors/data';
 import {DATA_KEYS} from '../../../store/reducers/Constants';
 import {createLengthSelector} from '../../../store/selectors/lib';
+import {FilterStateSelectors} from './filterState';
 
 const {ARTISTS, COUNTRIES} = DATA_KEYS;
-
-// Filter state map
-const createFilterStateSelector =
-  (key) => (state) => state.filters.selected[key];
-
-export const getArtistFilterState = createFilterStateSelector(ARTISTS);
-export const getCountryFilterState = createFilterStateSelector(COUNTRIES);
-
-export const FilterStateSelectors = {
-  [ARTISTS]: getArtistFilterState,
-  [COUNTRIES]: getCountryFilterState
-};
 
 // Chosen filter items
 const createChosenFilterItemsSelector = (key) => createSelector(
   DataSelectors[key],
-  createFilterStateSelector(key),
+  FilterStateSelectors[key],
 
   (items, filterState) => items.filter(({id}) => filterState[id])
 );

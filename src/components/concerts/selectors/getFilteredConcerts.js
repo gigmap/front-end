@@ -4,8 +4,6 @@ import {createSelector} from 'reselect';
 import {
   countChosenArtists,
   countChosenCountries,
-  getArtistFilterState,
-  getCountryFilterState
 } from '../../filters/selectors/selection';
 import type {Concert} from '../../../types';
 import {
@@ -13,6 +11,10 @@ import {
   countCountries,
   getConcerts
 } from '../../../store/selectors/data';
+import {
+  getArtistFilterState,
+  getCountryFilterState
+} from '../../filters/selectors/filterState';
 
 export const getFilteredConcerts = createSelector(
   getConcerts,

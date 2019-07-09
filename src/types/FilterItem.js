@@ -2,5 +2,7 @@
 
 export type FilterItem = {
   id: number,
-  displayName: string
+  displayName: string,
+  isSelected: boolean,
+  isAvailable: boolean
 }

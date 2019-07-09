@@ -2,21 +2,16 @@
 
 import {connect} from 'react-redux';
 import {toggleItem} from '../../../store/actions/filters';
-import {
-  ChosenFilterItemsSelectors,
-  FilterStateSelectors
-} from '../selectors/selection';
-import {DataIdSelectors, DataSelectors} from '../../../store/selectors/data';
-import {FilterAvailabilitySelectors} from '../selectors/availability';
+import {DataIdSelectors} from '../../../store/selectors/data';
+import {TagListSelectors} from '../selectors/specific/tagList';
+import {FilterOptionSelectors} from '../selectors/specific/filterOptions';
 
 export const connectFilter = (dataKey: string) => (Component) => {
 
   const mapStateToProps = (state) => ({
-    allItems: DataSelectors[dataKey](state),
+    allItems:  FilterOptionSelectors[dataKey](state),
     itemsIdMap: DataIdSelectors[dataKey](state),
-    selectedItems: ChosenFilterItemsSelectors[dataKey](state),
-    availableItems: FilterAvailabilitySelectors[dataKey](state),
-    filterState: FilterStateSelectors[dataKey](state)
+    selectedItems: TagListSelectors[dataKey](state)
   });
 
   const mapDispatchToProps = {toggleItem};

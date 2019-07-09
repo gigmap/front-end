@@ -6,10 +6,7 @@ import type {FilterItem} from '../../../../types/FilterItem';
 
 const {Option} = AutoComplete;
 
-type FilterSelectOptionProps = FilterItem & {
-  isSelected: boolean,
-  isAvailable: boolean,
-}
+type FilterSelectOptionProps = FilterItem;
 
 function CheckIcon() {
   return (

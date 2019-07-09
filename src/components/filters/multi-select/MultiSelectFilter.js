@@ -18,8 +18,6 @@ type MultiSelectFilterProps = {
   allItems: FilterItem[],
   itemsIdMap: { [string]: boolean },
   selectedItems: FilterItem[],
-  filterState: { [string]: boolean },
-  availableItems: { [string]: boolean },
   wording: FilterWording,
   dataKey: string,
   toggleItem: ToggleItemFn
@@ -31,8 +29,6 @@ export const MultiSelectFilter = (props: MultiSelectFilterProps) => {
     allItems,
     itemsIdMap,
     selectedItems,
-    filterState,
-    availableItems,
     wording,
     dataKey,
     toggleItem
@@ -46,18 +42,15 @@ export const MultiSelectFilter = (props: MultiSelectFilterProps) => {
         <FilterInput
           allItems={allItems}
           itemsIdMap={itemsIdMap}
-          filterState={filterState}
-          availableItems={availableItems}
           wording={wording}
           dataKey={dataKey}
           toggleItem={toggleItem}/>
 
-        <SeeAllButton dataKey={dataKey} />
+        <SeeAllButton dataKey={dataKey}/>
       </div>
 
       <BatchFilterControls dataKey={dataKey} word={wording.plural}/>
-      <FilterTagList items={selectedItems} availability={availableItems}
-                     close={deselectItem}/>
+      <FilterTagList items={selectedItems} close={deselectItem}/>
     </>
   );
 };

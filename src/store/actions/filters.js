@@ -1,8 +1,6 @@
 import {makeAction} from './lib';
-import {
-  FilterStateSelectors
-} from '../../components/filters/selectors/selection';
 import {DataSelectors} from '../selectors/data';
+import {FilterStateSelectors} from '../../components/filters/selectors/filterState';
 
 export const TYPES = {
   SEARCH: 'FILTERS:SEARCH:CHANGE',
@@ -12,6 +10,7 @@ export const TYPES = {
 };
 
 export type ToggleItemFn = (string, string, boolean) => void;
+export type ToggleAllFn = (string, boolean) => void;
 
 export const toggleItem = (dataKey, itemId, value) => (dispatch, getState) => {
   const selectedItems = FilterStateSelectors[dataKey](getState());

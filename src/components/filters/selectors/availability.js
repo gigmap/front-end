@@ -4,12 +4,12 @@ import {
   countArtists,
   countCountries
 } from '../../../store/selectors/data';
-import {getArtistFilterState, getCountryFilterState} from './selection';
 import type {Concert} from '../../../types';
 import {
   ARTISTS_DATA_KEY,
   COUNTRIES_DATA_KEY
 } from '../../../store/reducers/Constants';
+import {getArtistFilterState, getCountryFilterState} from './filterState';
 
 export const getCountryAvailability = createSelector(
   getConcerts, countArtists, getArtistFilterState,
