@@ -16,7 +16,7 @@ type MultiSelectFilterProps = {
 };
 
 const filterFunction = (inputValue, option) => {
-  return option.props.uppercaseName.indexOf(inputValue.toUpperCase()) !== -1;
+  return option.props.uppercasename.indexOf(inputValue.toUpperCase()) !== -1;
 };
 
 export const FilterInput = (props: MultiSelectFilterProps) => {

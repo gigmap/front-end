@@ -35,6 +35,26 @@ function ConcertObjectManager({ymaps, concerts}) {
       clusters={CLUSTER_OPTIONS}
       features={concerts}
       modules={MODULES_LIST}
+      instanceRef={(ref) => {
+        if (!ref) {
+          return;
+        }
+
+        const map = ref.getMap();
+        const cb = () => {
+          const shown = ref.objects.getAll().filter(it => {
+            const state = ref.getObjectState(it.id);
+            return state.found && state.isShown;
+          });
+
+          console.warn(shown.length, 'items are shown');
+        };
+
+
+        // console.warn(ref);
+        map.events.add('boundschange', cb);
+        cb();
+      }}
     />
   );
 }

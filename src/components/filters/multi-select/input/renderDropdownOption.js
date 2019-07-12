@@ -21,7 +21,7 @@ export const renderDropdownOption = (props: FilterSelectOptionProps) => {
   const css = isAvailable ? null : styles.naOption;
 
   return (
-    <Option key={id} uppercaseName={displayName.toUpperCase()} className={css}>
+    <Option key={id} uppercasename={displayName.toUpperCase()} className={css}>
       {isSelected && <CheckIcon />}
       {displayName}
     </Option>
