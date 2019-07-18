@@ -28,6 +28,7 @@ function concertToFeature(concerts: Concert[]) {
       ...result,
       id: String(concert.id), // Yandex.Map requires all ids to be the same type // TODO: during mapping?
       properties: {
+        qty,
         hintContent: `${concert.start}: ${concert.memberNames}`,
         balloonContentHeader: `${concert.start} ${concert.memberNames}`,
         balloonContentBody: `${concert.displayName}<br/>${renderUri(concert)}`,
@@ -52,6 +53,7 @@ function concertToFeature(concerts: Concert[]) {
       preset: 'islands#redIcon'
     },
     properties: {
+      qty,
       iconContent: qty,
       hintContent: titles.map(it => `- ${it}`).join('<br/>'),
       balloonContentHeader: `${qty} concerts here`,

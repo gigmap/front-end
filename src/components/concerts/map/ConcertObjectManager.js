@@ -1,19 +1,12 @@
 import React, {useState} from 'react';
 import * as PropTypes from 'prop-types';
-import {
-  ObjectManager,
-  withYMaps
-} from 'react-yandex-maps';
-import CLUSTER_HINT_TEMPLATE from './ClusterHintTemplate';
+import {ObjectManager, withYMaps} from 'react-yandex-maps';
+import CLUSTER_HINT_TEMPLATE from './templates/ClusterHintTemplate';
+import CLUSTER_SIZE_TEMPLATE from './templates/ClusterNumberTemplate';
 
 const OBJECT_OPTIONS = {
   openBalloonOnClick: true,
   preset: 'islands#redNightClubIcon'
-};
-
-const CLUSTER_OPTIONS = {
-  preset: 'islands#invertedRedClusterIcons',
-  hasHint: true
 };
 
 const MODULES_LIST = [
@@ -21,6 +14,12 @@ const MODULES_LIST = [
   'objectManager.addon.objectsHint',
   'objectManager.addon.clustersHint'
 ];
+
+const clusterCounterFilter = (data, items) => {
+  return items.reduce((acc, it) => acc + it.properties.qty, 0);
+};
+
+// TODO: this whole thing smells - class component or useEffect ?
 
 function ConcertObjectManager({ymaps, concerts, setShownGigIds}) {
 
@@ -44,7 +43,16 @@ function ConcertObjectManager({ymaps, concerts, setShownGigIds}) {
       .flatMap(it => it.properties.many ? it.properties.ids : it.id));
   };
 
-  // TODO: instanceRef callback smells
+  if (!ymaps.template.filtersStorage.get('clusterSize')) {
+    ymaps.template.filtersStorage.add('clusterSize', clusterCounterFilter);
+  }
+
+  const CLUSTER_OPTIONS = {
+    preset: 'islands#invertedRedClusterIcons',
+    clusterIconContentLayout:
+      ymaps.templateLayoutFactory.createClass(CLUSTER_SIZE_TEMPLATE),
+    hasHint: true
+  };
 
   return (
     <ObjectManager
@@ -87,7 +95,7 @@ ConcertObjectManager.propTypes = {
 const ConcertYandexObjectManager = withYMaps(
   React.memo(ConcertObjectManager),
   true,
-  ['templateLayoutFactory', 'util.bounds']);
+  ['templateLayoutFactory', 'util.bounds', 'template.filtersStorage']);
 
 ConcertYandexObjectManager.propTypes = {
   concerts: PropTypes.array.isRequired,
