@@ -20,7 +20,7 @@ const DateFilter = (props: DateFilterProps) => {
 
   const onSelect = (dates) => {
     setDates(dates);
-    load();
+    load(false);
   };
 
   return (

@@ -11,7 +11,7 @@ const TempButtons = ({username, loading, logout, load}) => {
         <Icon type='user'/> {username}: Log Out
       </Button>
 
-      <Button style={{marginLeft: 10}} disabled={loading} onClick={load}>
+      <Button style={{marginLeft: 10}} disabled={loading} onClick={() => load(false)}>
         <Icon type='reload'/> Reload Concerts
       </Button>
     </div>

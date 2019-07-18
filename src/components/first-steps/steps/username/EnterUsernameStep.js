@@ -101,7 +101,7 @@ function EnterUsernameStep({form, currentName, updateUserData, moveToNextStep, l
 
   const proceed = () => {
     login();
-    load();
+    load(true);
   };
   const handleSubmit =
     createSubmitHandler(form, setNameLoading, setArtistQty, updateUserData);

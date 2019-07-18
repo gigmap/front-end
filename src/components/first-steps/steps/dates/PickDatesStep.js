@@ -35,7 +35,7 @@ function PickDatesStep(
   const proceed = () => {
     updateUserData({dates});
     login();
-    load();
+    load(true);
   };
 
   return (
