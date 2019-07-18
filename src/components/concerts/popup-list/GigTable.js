@@ -23,7 +23,7 @@ const columns = [
     title: 'Who',
     dataIndex: 'memberNames',
     key: 'memberNames',
-    width: 150,
+    width: 250,
     sorter: (a, b) => a.memberNames > b.memberNames ? 1 : -1
   },
   {

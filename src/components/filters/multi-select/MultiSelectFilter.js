@@ -49,7 +49,10 @@ export const MultiSelectFilter = (props: MultiSelectFilterProps) => {
         <SeeAllButton dataKey={dataKey}/>
       </div>
 
-      <BatchFilterControls dataKey={dataKey} word={wording.plural}/>
+      <BatchFilterControls dataKey={dataKey} word={wording.plural}
+                           totalQty={allItems.length}
+                           selectedQty={selectedItems.length}
+      />
       <FilterTagList items={selectedItems} close={deselectItem}/>
     </>
   );
