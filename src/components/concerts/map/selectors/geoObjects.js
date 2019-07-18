@@ -58,6 +58,7 @@ function concertToFeature(concerts: Concert[]) {
       balloonContentBody: `<ul>${details.join('')}</ul>`,
       balloonContentFooter: concerts[0].location.city,
       many: true,
+      ids,
       titles
     }
   };

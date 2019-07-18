@@ -1,6 +1,6 @@
 {
   "name": "@gigmap/front-end",
-  "version": "0.9.1",
+  "version": "0.10.1",
   "private": true,
   "dependencies": {
     "antd": "^3.19.3",
@@ -19,7 +19,6 @@
     "react-scripts": "3.0.1",
     "react-yandex-maps": "^3.1.0",
     "redux": "^4.0.1",
-    "redux-form": "^8.2.4",
     "redux-logger": "^3.0.6",
     "redux-persist": "^5.10.0",
     "redux-thunk": "^2.3.0",

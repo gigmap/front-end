@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import * as PropTypes from 'prop-types';
 import {
   ObjectManager,
@@ -22,7 +22,30 @@ const MODULES_LIST = [
   'objectManager.addon.clustersHint'
 ];
 
-function ConcertObjectManager({ymaps, concerts}) {
+function ConcertObjectManager({ymaps, concerts, setShownGigIds}) {
+
+  const [mapRef, setMapRef] = useState(null);
+  const {bounds} = ymaps.util;
+
+  const updateShownIds = (manager) => {
+    const map = manager.getMap();
+
+    const shownItems = manager.objects.getAll().filter(it => {
+      const state = manager.getObjectState(it.id);
+      const isShown = state.found && state.isShown;
+      if (!isShown) {
+        return false;
+      }
+
+      return bounds.containsPoint(map.getBounds(), it.geometry.coordinates);
+    });
+
+    setShownGigIds(shownItems
+      .flatMap(it => it.properties.many ? it.properties.ids : it.id));
+  };
+
+  // TODO: instanceRef callback smells
+
   return (
     <ObjectManager
       options={{
@@ -40,20 +63,16 @@ function ConcertObjectManager({ymaps, concerts}) {
           return;
         }
 
+        updateShownIds(ref);
+
+        // no need to add another event handler instance
+        if (mapRef) {
+          return;
+        }
+
         const map = ref.getMap();
-        const cb = () => {
-          const shown = ref.objects.getAll().filter(it => {
-            const state = ref.getObjectState(it.id);
-            return state.found && state.isShown;
-          });
-
-          console.warn(shown.length, 'items are shown');
-        };
-
-
-        // console.warn(ref);
-        map.events.add('boundschange', cb);
-        cb();
+        setMapRef(map);
+        map.events.add('boundschange', () => updateShownIds(ref));
       }}
     />
   );
@@ -61,16 +80,18 @@ function ConcertObjectManager({ymaps, concerts}) {
 
 ConcertObjectManager.propTypes = {
   concerts: PropTypes.array.isRequired,
-  ymaps: PropTypes.object.isRequired
+  ymaps: PropTypes.object.isRequired,
+  setShownGigIds: PropTypes.func.isRequired
 };
 
 const ConcertYandexObjectManager = withYMaps(
   React.memo(ConcertObjectManager),
   true,
-  ['templateLayoutFactory']);
+  ['templateLayoutFactory', 'util.bounds']);
 
 ConcertYandexObjectManager.propTypes = {
-  concerts: PropTypes.array.isRequired
+  concerts: PropTypes.array.isRequired,
+  setShownGigIds: PropTypes.func.isRequired
 };
 
 export default React.memo(ConcertYandexObjectManager);

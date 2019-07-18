@@ -13,6 +13,9 @@ import ConcertObjectManager from './ConcertObjectManager';
 import {getUserLocation} from '../../../store/selectors/user';
 import HomePlacemark from './HomePlacemark';
 import type {GeoPoint, Concert} from '../../../types';
+import {setShownGigIds} from '../../../store/actions/map';
+import {default as ShownGigsCounter} from '../popup-list/ShownGigsCounter';
+import {default as ShownGigsPopup} from '../popup-list/ShownGigsPopup';
 
 const MAP_QUERY = {
   apikey: API_KEY,
@@ -20,26 +23,31 @@ const MAP_QUERY = {
   load: 'Map,Placemark'
 };
 
-type Props = {
+type ConcertMapProps = {
   concerts: Concert[],
-  location: GeoPoint
+  location: GeoPoint,
+  setShownGigIds: Function
 };
 
-function ConcertMap(props: Props) {
-  const {concerts, location} = props;
+function ConcertMap(props: ConcertMapProps) {
+  const {concerts, location, setShownGigIds} = props;
 
   const mapState = location ?
     {center: [location.lat, location.lng], zoom: 6} :
     {center: [54, 16.5], zoom: 4};
 
   return (
-    <YMaps query={MAP_QUERY}>
-      <Map width={'100%'} height={'100%'} defaultState={mapState}>
-        {location && <HomePlacemark location={location}/>}
-        <ConcertObjectManager concerts={concerts}/>
-        <ZoomControl/>
-      </Map>
-    </YMaps>
+    <>
+      <YMaps query={MAP_QUERY}>
+        <Map width={'100%'} height={'100%'} defaultState={mapState}>
+          {location && <HomePlacemark location={location}/>}
+          <ConcertObjectManager concerts={concerts} setShownGigIds={setShownGigIds}/>
+          <ZoomControl/>
+        </Map>
+      </YMaps>
+      <ShownGigsCounter />
+      <ShownGigsPopup />
+    </>
   );
 }
 
@@ -48,4 +56,8 @@ const mapStateToProps = (state) => ({
   location: getUserLocation(state)
 });
 
-export default connect(mapStateToProps)(React.memo(ConcertMap));
+const mapDispatchToProps = {
+  setShownGigIds
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(React.memo(ConcertMap));
