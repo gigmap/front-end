@@ -3,7 +3,6 @@ import {DataSelectors} from '../selectors/data';
 import {FilterStateSelectors} from '../../components/filters/selectors/filterState';
 
 export const TYPES = {
-  SEARCH: 'FILTERS:SEARCH:CHANGE',
   TOGGLE: 'FILTERS:ITEM:TOGGLE',
   TOGGLE_ALL: 'FILTERS:ITEM:TOGGLE_ALL',
   TOGGLE_DIALOG: 'FILTERS:DIALOG:TOGGLE'
@@ -38,8 +37,3 @@ export const toggleAll = (dataKey, value) => (dispatch, getState) => {
 
 export const toggleFilterDialog = (dataKey, value) =>
   makeAction(TYPES.TOGGLE_DIALOG, value, {dataKey});
-
-// TODO: unused ?
-export const searchFilters =
-  (formName, value) => makeAction(TYPES.SEARCH, value, {name: formName});
-

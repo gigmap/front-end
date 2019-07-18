@@ -2,7 +2,7 @@ import React, {Suspense} from 'react';
 import {connect} from 'react-redux';
 import * as PropTypes from 'prop-types';
 import {Layout} from 'antd';
-import AppHeader from '../_old/header/AppHeader';
+import AppHeader from './old-header/AppHeader';
 import styles from './App.module.css';
 import Loading from '../common/Loading';
 
