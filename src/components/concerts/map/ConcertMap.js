@@ -9,7 +9,7 @@ import {
 } from 'react-yandex-maps';
 import {API_KEY} from '../../../api/yandex';
 import {getYaMapFeatures} from './selectors/geoObjects';
-import ConcertObjectManager from './ConcertObjectManager';
+import {ConcertObjectManagerWithYmaps} from './ConcertObjectManager';
 import {getUserLocation} from '../../../store/selectors/user';
 import HomePlacemark from './HomePlacemark';
 import type {GeoPoint, Concert} from '../../../types';
@@ -41,7 +41,8 @@ function ConcertMap(props: ConcertMapProps) {
       <YMaps query={MAP_QUERY}>
         <Map width={'100%'} height={'100%'} defaultState={mapState}>
           {location && <HomePlacemark location={location}/>}
-          <ConcertObjectManager concerts={concerts} setShownGigIds={setShownGigIds}/>
+          <ConcertObjectManagerWithYmaps
+            concerts={concerts} setShownGigIds={setShownGigIds}/>
           <ZoomControl/>
         </Map>
       </YMaps>
