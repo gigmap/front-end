@@ -1,8 +1,9 @@
-import React, {useState} from 'react';
+import React from 'react';
 import * as PropTypes from 'prop-types';
 import {ObjectManager, withYMaps} from 'react-yandex-maps';
 import CLUSTER_HINT_TEMPLATE from './templates/ClusterHintTemplate';
 import CLUSTER_SIZE_TEMPLATE from './templates/ClusterNumberTemplate';
+import type {Concert} from '../../../types';
 
 const OBJECT_OPTIONS = {
   openBalloonOnClick: true,
@@ -19,18 +20,40 @@ const clusterCounterFilter = (data, items) => {
   return items.reduce((acc, it) => acc + it.properties.qty, 0);
 };
 
-// TODO: this whole thing smells - class component or useEffect ?
+type ConcertObjectManagerProps = {
+  concerts: Concert[],
+  ymaps: {},
+  setShownGigIds: Function
+}
 
-function ConcertObjectManager({ymaps, concerts, setShownGigIds}) {
+class ConcertObjectManager extends React.PureComponent<ConcertObjectManagerProps> {
 
-  const [mapRef, setMapRef] = useState(null);
-  const {bounds} = ymaps.util;
+  constructor(...args) {
+    super(...args);
 
-  const updateShownIds = (manager) => {
-    const map = manager.getMap();
+    this.objectManager = null;
 
-    const shownItems = manager.objects.getAll().filter(it => {
-      const state = manager.getObjectState(it.id);
+    const {ymaps} = this.props;
+    if (!ymaps.template.filtersStorage.get('clusterSize')) {
+      ymaps.template.filtersStorage.add('clusterSize', clusterCounterFilter);
+    }
+
+    this.clusterOptions = {
+      preset: 'islands#invertedRedClusterIcons',
+      clusterIconContentLayout:
+        ymaps.templateLayoutFactory.createClass(CLUSTER_SIZE_TEMPLATE),
+      hasHint: true
+    };
+  }
+
+  updateShownIds = () => {
+    const {ymaps, setShownGigIds} = this.props;
+    const {bounds} = ymaps.util;
+
+    const map = this.objectManager.getMap();
+
+    const shownItems = this.objectManager.objects.getAll().filter(it => {
+      const state = this.objectManager.getObjectState(it.id);
       const isShown = state.found && state.isShown;
       if (!isShown) {
         return false;
@@ -43,63 +66,51 @@ function ConcertObjectManager({ymaps, concerts, setShownGigIds}) {
       .flatMap(it => it.properties.many ? it.properties.ids : it.id));
   };
 
-  if (!ymaps.template.filtersStorage.get('clusterSize')) {
-    ymaps.template.filtersStorage.add('clusterSize', clusterCounterFilter);
-  }
+  managerRefUpdated = (ref) => {
+    if (!ref) {
+      return;
+    }
 
-  const CLUSTER_OPTIONS = {
-    preset: 'islands#invertedRedClusterIcons',
-    clusterIconContentLayout:
-      ymaps.templateLayoutFactory.createClass(CLUSTER_SIZE_TEMPLATE),
-    hasHint: true
+    this.objectManager = ref;
+    this.updateShownIds();
+    if (this.objectManager !== null) {
+      return;
+    }
+
+    const map = ref.getMap();
+    // map gets destroyed on component unmount, so no need to remove the event listener
+    map.events.add('boundschange', this.updateShownIds);
   };
 
-  return (
-    <ObjectManager
-      options={{
-        clusterize: true,
-        gridSize: 128,
-        clusterHintContentLayout:
-          ymaps.templateLayoutFactory.createClass(CLUSTER_HINT_TEMPLATE)
-      }}
-      objects={OBJECT_OPTIONS}
-      clusters={CLUSTER_OPTIONS}
-      features={concerts}
-      modules={MODULES_LIST}
-      instanceRef={(ref) => {
-        if (!ref) {
-          return;
-        }
+  render() {
+    const {ymaps, concerts} = this.props;
 
-        updateShownIds(ref);
-
-        // no need to add another event handler instance
-        if (mapRef) {
-          return;
-        }
-
-        const map = ref.getMap();
-        setMapRef(map);
-        map.events.add('boundschange', () => updateShownIds(ref));
-      }}
-    />
-  );
+    return (
+      <ObjectManager
+        options={{
+          clusterize: true,
+          gridSize: 128,
+          clusterHintContentLayout:
+            ymaps.templateLayoutFactory.createClass(CLUSTER_HINT_TEMPLATE)
+        }}
+        objects={OBJECT_OPTIONS}
+        clusters={this.clusterOptions}
+        features={concerts}
+        modules={MODULES_LIST}
+        instanceRef={this.managerRefUpdated}
+      />
+    );
+  }
 }
 
-ConcertObjectManager.propTypes = {
-  concerts: PropTypes.array.isRequired,
-  ymaps: PropTypes.object.isRequired,
-  setShownGigIds: PropTypes.func.isRequired
-};
-
-const ConcertYandexObjectManager = withYMaps(
-  React.memo(ConcertObjectManager),
+const ConcertObjectManagerWithYmaps = withYMaps(
+  ConcertObjectManager,
   true,
   ['templateLayoutFactory', 'util.bounds', 'template.filtersStorage']);
 
-ConcertYandexObjectManager.propTypes = {
+ConcertObjectManagerWithYmaps.propTypes = {
   concerts: PropTypes.array.isRequired,
   setShownGigIds: PropTypes.func.isRequired
 };
 
-export default React.memo(ConcertYandexObjectManager);
+export {ConcertObjectManagerWithYmaps};
