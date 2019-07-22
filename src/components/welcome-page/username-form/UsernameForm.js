@@ -3,20 +3,17 @@
 import React, {useState} from 'react';
 import {Icon, Form, Input, Button} from 'antd';
 import {connect} from 'react-redux';
-import * as PropTypes from 'prop-types';
-import {getArtistQty} from '../../../../api/gigmap';
-import UsernameCheckResults from './UsernameCheckResults';
-import {
-  moveToNextStep,
-  updateUserData
-} from '../../../../store/actions/first-steps';
-import {login} from '../../../../store/actions/user';
-import {load} from '../../../../store/actions/data';
-import styles from '../steps.module.css';
+import {getArtistQty} from '../../../api/gigmap';
+import {UsernameCheckResults} from './UsernameCheckResults';
+import {login} from '../../../store/actions/user';
+import {load} from '../../../store/actions/data';
+import styles from './EnterUsername.module.css';
 
 // TODO: needs refactoring
 
-function renderInputField(form: Object, currentName: string, nameLoading: boolean) {
+const NAME_FIELD = 'username';
+
+function renderInputField(form: Object, nameLoading: boolean) {
   const {getFieldDecorator} = form;
   const validationProps = nameLoading ? { // for a spinner near the field
     validateStatus: 'validating',
@@ -25,8 +22,7 @@ function renderInputField(form: Object, currentName: string, nameLoading: boolea
 
   return (
     <Form.Item {...validationProps}>
-      {getFieldDecorator('username', {
-        initialValue: currentName,
+      {getFieldDecorator(NAME_FIELD, {
         rules: [{
           required: true,
           message: 'Please input your songkick username'
@@ -48,7 +44,7 @@ function renderSubmitButton(nameLoading) {
 }
 
 const createSubmitHandler =
-  (form, setNameLoading, setArtistQty, updateUserData) => (e) => {
+  (form, setNameLoading, setArtistQty) => (e) => {
     e.preventDefault();
     form.validateFields((err, {username}) => {
       if (err) {
@@ -61,9 +57,6 @@ const createSubmitHandler =
         .then(data => {
           setNameLoading(false);
           setArtistQty(data.qty);
-          if (data.qty > 0) {
-            updateUserData({name: username});
-          }
         })
         .catch(e => {
           setNameLoading(false);
@@ -77,56 +70,51 @@ const createSubmitHandler =
     });
   };
 
-function renderControls(artistQty, moveToNextStep, proceed) {
+function renderControls(artistQty, proceed) {
   const nextDisabled = artistQty === null || artistQty === 0;
 
   return (
     <div className={styles.controls}>
-      <Button type={'primary'} className={styles.button}
-              onClick={moveToNextStep} disabled={nextDisabled}>
-        Next
-      </Button>
       <Button type={'default'} className={styles.button} onClick={proceed}
               disabled={nextDisabled}>
-        Skip the rest and log in
+        Log in
       </Button>
     </div>
   );
 }
 
-function EnterUsernameStep({form, currentName, updateUserData, moveToNextStep, login, load}) {
+type Props = {
+  form: Form,
+  login: Function,
+  load: Function
+};
 
+function UsernameForm({form, login, load}: Props) {
+
+  const {getFieldValue} = form;
   const [nameLoading, setNameLoading] = useState(false);
   const [artistQty, setArtistQty] = useState(null);
 
   const proceed = () => {
-    login();
+    login(getFieldValue(NAME_FIELD));
     load(true);
   };
   const handleSubmit =
-    createSubmitHandler(form, setNameLoading, setArtistQty, updateUserData);
+    createSubmitHandler(form, setNameLoading, setArtistQty);
   return (
     <>
       <Form layout="inline" onSubmit={handleSubmit}>
-        {renderInputField(form, currentName, nameLoading)}
+        {renderInputField(form, nameLoading)}
         {renderSubmitButton(nameLoading)}
       </Form>
       {artistQty !== null && <UsernameCheckResults artistQty={artistQty}/>}
-      {renderControls(artistQty, moveToNextStep, proceed)}
+      {renderControls(artistQty, proceed)}
     </>
   );
 }
 
-EnterUsernameStep.propTypes = {
-  form: PropTypes.object.isRequired,
+const mapDispatchToProps = {login, load};
 
-  updateUserData: PropTypes.func.isRequired,
-  moveToNextStep: PropTypes.func.isRequired
-};
-
-const mapStateToProps = ({firstSteps: {data: {name}}}) => ({currentName: name});
-const mapDispatchToProps = {updateUserData, moveToNextStep, login, load};
-
-const WrappedLoginForm = Form.create({name: 'EnterUsernameStep'})(EnterUsernameStep);
-
-export default connect(mapStateToProps, mapDispatchToProps)(WrappedLoginForm);
+export const ConnectedUsernameForm = connect(null, mapDispatchToProps)(
+  Form.create({name: 'UsernameForm'})(UsernameForm)
+);

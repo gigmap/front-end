@@ -1,6 +1,7 @@
+// @flow
+
 import React from 'react';
 import {Alert} from 'antd';
-import * as PropTypes from 'prop-types';
 
 function renderContent(artistQty) {
   if (artistQty === 0) {
@@ -20,27 +21,21 @@ function renderContent(artistQty) {
   const tracked = `You have ${artistQty} ${word} tracked.`;
   const conclusion = artistQty < 30 ?
     'It shouldn\'t be long!' :
-    'Loading their data can take a while.';
+    'Loading their data can take a while, please, be patient.';
 
   return (
     <Alert message={`${tracked} ${conclusion}`} type="info" showIcon/>
   );
 }
 
-function RawUsernameCheckResults({artistQty}) {
+type Props = {
+  artistQty: number;
+}
 
-
+export function UsernameCheckResults({artistQty}: Props) {
   return (
     <div style={{marginTop: 20}}>
       {renderContent(artistQty)}
     </div>
   );
 }
-
-const UsernameCheckResults = React.memo(RawUsernameCheckResults);
-
-UsernameCheckResults.propTypes = {
-  artistQty: PropTypes.number.isRequired
-};
-
-export default UsernameCheckResults;

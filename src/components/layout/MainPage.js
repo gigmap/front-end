@@ -1,37 +1,14 @@
 import React from 'react';
-import {Alert, Button, Layout} from 'antd';
+import {Layout} from 'antd';
 import styles from './MainPage.module.less';
-import ContentArea from './content/ContentArea';
+import {ConnectedContentArea} from './content/ContentArea';
 import FooterArea from './footer/FooterArea';
 import HeaderArea from './header/HeaderArea';
-import SideControls from './siderbar/SideControls';
+import {ConnectedSideControls} from './siderbar/SideControls';
 
 const {Header, Footer, Sider, Content} = Layout;
 
-// TODO (implement)   if (!finished || error) {
-const renderError = (error: string, load: Function) => {
-
-  const notice = error ?
-    <Alert type='error' showIcon
-           message={
-             <div>An error happened during concert loading:<br/>{error}</div>
-           }
-    /> :
-    <Alert type='warning' showIcon
-           message='Somehow concerts are not loaded.'/>;
-
-  const button =
-    <Button type='primary' style={{marginTop: 20}} onClick={load}>
-      Try Again
-    </Button>;
-
-  return <>
-    {notice}
-    {button}
-  </>;
-};
-
-function MainPage() {
+export function MainPage() {
   return (
     <Layout className={styles.fullHeight}>
 
@@ -43,7 +20,7 @@ function MainPage() {
           </Header>
 
           <Content className={styles.controls}>
-            <SideControls />
+            <ConnectedSideControls />
           </Content>
 
           <Footer className={styles.footer}>
@@ -54,10 +31,8 @@ function MainPage() {
       </Sider>
 
       <Content className={styles.content}>
-        <ContentArea />
+        <ConnectedContentArea />
       </Content>
     </Layout>
   );
 }
-
-export default MainPage;
