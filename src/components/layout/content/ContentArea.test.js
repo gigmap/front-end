@@ -16,10 +16,10 @@ describe('App', function () {
 
   describe('snapshots', function () {
     [
-      {loading: false, authenticated: false},
-      {loading: false, authenticated: true},
-      {loading: true, authenticated: false},
-      {loading: true, authenticated: true}
+      {loading: false, authenticated: false, finished: false},
+      {loading: false, authenticated: true, finished: true},
+      {loading: true, authenticated: false, finished: false},
+      {loading: true, authenticated: true, finished: false}
     ].forEach(props => {
       it(`should render without crashing with props ${JSON.stringify(props)}`, () => {
         const {wrapper} = setup(props);

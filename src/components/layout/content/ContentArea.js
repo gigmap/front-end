@@ -6,19 +6,22 @@ import LoadingOverlay from '../../common/loading-overlay/LoadingOverlay';
 import Loading from '../../common/Loading';
 import {Alert, Button} from 'antd';
 import {isAuthenticated} from '../../../store/selectors/user';
+import {load} from '../../../store/actions/data';
+import styles from './ContentArea.module.less';
 
 const ConcertMap = React.lazy(() => import('../../concerts/map/ConcertMap'));
 const WelcomePage = React.lazy(() => import('../../welcome-page/WelcomePage'));
 
 type ContentAreaProps = {
   authenticated: boolean,
-  loading: boolean
+  finished: boolean,
+  error: string,
+  loading: boolean,
+  load: Function
 };
 
-// TODO: show error
-// TODO (implement)   if (!finished || error) {
+// TODO: rework
 const renderError = (error: string, load: Function) => {
-
   const notice = error ?
     <Alert type='error' showIcon
            message={
@@ -29,30 +32,45 @@ const renderError = (error: string, load: Function) => {
            message='Somehow concerts are not loaded.'/>;
 
   const button =
-    <Button type='primary' style={{marginTop: 20}} onClick={load}>
+    <Button type='primary' className={styles.button} onClick={() => load(true)}>
       Try Again
     </Button>;
 
-  return <>
-    {notice}
-    {button}
-  </>;
+  return <div className={styles.errorWrapper}>
+    <div>
+      {notice}
+      {button}
+    </div>
+  </div>;
 };
 
+function renderContent(props: ContentAreaProps) {
+  const {authenticated, finished, error, load} = props;
+
+  if (!authenticated) {
+    return <Suspense fallback={<Loading/>}>
+      <WelcomePage/>
+    </Suspense>;
+  }
+
+  if (!finished || error) {
+    return renderError(error, load);
+  }
+
+  return (
+    <Suspense fallback={<Loading/>}>
+      <ConcertMap/>
+    </Suspense>
+  );
+}
+
 export const ContentArea = (props: ContentAreaProps) => {
-  const {authenticated, loading} = props;
+  const {loading} = props;
 
   return (
     <>
       {loading && <LoadingOverlay/>}
-
-      <Suspense fallback={<Loading/>}>
-        {
-          authenticated ?
-            <ConcertMap/> :
-            <WelcomePage/>
-        }
-      </Suspense>
+      {renderContent(props)}
     </>
   );
 };
@@ -65,4 +83,7 @@ const mapStateToProps = (state) =>
     authenticated: isAuthenticated(state)
   });
 
-export const ConnectedContentArea = connect(mapStateToProps)(ContentArea);
+const mapDispatchToProps = {load};
+
+export const ConnectedContentArea =
+  connect(mapStateToProps, mapDispatchToProps)(ContentArea);
