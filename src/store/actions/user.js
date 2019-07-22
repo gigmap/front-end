@@ -1,3 +1,5 @@
+// @flow
+
 import {makeAction} from './lib';
 
 export const TYPES = {
@@ -7,10 +9,7 @@ export const TYPES = {
   SET_DATES: 'USER:DATES:SET'
 };
 
-export const login = () => (dispatch, getState) => {
-  const {firstSteps: {data}} = getState();
-  dispatch(makeAction(TYPES.LOGIN, data));
-};
+export const login = (name: string) => makeAction(TYPES.LOGIN, {name});
 
 export const logout = () => makeAction(TYPES.LOGOUT);
 

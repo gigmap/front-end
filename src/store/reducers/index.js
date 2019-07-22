@@ -2,7 +2,6 @@ import {combineReducers} from 'redux';
 import {user} from './user/user';
 import {data} from './data/data';
 import {filters} from './filters';
-import {firstSteps} from './ui/first-steps';
 import {map} from './map';
 
 export default function createRootReducer() {
@@ -10,7 +9,6 @@ export default function createRootReducer() {
     user,
     data,
     filters,
-    firstSteps,
     map
   });
 }

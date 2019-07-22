@@ -6,9 +6,10 @@ const songkickLink = <a href={'https://www.songkick.com'}
                         rel={'nofollow noopener'}
                         target={'_blank'}>Songkick</a>;
 
-export default function WelcomeText() {
+export function WelcomeText() {
   return (
     <>
+      <Title>Welcome to Gig Map!</Title>
       <Title level={2}>What's going on?</Title>
       <Text>
         <Paragraph>
@@ -17,13 +18,13 @@ export default function WelcomeText() {
         </Paragraph>
         <Paragraph>
           To do so, we use data generously provided by
-          awesome {songkickLink} project.
+          the {songkickLink} project.
           <br/>
           So you would need a {songkickLink} account with your favorite artists
           tracked there.
         </Paragraph>
         <Paragraph>
-          Have one? Just follow a couple of quick simple steps below!
+          Already have one? Just enter it below!
         </Paragraph>
       </Text>
     </>

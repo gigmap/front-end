@@ -1,0 +1,43 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`App snapshots should render without crashing with props {"loading":false,"authenticated":false} 1`] = `
+<Fragment>
+  <Suspense
+    fallback={<Loading />}
+  >
+    <lazy />
+  </Suspense>
+</Fragment>
+`;
+
+exports[`App snapshots should render without crashing with props {"loading":false,"authenticated":true} 1`] = `
+<Fragment>
+  <Suspense
+    fallback={<Loading />}
+  >
+    <lazy />
+  </Suspense>
+</Fragment>
+`;
+
+exports[`App snapshots should render without crashing with props {"loading":true,"authenticated":false} 1`] = `
+<Fragment>
+  <LoadingOverlay />
+  <Suspense
+    fallback={<Loading />}
+  >
+    <lazy />
+  </Suspense>
+</Fragment>
+`;
+
+exports[`App snapshots should render without crashing with props {"loading":true,"authenticated":true} 1`] = `
+<Fragment>
+  <LoadingOverlay />
+  <Suspense
+    fallback={<Loading />}
+  >
+    <lazy />
+  </Suspense>
+</Fragment>
+`;

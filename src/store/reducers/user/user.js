@@ -27,7 +27,7 @@ export const user = (state = initialState, {type, payload}) => {
         location: payload ? {...payload} : null
       };
 
-
+    // TODO: move to filters
     case TYPES.SET_DATES:
       const dates: Moment[] = payload;
 
