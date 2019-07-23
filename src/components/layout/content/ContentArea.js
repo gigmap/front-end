@@ -20,7 +20,7 @@ type ContentAreaProps = {
   load: Function
 };
 
-// TODO: rework
+// TODO: rework error detecting and rendering
 const renderError = (error: string, load: Function) => {
   const notice = error ?
     <Alert type='error' showIcon
@@ -45,7 +45,7 @@ const renderError = (error: string, load: Function) => {
 };
 
 function renderContent(props: ContentAreaProps) {
-  const {authenticated, finished, error, load} = props;
+  const {authenticated, finished, error, load, loading} = props;
 
   if (!authenticated) {
     return <Suspense fallback={<Loading/>}>
@@ -53,7 +53,7 @@ function renderContent(props: ContentAreaProps) {
     </Suspense>;
   }
 
-  if (!finished || error) {
+  if (!loading && (!finished || error)) {
     return renderError(error, load);
   }
 
