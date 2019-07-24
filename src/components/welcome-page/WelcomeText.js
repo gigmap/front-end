@@ -2,9 +2,9 @@ import React from 'react';
 import {Typography} from 'antd';
 
 const {Title, Text, Paragraph} = Typography;
-const songkickLink = <a href={'https://www.songkick.com'}
+const getLink = (text) => (<a href={'https://www.songkick.com'}
                         rel={'nofollow noopener'}
-                        target={'_blank'}>Songkick</a>;
+                        target={'_blank'}>{text}</a>);
 
 export function WelcomeText() {
   return (
@@ -18,13 +18,22 @@ export function WelcomeText() {
         </Paragraph>
         <Paragraph>
           To do so, we use data generously provided by
-          the {songkickLink} project.
+          the {getLink('Songkick')} project.
           <br/>
-          So you would need a {songkickLink} account with your favorite artists
+          So you would need a {getLink('Songkick')} account with your favorite artists
           tracked there.
         </Paragraph>
         <Paragraph>
-          Already have one? Just enter it below!
+          <b>Already have one?</b> Just enter your username below!
+        </Paragraph>
+        <Paragraph>
+          <b>Don't have one?</b>
+          <ol>
+            <li>Go to {getLink('songkick.com')}</li>
+            <li>Create an account</li>
+            <li>Use search to find your favorite artists and click "Track artist"</li>
+            <li>Come back here and enter your username!</li>
+          </ol>
         </Paragraph>
       </Text>
     </>
