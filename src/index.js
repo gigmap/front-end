@@ -10,8 +10,9 @@ import configureStore from './store/configureStore';
 import {App} from './components/app/App';
 import LoadingOverlay from './components/common/loading-overlay/LoadingOverlay';
 
-if (process.env.NODE_ENV === 'production') {
-  ReactGA.initialize(process.env.REACT_APP_GA_ID, {
+const googleAnalyticsId = process.env.REACT_APP_GA_ID;
+if (googleAnalyticsId) {
+  ReactGA.initialize(googleAnalyticsId, {
     debug: false
   });
 }
@@ -21,7 +22,7 @@ const {store, persistor} = configureStore({});
 ReactDOM.render(
   <Provider store={store}>
     <PersistGate loading={<LoadingOverlay/>} persistor={persistor}>
-        <App />
+      <App/>
     </PersistGate>
   </Provider>,
   document.getElementById('root'));

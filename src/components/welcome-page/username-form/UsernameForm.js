@@ -3,10 +3,12 @@
 import React, {useState} from 'react';
 import {Icon, Form, Input, Button} from 'antd';
 import {connect} from 'react-redux';
+import * as ReactGA from 'react-ga';
 import {getArtistQty} from '../../../api/gigmap';
 import {UsernameCheckResults} from './UsernameCheckResults';
 import {login} from '../../../store/actions/user';
 import {load} from '../../../store/actions/data';
+import {EVENTS} from '../../../constants/Tracking';
 import styles from './EnterUsername.module.css';
 
 // TODO: needs refactoring
@@ -96,6 +98,10 @@ function UsernameForm({form, login, load}: Props) {
   const [artistQty, setArtistQty] = useState(null);
 
   const proceed = () => {
+    ReactGA.event({
+      category: EVENTS.User.category,
+      action: EVENTS.User.actions.SongkickAuthorized
+    });
     login(getFieldValue(NAME_FIELD));
     load(true);
   };

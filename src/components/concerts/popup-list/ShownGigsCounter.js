@@ -3,9 +3,11 @@
 import * as React from 'react';
 import {connect} from 'react-redux';
 import {Button} from 'antd';
+import * as ReactGA from 'react-ga';
 import {toggleShownGigsPopup} from '../../../store/actions/map';
 import {countShownConcerts} from './selectors';
 import styles from './ShownGigsCounter.module.less';
+import {EVENTS} from '../../../constants/Tracking';
 
 type ShownGigsCounterProps = {
   qtyOnMap: number,
@@ -32,6 +34,10 @@ const makeText = (qty: number) => {
 export const ShownGigsCounter = (props: ShownGigsCounterProps) => {
   const {toggleShownGigsPopup, qtyOnMap} = props;
   const open = (e) => {
+    ReactGA.event({
+      category: EVENTS.UI.category,
+      action: EVENTS.UI.actions.DetailsButton
+    });
     e.target.blur();
     toggleShownGigsPopup(true);
   };
