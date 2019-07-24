@@ -1,6 +1,7 @@
 import React from 'react';
-import style from './ErrorBoundary.module.less';
 import {Alert, Button, Typography} from 'antd';
+import * as ReactGA from 'react-ga';
+import style from './ErrorBoundary.module.less';
 
 const MAIL = process.env.REACT_APP_SUPPORT_EMAIL;
 
@@ -28,6 +29,10 @@ export class ErrorBoundary extends React.Component {
   }
 
   componentDidCatch(error, info) {
+    ReactGA.exception({
+      description: `${error.message}:\nStack:\n${info.componentStack}`,
+      fatal: true
+    });
     console.error(error, info);
   }
 

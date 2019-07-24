@@ -34,24 +34,10 @@ exports[`App snapshots should render without crashing with props {"loading":true
 exports[`App snapshots should render without crashing with props {"loading":true,"authenticated":true,"finished":false} 1`] = `
 <Fragment>
   <LoadingOverlay />
-  <div>
-    <div>
-      <Alert
-        message="Somehow concerts are not loaded."
-        showIcon={true}
-        type="warning"
-      />
-      <Button
-        block={false}
-        ghost={false}
-        htmlType="button"
-        loading={false}
-        onClick={[Function]}
-        type="primary"
-      >
-        Try Again
-      </Button>
-    </div>
-  </div>
+  <Suspense
+    fallback={<Loading />}
+  >
+    <lazy />
+  </Suspense>
 </Fragment>
 `;
