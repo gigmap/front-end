@@ -71,9 +71,11 @@ class ConcertObjectManager extends React.PureComponent<ConcertObjectManagerProps
       return;
     }
 
+    const hasManager = this.objectManager !== null;
     this.objectManager = ref;
     this.updateShownIds();
-    if (this.objectManager !== null) {
+
+    if (hasManager) {
       return;
     }
 
