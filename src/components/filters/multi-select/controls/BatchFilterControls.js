@@ -26,12 +26,15 @@ export const BatchFilterControls = (props: BatchFilterControlsProps) => {
       <div className={styles.status}>
         {selectedQty}/{totalQty} selected
       </div>
-      <Button type={'link'} onClick={selectAll}>
-        Select all {word}
-      </Button>
-      <Button type={'link'} onClick={deselectAll}>
-        Clear
-      </Button>
+
+      <span>
+        <Button type={'link'} className={styles.batchButton} onClick={selectAll}>
+          Select all {word}
+        </Button>
+        <Button type={'link'} className={styles.batchButton} onClick={deselectAll}>
+          Clear
+        </Button>
+      </span>
     </div>
   );
 };

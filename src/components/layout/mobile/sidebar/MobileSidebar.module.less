@@ -1,0 +1,18 @@
+.mobileFilters {
+  width: 100%;
+  height: calc(100% - 64px);
+  padding: 0 10px 20px;
+  position: fixed;
+  display: flex;
+  z-index: 15;
+  left: -100%;
+  top: 64px;
+  background: #f0f2f5;
+  overflow-y: scroll;
+
+  transition: left 200ms;
+}
+
+.showFilters {
+  left: 0;
+}

@@ -4,10 +4,10 @@ import React, {Suspense} from 'react';
 import {connect} from 'react-redux';
 import TempButtons from './TempButtons';
 import {Divider} from 'antd';
-import LoadingOverlay from '../../common/loading-overlay/LoadingOverlay';
-import {isAuthenticated} from '../../../store/selectors/user';
+import LoadingOverlay from '../../../common/loading-overlay/LoadingOverlay';
+import {isAuthenticated} from '../../../../store/selectors/user';
 
-const FilterForm = React.lazy(() => import('../../filters/FilterForm'));
+const FilterForm = React.lazy(() => import('../../../filters/FilterForm'));
 
 type SideControlsProps = {
   authenticated: boolean

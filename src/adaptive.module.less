@@ -1,0 +1,15 @@
+@import "./mixins";
+
+.fullscreenOnly {
+  .forMobile({
+    display: none !important;
+  });
+}
+
+.mobileOnly {
+  display: none !important;
+
+  .forMobile({
+    display: inherit !important;
+  })
+}

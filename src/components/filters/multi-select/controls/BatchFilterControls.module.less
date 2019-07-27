@@ -1,15 +1,23 @@
+@import "../../../../mixins";
+
 .controls {
 
-  button span {
-    text-decoration: underline;
-  }
+  .batchButton {
+    span {
+      text-decoration: underline;
+    }
 
-  button:hover span {
-    text-decoration: none;
-  }
+    &:hover span {
+      text-decoration: none;
+    }
 
-  button:first-child {
-    padding-left: 0;
+    &:first-child {
+      padding-left: 0;
+    }
+
+    .forMobile({
+      padding: 0 5px;
+    });
   }
 
   .status {

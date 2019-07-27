@@ -1,0 +1,11 @@
+.forFullscreen(@styles) {
+  @media all and (min-width: 900px) {
+    @styles();
+  }
+}
+
+.forMobile(@styles) {
+  @media all and (max-width: 900px) {
+    @styles();
+  }
+}
