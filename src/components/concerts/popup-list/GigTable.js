@@ -1,8 +1,9 @@
 // @flow
 
 import * as React from 'react';
+import {Descriptions, Table} from 'antd';
+import adaptive from '../../../adaptive.module.less';
 import type {Concert} from '../../../types';
-import {Table} from 'antd';
 
 type GigTableProps = {
   concerts: Concert[]
@@ -50,15 +51,34 @@ const columns = [
 
 ];
 
+const renderDescriptionItem = (concert: Concert) => {
+  return (
+    <div key={concert.id} style={{marginBottom: 15}}>
+      <Descriptions size={'small'} bordered layout={'vertical'}>
+        <Descriptions.Item label={concert.memberNames}>
+          <div>{renderDate(concert.start)}, {concert.location.city}</div>
+          <div>{renderLink(concert.displayName, concert)}</div>
+        </Descriptions.Item>
+      </Descriptions>
+    </div>
+  );
+};
+
 export const GigTable = (props: GigTableProps) => {
   const {concerts} = props;
 
   return (
-    <Table
-      rowKey={'id'} size={'small'} pagination={false}
-      columns={columns} dataSource={concerts}
-      scroll={{y: 600}}
-    />
+    <>
+      <div className={adaptive.mobileOnly}>
+        {concerts.map(renderDescriptionItem)}
+      </div>
+      <Table
+        className={adaptive.fullscreenOnly}
+        rowKey={'id'} size={'small'} pagination={false}
+        columns={columns} dataSource={concerts}
+        scroll={{y: 600}}
+      />
+    </>
   );
 };
 
