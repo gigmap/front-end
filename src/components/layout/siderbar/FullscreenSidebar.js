@@ -4,7 +4,6 @@ import classNames from 'classnames';
 import {Layout} from 'antd';
 import HeaderArea from '../header/HeaderArea';
 import {ConnectedSideControls} from './parts/SideControls';
-import {FooterArea} from '../footer/FooterArea';
 import styles from './FullscreenSidebar.module.less';
 import adaptive from '../../../adaptive.module.less';
 
@@ -22,8 +21,6 @@ export const FullscreenSidebar = () => {
         <Content className={styles.controls}>
           <ConnectedSideControls/>
         </Content>
-
-        <FooterArea isMobile={false}/>
       </Layout>
 
     </Sider>
