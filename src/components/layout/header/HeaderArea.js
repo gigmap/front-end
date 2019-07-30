@@ -8,8 +8,8 @@ const HeaderArea = () => {
   return (
     <div className={styles.wrapper}>
       <img className={classNames(styles.image, adaptive.fullscreenOnly)}
-           src={Logo} alt={'GigMap'}/>
-      <span className={styles.title}><span>Gig</span>Map</span>
+           src={Logo} alt={'Dig a Gig!'}/>
+      <span className={styles.title}><span>Dig</span> a <span>Gig</span></span>
     </div>
   );
 };

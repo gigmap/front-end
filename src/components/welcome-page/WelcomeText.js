@@ -9,11 +9,11 @@ const getLink = (text) => (<a href={'https://www.songkick.com'}
 export function WelcomeText() {
   return (
     <>
-      <Title>Welcome to Gig Map!</Title>
+      <Title>Welcome to Dig a Gig!</Title>
       <Title level={2}>What's going on?</Title>
       <Text>
         <Paragraph>
-          GigMap is here to help you discover gigs and concerts of your favorite
+          We are here to help you discover gigs and concerts of your favorite
           artists all over the world.
         </Paragraph>
         <Paragraph>

@@ -1,4 +1,4 @@
-# GigMap Web App
+# Dig-a-Gig Web App
 
 [![CircleCI](https://circleci.com/gh/gigmap/front-end.svg?style=svg)](https://circleci.com/gh/gigmap/front-end)
 [![Coverage Status](https://coveralls.io/repos/github/gigmap/front-end/badge.svg?branch=master)](https://coveralls.io/github/gigmap/front-end?branch=master)
