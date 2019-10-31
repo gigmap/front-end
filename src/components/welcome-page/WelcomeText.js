@@ -2,6 +2,7 @@ import React from 'react';
 import {Typography} from 'antd';
 
 const {Title, Text, Paragraph} = Typography;
+const MAIL = process.env.REACT_APP_SUPPORT_EMAIL;
 const getLink = (text) => (<a href={'https://www.songkick.com'}
                         rel={'nofollow noopener'}
                         target={'_blank'}>{text}</a>);
@@ -24,7 +25,8 @@ export function WelcomeText() {
           tracked there.
         </Paragraph>
         <Paragraph>
-          <b>Already have one?</b> Just enter your username below!
+          <b>Already have one?</b><br/>
+          Just enter your username <a href={'#username-form'}>below</a>!
         </Paragraph>
         <Paragraph>
           <b>Don't have one?</b>
@@ -34,6 +36,10 @@ export function WelcomeText() {
             <li>Use search to find your favorite artists and click "Track artist"</li>
             <li>Come back here and enter your username!</li>
           </ol>
+        </Paragraph>
+        <Paragraph>
+          <b>Have any questions?</b><br/>
+          Don't hesitate to contact us at <a href={`mailto:${MAIL}`}>{MAIL}</a> to ask them.
         </Paragraph>
       </Text>
     </>

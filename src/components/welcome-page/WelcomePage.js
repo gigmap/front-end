@@ -15,7 +15,7 @@ export function WelcomePage() {
 
         <Title level={2}>Let's roll!</Title>
 
-        <div className={styles.form}>
+        <div className={styles.form} id={'username-form'} >
           <ConnectedUsernameForm/>
         </div>
       </Typography>

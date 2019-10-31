@@ -24,7 +24,6 @@ jobs:
   deploy:
       machine: true
       steps:
-        - run: echo "not ready yet"
         - run: >-
             ssh ${DEPLOY_USER}@${DEPLOY_HOST}
             "docker pull ${DOCKER_REGISTRY}/${DOCKER_USER}/gigmap/gigmap-front:latest

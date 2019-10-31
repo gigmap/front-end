@@ -15,7 +15,7 @@ export const FullscreenSidebar = () => {
            width={400}>
       <Layout className={styles.sidebarLayout}>
         <Header className={styles.header}>
-          <HeaderArea/>
+          <HeaderArea className={styles.logoWrapper}/>
         </Header>
 
         <Content className={styles.controls}>

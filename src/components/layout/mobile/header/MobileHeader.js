@@ -24,8 +24,10 @@ export const MobileHeader = (props: MobileSidebarProps) => {
   return (
     <Header className={classNames(styles.overallHeader, adaptive.mobileOnly)}>
       <Button type={'primary'} icon={icon} onClick={toggleSidebar}
-              disabled={!isAuthenticated}/>
-      <HeaderArea/>
+              disabled={!isAuthenticated} />
+      <div>
+        <HeaderArea className={styles.logoWrapper}/>
+      </div>
     </Header>
   );
 };

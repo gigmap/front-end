@@ -1,5 +1,5 @@
 import {makeAction, makeRequestTypes} from './lib';
-import {getConcerts} from '../../api/gigmap';
+import {getConcerts} from '../../api/gigmap/gigmap';
 import {toggleAll} from './filters';
 import {DATA_KEYS} from '../reducers/Constants';
 

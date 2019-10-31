@@ -4,7 +4,7 @@ import React, {useState} from 'react';
 import {Icon, Form, Input, Button} from 'antd';
 import {connect} from 'react-redux';
 import * as ReactGA from 'react-ga';
-import {getArtistQty} from '../../../api/gigmap';
+import {getArtistQty} from '../../../api/gigmap/gigmap';
 import {UsernameCheckResults} from './UsernameCheckResults';
 import {login} from '../../../store/actions/user';
 import {load} from '../../../store/actions/data';

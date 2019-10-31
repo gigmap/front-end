@@ -3,7 +3,7 @@
 import React, {Suspense} from 'react';
 import {connect} from 'react-redux';
 import LoadingOverlay from '../../common/loading-overlay/LoadingOverlay';
-import Loading from '../../common/Loading';
+import Loading from '../../common/loading/Loading';
 import {Alert, Button} from 'antd';
 import {isAuthenticated} from '../../../store/selectors/user';
 import {load} from '../../../store/actions/data';
