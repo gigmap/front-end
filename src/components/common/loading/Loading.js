@@ -1,10 +1,12 @@
 import {Spin} from 'antd';
 import React from 'react';
 import * as PropTypes from 'prop-types';
+import styles from './Loading.module.css';
 
+// TODO: reword with Flow Props
 export default function Loading({tip, size}) {
   return (
-    <div style={{margin: 50, textAlign: 'center'}}>
+    <div className={styles.wrapper}>
       <Spin size={size || 'large'} tip={tip}/>
     </div>
   );

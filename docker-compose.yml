@@ -1,0 +1,7 @@
+version: '3'
+
+services:
+  dig-a-gig-front:
+    build: .
+    ports:
+      - 3000:80

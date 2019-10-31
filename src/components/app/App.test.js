@@ -1,7 +1,7 @@
 import React from 'react';
 import {shallow} from 'enzyme';
 import {App} from './App';
-import {MainPage} from '../layout/MainPage';
+import {MainRouter} from './router/MainRouter';
 
 
 describe('App', function () {
@@ -18,6 +18,6 @@ describe('App', function () {
   it('should contain MainPage', () => {
     const {wrapper} = setup();
 
-    expect(wrapper.find(MainPage)).toHaveLength(1);
+    expect(wrapper.find(MainRouter)).toHaveLength(1);
   });
 });

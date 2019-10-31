@@ -4,6 +4,7 @@ import {data} from './data/data';
 import {filters} from './filters';
 import {map} from './map';
 import {ui} from './ui';
+import {artistImport} from './import'
 
 export default function createRootReducer() {
   return combineReducers({
@@ -11,6 +12,7 @@ export default function createRootReducer() {
     data,
     filters,
     map,
-    ui
+    ui,
+    artistImport
   });
 }
