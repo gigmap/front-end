@@ -2,10 +2,12 @@
 
 import React, {useState} from 'react';
 import {connect} from 'react-redux';
+import * as ReactGA from 'react-ga';
 import {uploadGoogleData} from '../../../../../store/actions/import';
 import {Button, Form, Input, Spin} from 'antd';
 import {RequestError} from '../../../../common/request-error/RequestError';
 import styles from './ImportGoogleForm.module.less';
+import {EVENTS} from '../../../../../constants/Tracking';
 
 type ImportGoogleFormProps = {
  loading: boolean,
@@ -22,6 +24,10 @@ export const ImportGoogleForm = (props: ImportGoogleFormProps) => {
   const onSubmit = (e) => {
     e.target.blur();
     e.preventDefault();
+    ReactGA.event({
+      category: EVENTS.Features.category,
+      action: EVENTS.Features.actions.GoogleImportUsed
+    });
     uploadGoogleData(username, html);
   };
 

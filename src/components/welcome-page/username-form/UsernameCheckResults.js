@@ -2,18 +2,18 @@
 
 import React from 'react';
 import {Alert} from 'antd';
+import {SongkickLink} from '../../common/links/songkick/SongkickLink';
 
 function renderContent(artistQty) {
   if (artistQty === 0) {
     const message = <span>
           You have no artists tracked on&nbsp;
-      <a target='_blank' rel='noreferrer noopener'
-         href="https://www.songkick.com/tracker/artists">Songkick</a>.
+          <SongkickLink path={'/tracker/artists'} />.
           Track some and try again!
     </span>;
 
     return (
-      <Alert message={message} type="warning" showIcon/>
+      <Alert message={message} type="warning" showIcon />
     );
   }
 
@@ -24,7 +24,7 @@ function renderContent(artistQty) {
     'Loading their data can take a while, please, be patient.';
 
   return (
-    <Alert message={`${tracked} ${conclusion}`} type="info" showIcon/>
+    <Alert message={`${tracked} ${conclusion}`} type="info" showIcon />
   );
 }
 

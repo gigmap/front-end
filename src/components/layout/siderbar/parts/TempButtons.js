@@ -1,22 +1,24 @@
 import React from 'react';
-import {Button, Icon} from 'antd';
+import {Button, Icon, Tooltip} from 'antd';
 import {connect} from 'react-redux';
 import {load} from '../../../../store/actions/data';
 import {logout} from '../../../../store/actions/user';
-import adaptive from '../../../../adaptive.module.less';
 import style from './TempButtons.module.less';
 
 const TempButtons = ({username, loading, logout, load}) => {
+  const reload = () => load(false);
+
   return (
     <div className={style.wrapper}>
       <Button onClick={logout}>
-        <Icon type='user'/> {username}: Log Out
+        <Icon type='user' /> {username}: Log Out
       </Button>
 
-      <Button style={{marginLeft: 10}} disabled={loading} onClick={() => load(false)}>
-        <Icon type='reload'/>
-        <span className={adaptive.fullscreenOnly}> Reload Concerts</span>
-      </Button>
+      <Tooltip title={'Reload Concerts'}>
+        <Button icon={'reload'}
+                className={style.reload} disabled={loading} onClick={reload}>
+        </Button>
+      </Tooltip>
     </div>
   );
 };

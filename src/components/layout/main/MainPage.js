@@ -1,5 +1,6 @@
 import React from 'react';
 import {Layout} from 'antd';
+import * as ReactGA from 'react-ga';
 import styles from './MainPage.module.less';
 import {ConnectedContentArea} from '../content/ContentArea';
 import {GigMapFooter} from '../footer/GigMapFooter';
@@ -10,6 +11,8 @@ import {FullscreenSidebar} from '../siderbar/FullscreenSidebar';
 const {Content} = Layout;
 
 export function MainPage() {
+  ReactGA.pageview(window.location.pathname + window.location.search);
+
   return (
     <Layout className={styles.mainLayout}>
       <ConnectedMobileHeader />

@@ -1,13 +1,12 @@
 // @flow
 import React from 'react';
-import {Breadcrumb, Icon, Layout, Typography} from 'antd';
+import {Layout, Typography} from 'antd';
 import classes from 'classnames';
+import * as ReactGA from 'react-ga';
 import {ConnectedMobileHeader} from '../mobile/header/MobileHeader';
 import {ConnectedMobileSidebar} from '../mobile/sidebar/MobileSidebar';
 import {GigMapFooter} from '../footer/GigMapFooter';
 import styles from './SecondaryPage.module.less';
-import {Link} from 'react-router-dom';
-import {ROUTES} from '../../../constants/Routes';
 import HeaderArea from '../header/HeaderArea';
 import adaptive from '../../../adaptive.module.less';
 import {Breadcrumbs} from '../navigation/breadcrumbs/Breadcrumbs';
@@ -24,6 +23,8 @@ type StaticPageLayoutProps = {
 // TODO: improve breadcrumbs
 export const SecondaryPageLayout = (props: StaticPageLayoutProps) => {
   const {title} = props;
+  ReactGA.pageview(window.location.pathname + window.location.search);
+
   return (
     <Layout className={styles.mainLayout}>
 

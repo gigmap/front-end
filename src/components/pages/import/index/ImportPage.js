@@ -4,6 +4,7 @@ import {SecondaryPageLayout} from '../../../layout/secondary-page/SecondaryPageL
 import {Button, Typography} from 'antd';
 import {Link} from 'react-router-dom';
 import {ROUTES} from '../../../../constants/Routes';
+import {SongkickLink} from '../../../common/links/songkick/SongkickLink';
 
 const {Paragraph} = Typography;
 
@@ -14,10 +15,7 @@ export const ImportPage = () => {
         <Paragraph>
           You can import your <b>Spotify</b> and <b>Last.fm</b> artists
           from&nbsp;
-          <a href={'https://www.songkick.com/tracker/artists'}
-             target={'_blank'}>
-            Songkick Artists page
-          </a>.
+          <SongkickLink path={'/tracker/artists'} />.
         </Paragraph>
         <Paragraph>
           We also have a way to kinda import from Google Music playlists,

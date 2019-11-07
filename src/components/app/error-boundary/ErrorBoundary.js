@@ -2,21 +2,7 @@ import React from 'react';
 import {Alert, Button, Typography} from 'antd';
 import * as ReactGA from 'react-ga';
 import style from './ErrorBoundary.module.less';
-
-const MAIL = process.env.REACT_APP_SUPPORT_EMAIL;
-
-const renderContacts = () => {
-  if (!MAIL) {
-    return null;
-  }
-
-  return (
-    <p>
-      Or feel free to <a href={`mailto:${MAIL}`}>contact us</a>
-      at <a href={`mailto:${MAIL}`}>{MAIL}</a>.
-    </p>
-  );
-};
+import {SupportMailLink} from '../../common/links/mail/SupportMailLink';
 
 export class ErrorBoundary extends React.Component {
   constructor(props) {
@@ -56,7 +42,9 @@ export class ErrorBoundary extends React.Component {
                 <p>
                   Please, try to reload the page or wait a couple of minutes.
                 </p>
-                {renderContacts()}
+                <p>
+                  Or feel free to contact us at <SupportMailLink />.
+                </p>
                 <Button onClick={() => window.location.reload()}
                         type={'primary'}>
                   Reload Page

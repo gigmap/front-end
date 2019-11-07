@@ -1,9 +1,9 @@
 // @flow
 import React from 'react';
 import {Typography} from 'antd';
+import {SupportMailLink} from '../../../../common/links/mail/SupportMailLink';
 
 const {Paragraph, Text} = Typography;
-const MAIL = process.env.REACT_APP_SUPPORT_EMAIL;
 
 export const ImportGoogleManual = () => {
   return (
@@ -15,7 +15,7 @@ export const ImportGoogleManual = () => {
         It's not perfect, seems a bit complicated, but it's how it is for
         now.<br />
         Please follow several step below. Feel free
-        to <a href={`mailto:${MAIL}`}>contact us</a> for any help.
+        to contact us at <SupportMailLink/> for any help.
       </Paragraph>
       <Paragraph>
         <ol>
