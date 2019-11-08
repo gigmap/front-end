@@ -34,7 +34,7 @@ export function WelcomeText() {
         </Paragraph>
         <Paragraph>
           <b>Don't have one?</b><br/>
-          <ConnectedTryOutButton/> We have a demo account with 200 top artists tracked.
+          <ConnectedTryOutButton/> We have a demo account with some top artists tracked.
           <br/>
           Or follow these simple steps to create your own account:
           <ol>
