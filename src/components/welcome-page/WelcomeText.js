@@ -11,7 +11,7 @@ const {Title, Text, Paragraph} = Typography;
 export function WelcomeText() {
   return (
     <>
-      <Title>Welcome to Dig a Gig!</Title>
+      <Title level={1}>Welcome to Dig a Gig!</Title>
       <Title level={2}>What's going on?</Title>
       <Text>
         <Paragraph>
