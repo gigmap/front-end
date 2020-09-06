@@ -6,7 +6,6 @@ import TempButtons from './TempButtons';
 import {Divider} from 'antd';
 import LoadingOverlay from '../../../common/loading-overlay/LoadingOverlay';
 import {isAuthenticated} from '../../../../store/selectors/user';
-import adaptive from '../../../../adaptive.module.less';
 import {ConnectedMobileNavLinks} from '../../mobile/nav-links/MobileNavLinks';
 import styles from './SideControls.module.less';
 

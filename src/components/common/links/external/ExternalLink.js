@@ -10,7 +10,7 @@ export const ExternalLink = (props: ExternalLinkProps) => {
   const {url, text} = props;
   return (
     <a href={url}
-       rel={'nofollow noopener'}
+       rel="noopener noreferrer"
        target={'_blank'}>
       {text || url}
     </a>

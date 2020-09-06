@@ -4,6 +4,8 @@ export const ARTISTS_DATA_KEY = 'artists';
 export const COUNTRIES_DATA_KEY = 'countries';
 export const CONCERTS_DATA_KEY = 'concerts';
 
+export const EVENT_OPTIONS_FILTER_KEY = 'eventOptions';
+
 export const DATA_KEYS = {
   ARTISTS: ARTISTS_DATA_KEY,
   COUNTRIES: COUNTRIES_DATA_KEY,

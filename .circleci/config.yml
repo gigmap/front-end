@@ -3,11 +3,11 @@ version: 2.1
 jobs:
   test:
     docker:
-      - image: circleci/node:latest
+      - image: circleci/node:12
     steps:
       - checkout
-      - run: npm ci
-      - run: npm test -- --coverage --coverageReporters=text-lcov | npx coveralls
+      - run: yarn
+      - run: yarn test --coverage --coverageReporters=text-lcov | npx coveralls
   build:
     machine: true
     steps:

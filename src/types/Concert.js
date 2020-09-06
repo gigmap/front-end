@@ -11,6 +11,8 @@ export type Concert = {
     lng: ?number
   },
   start: string,
+  going?: boolean,
+  interested?: boolean,
   isWithCoordinates: boolean,
   memberNames: string,
   members: Array<{

@@ -14,6 +14,7 @@ const COLUMNS = [
     key: 'googleArtist',
     render: (artist) => (
       <a target={'_blank'}
+        rel="noopener noreferrer"
          href={`https://play.google.com/music/listen#/artist/${artist.id}`}>
         <Button icon={'eye'}>
           {artist.title}
@@ -49,7 +50,7 @@ const COLUMNS = [
       }
 
       return (
-        <a href={artist.uri} target={'_blank'}>
+        <a href={artist.uri} target={'_blank'} rel="noopener noreferrer">
           <Button type={'primary'}>
             {record.isTracked ? 'Go to Artist' : 'Go Track'}
           </Button>

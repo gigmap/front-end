@@ -1,4 +1,4 @@
-FROM node:latest as build
+FROM node:12 as build
 ARG YANDEX_API_KEY
 ARG GIGMAP_API_URL
 ARG SUPPORT_EMAIL
@@ -11,8 +11,8 @@ RUN mkdir /app
 WORKDIR /app
 COPY . .
 COPY .env.example .env
-RUN npm ci
-RUN npm run build
+RUN yarn install --silent --non-interactive
+RUN yarn build
 
 FROM nginx:stable
 COPY ./nginx.conf /etc/nginx/conf.d/default.conf

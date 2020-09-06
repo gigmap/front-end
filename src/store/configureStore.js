@@ -3,13 +3,16 @@ import thunk from 'redux-thunk';
 import {createLogger} from 'redux-logger';
 import createRootReducer from './reducers';
 
-import {persistStore, persistReducer} from 'redux-persist';
+import {persistStore, persistReducer, createMigrate} from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
+import {CURRENT_VERSION, MIGRATIONS} from './migrations';
 
 // TODO: don't persist data.loading
 const persistConfig = {
   key: 'root',
-  storage
+  storage,
+  version: CURRENT_VERSION,
+  migrate: createMigrate(MIGRATIONS, { debug: true }),
 };
 
 export default function configureStore(initialState) {
