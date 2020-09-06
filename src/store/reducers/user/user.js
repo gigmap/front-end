@@ -6,6 +6,7 @@ import {STORE_DATE_FORMAT} from '../Constants';
 
 export const initialState = {
   name: null,
+  // TODO: not used
   location: null,
   dates: {
     from: moment().format(STORE_DATE_FORMAT),

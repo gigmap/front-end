@@ -1,0 +1,1 @@
+export const getMapPosition = ({map: {center, zoom}}) => ({center, zoom});

@@ -1,7 +1,7 @@
 // @flow
 
 import {createSelector} from 'reselect';
-import {getUserLocation} from '../../../store/selectors/user';
+import {getUserLocation} from '../../../store/reducers/user/selectors';
 import {getConcerts} from '../../../store/selectors/data';
 import type {Concert} from '../../../types';
 

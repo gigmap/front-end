@@ -5,7 +5,7 @@ import {connect} from 'react-redux';
 import LoadingOverlay from '../../common/loading-overlay/LoadingOverlay';
 import Loading from '../../common/loading/Loading';
 import {Alert, Button} from 'antd';
-import {isAuthenticated} from '../../../store/selectors/user';
+import {isAuthenticated} from '../../../store/reducers/user/selectors';
 import {load} from '../../../store/actions/data';
 import styles from './ContentArea.module.less';
 

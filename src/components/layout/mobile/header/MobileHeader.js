@@ -7,7 +7,7 @@ import adaptive from '../../../../adaptive.module.less';
 import styles from './MobileHeader.module.less';
 import HeaderArea from '../../header/HeaderArea';
 import {toggleMobileSidebar} from '../../../../store/actions/ui';
-import {isAuthenticated} from '../../../../store/selectors/user';
+import {isAuthenticated} from '../../../../store/reducers/user/selectors';
 
 const {Header} = Layout;
 

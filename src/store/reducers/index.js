@@ -2,7 +2,7 @@ import {combineReducers} from 'redux';
 import {user} from './user/user';
 import {data} from './data/data';
 import {filters} from './filters';
-import {map} from './map';
+import {map} from './map/reducers';
 import {ui} from './ui';
 import {artistImport} from './import'
 

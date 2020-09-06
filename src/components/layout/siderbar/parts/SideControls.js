@@ -5,7 +5,7 @@ import {connect} from 'react-redux';
 import TempButtons from './TempButtons';
 import {Divider} from 'antd';
 import LoadingOverlay from '../../../common/loading-overlay/LoadingOverlay';
-import {isAuthenticated} from '../../../../store/selectors/user';
+import {isAuthenticated} from '../../../../store/reducers/user/selectors';
 import {ConnectedMobileNavLinks} from '../../mobile/nav-links/MobileNavLinks';
 import styles from './SideControls.module.less';
 

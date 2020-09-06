@@ -3,7 +3,7 @@
 import * as React from 'react';
 import {connect} from 'react-redux';
 import {Modal} from 'antd';
-import {toggleShownGigsPopup} from '../../../store/actions/map';
+import {toggleShownGigsPopup} from '../../../store/reducers/map/actions';
 import {getShownConcerts} from './selectors';
 import {default as GigTable} from './GigTable';
 import type {Concert} from '../../../types';
