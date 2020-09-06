@@ -55,7 +55,7 @@ export const CheckboxFilterDialog = (props: CheckboxFilterDialogProps) => {
 
   return (
     <Modal
-      title={`Select ${wording.plural} (this dialog is under development)`}
+      title={`Select ${wording.plural}`}
       visible={isOpen}
       onCancel={close}
       footer={<Button onClick={close}>OK</Button>}

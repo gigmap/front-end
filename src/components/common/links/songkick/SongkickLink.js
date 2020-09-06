@@ -1,6 +1,6 @@
 // @flow
 import React from 'react';
-import {ExternalLink} from '../external/SongkickLink';
+import {ExternalLink} from '../external/ExternalLink';
 
 type SongkickLinkProps = {
   path?: string,

@@ -4,6 +4,7 @@ import * as React from 'react';
 import {Descriptions, Table} from 'antd';
 import adaptive from '../../../adaptive.module.less';
 import type {Concert} from '../../../types';
+import {MemoizedAttendanceIcon} from '../../common/icons/AttendanceIcon';
 
 type GigTableProps = {
   concerts: Concert[]
@@ -19,13 +20,21 @@ const renderLink = (event: string, record: Concert) => (
   </a>
 );
 
+const renderMembers = (members: string, record: Concert) => (
+  <>
+    {members}
+    <MemoizedAttendanceIcon concert={record}/>
+  </>
+);
+
 const columns = [
   {
     title: 'Who',
     dataIndex: 'memberNames',
     key: 'memberNames',
     width: 250,
-    sorter: (a, b) => a.memberNames > b.memberNames ? 1 : -1
+    sorter: (a, b) => a.memberNames > b.memberNames ? 1 : -1,
+    render: renderMembers
   },
   {
     title: 'When',

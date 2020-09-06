@@ -79,8 +79,9 @@ class ConcertObjectManager extends React.PureComponent<ConcertObjectManagerProps
       return;
     }
 
+    // map gets destroyed on component unmount, so no need to remove event listeners
+    ref.events.add('optionschange', () => setImmediate(this.updateShownIds));
     const map = ref.getMap();
-    // map gets destroyed on component unmount, so no need to remove the event listener
     map.events.add('boundschange', this.updateShownIds);
   };
 
