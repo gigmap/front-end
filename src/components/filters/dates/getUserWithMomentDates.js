@@ -1,6 +1,6 @@
 import {createSelector} from 'reselect';
 import moment from 'moment';
-import {getUser} from '../../../store/selectors/user';
+import {getUser} from '../../../store/reducers/user/selectors';
 
 // TODO: dates should be moved to filters (!)
 export const getUserWithMoment = createSelector(

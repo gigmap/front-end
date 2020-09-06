@@ -10,6 +10,7 @@ import {login} from '../../../store/actions/user';
 import {load} from '../../../store/actions/data';
 import {EVENTS} from '../../../constants/Tracking';
 import styles from './EnterUsername.module.css';
+import {setPosition} from '../../../store/reducers/map/actions';
 
 // TODO: needs refactoring
 
@@ -31,8 +32,8 @@ function renderInputField(form: Object, nameLoading: boolean) {
         }]
       })(
         <Input
-          prefix={<Icon type="user" style={{color: 'rgba(0,0,0,.25)'}}/>}
-          placeholder="Songkick Username"/>
+          prefix={<Icon type="user" style={{color: 'rgba(0,0,0,.25)'}} />}
+          placeholder="Songkick Username" />
       )}
     </Form.Item>
   );
@@ -88,10 +89,11 @@ function renderControls(artistQty, proceed) {
 type Props = {
   form: Form,
   login: Function,
-  load: Function
+  load: Function,
+  setPosition: Function
 };
 
-function UsernameForm({form, login, load}: Props) {
+function UsernameForm({form, login, load, setPosition}: Props) {
 
   const {getFieldValue} = form;
   const [nameLoading, setNameLoading] = useState(false);
@@ -104,6 +106,11 @@ function UsernameForm({form, login, load}: Props) {
     });
     login(getFieldValue(NAME_FIELD));
     load(true);
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition((position) => {
+        setPosition([position.coords.latitude, position.coords.longitude]);
+      });
+    }
   };
   const handleSubmit =
     createSubmitHandler(form, setNameLoading, setArtistQty);
@@ -113,13 +120,13 @@ function UsernameForm({form, login, load}: Props) {
         {renderInputField(form, nameLoading)}
         {renderSubmitButton(nameLoading)}
       </Form>
-      {artistQty !== null && <UsernameCheckResults artistQty={artistQty}/>}
+      {artistQty !== null && <UsernameCheckResults artistQty={artistQty} />}
       {renderControls(artistQty, proceed)}
     </>
   );
 }
 
-const mapDispatchToProps = {login, load};
+const mapDispatchToProps = {login, load, setPosition};
 
 export const ConnectedUsernameForm = connect(null, mapDispatchToProps)(
   Form.create({name: 'UsernameForm'})(UsernameForm)

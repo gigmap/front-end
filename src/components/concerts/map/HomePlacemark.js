@@ -8,7 +8,7 @@ import type {GeoPoint} from '../../../types';
 type Props = {
   location: GeoPoint
 };
-
+// TODO: unused?
 function HomePlacemark(props: Props) {
   const {location} = props;
 

@@ -4,7 +4,7 @@ import * as React from 'react';
 import {connect} from 'react-redux';
 import {Button} from 'antd';
 import * as ReactGA from 'react-ga';
-import {toggleShownGigsPopup} from '../../../store/actions/map';
+import {toggleShownGigsPopup} from '../../../store/reducers/map/actions';
 import {countShownConcerts} from './selectors';
 import styles from './ShownGigsCounter.module.less';
 import {EVENTS} from '../../../constants/Tracking';
