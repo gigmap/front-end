@@ -13,6 +13,8 @@ export type Concert = {
   start: string,
   going?: boolean,
   interested?: boolean,
+  postponed?: boolean,
+  isFestival?: boolean;
   isWithCoordinates: boolean,
   memberNames: string,
   members: Array<{
