@@ -12,7 +12,7 @@ export const ExternalLink = (props: ExternalLinkProps) => {
     <a href={url}
        rel="noopener noreferrer"
        target={'_blank'}>
-      {text || url}
+      {text || props.children  || url}
     </a>
   );
 };

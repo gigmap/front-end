@@ -1,7 +1,22 @@
+@import "../../../../../theme.less";
+
 .wrapper a {
   padding-left: 6px;
 }
 
 .wrapper a:first-child {
   padding-left: 0;
+}
+
+.wrapper a:last-child {
+  color: @primary-bg;
+  vertical-align: middle;
+}
+
+.wrapper.mobile a:last-child {
+  color: @dark-block-bg;
+}
+
+.facebookIcon {
+  font-size: 20px;
 }
