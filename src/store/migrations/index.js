@@ -17,6 +17,16 @@ export const MIGRATIONS = {
         ...INITIAL_MAP_POSITION
       }
     };
+  },
+  2: (state) => {
+    const newState = {...state};
+    const displayOptions = state.filters.selected[EVENT_OPTIONS_FILTER_KEY];
+
+    newState.filters.selected[EVENT_OPTIONS_FILTER_KEY] = {
+      ...INITIAL_EVENT_OPTIONS,
+      ...displayOptions
+    };
+    return newState;
   }
 };
 

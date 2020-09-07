@@ -7,15 +7,44 @@ import {makeYaPosition} from '../../../../api/yandex';
 import {getFilteredConcerts} from '../../selectors/getFilteredConcerts';
 import type {Concert} from '../../../../types';
 
-const REGULAR_PRESET = 'islands#redNightClubIcon';
-const GOING_PRESET = 'islands#darkGreenNightClubIcon';
-const INTERESTED_PRESET = 'islands#darkBlueNightClubIcon';
+const CONCERT_ICON = 'NightClub';
+const FESTIVAL_ICON = 'Circus';
+const REGULAR_COLOR = 'red';
+const GOING_COLOR = 'green';
+const INTERESTED_COLOR = 'blue';
+const POSTPONED_COLOR = 'orange';
 
-const getAttendanceText = (concert: Concert) => {
+const getAdditionalText = (concert: Concert) => {
+  const labels = [];
+
   if (concert.going) {
-    return ' (going)';
+    labels.push('going');
+  } else if (concert.interested) {
+    labels.push('interested');
   }
-  return concert.interested ? ' (interested)' : '';
+
+  if (concert.postponed) {
+    labels.push('postponed');
+  }
+
+  return labels.length > 0 ? ` (${labels.join(', ')})` : '';
+};
+
+const getColor = (concert: Concert) => {
+  if (concert.going) {
+    return GOING_COLOR;
+  }
+
+  if (concert.interested) {
+    return INTERESTED_COLOR;
+  }
+
+  return concert.postponed ? POSTPONED_COLOR : REGULAR_COLOR;
+};
+
+const getPreset = (concert: Concert) => {
+  const icon = concert.isFestival ? FESTIVAL_ICON : CONCERT_ICON;
+  return `islands#${getColor(concert)}${icon}Icon`;
 };
 
 const renderUri = (concert: Concert) =>
@@ -34,13 +63,12 @@ function concertToFeature(concerts: Concert[]) {
   // todo: memoize ?
   if (qty === 1) {
     const [concert] = concerts;
-    const attendance = getAttendanceText(concert);
+    const attendance = getAdditionalText(concert);
     return {
       ...result,
       id: String(concert.id), // Yandex.Map requires all ids to be the same type // TODO: during mapping?
       options: {
-        preset: concert.going ? GOING_PRESET :
-          (concert.interested ? INTERESTED_PRESET : REGULAR_PRESET)
+        preset: getPreset(concert)
       },
       properties: {
         qty,
@@ -57,7 +85,7 @@ function concertToFeature(concerts: Concert[]) {
   const titles = [];
   for (const it of concerts.sort((a, b) => a.start > b.start ? 1 : -1)) {
     ids.push(it.id);
-    const attendance = getAttendanceText(it);
+    const attendance = getAdditionalText(it);
     details.push(`<li>${it.start} ${it.memberNames}${attendance} ${renderUri(it)}</li>`);
     titles.push(`${it.start}: ${it.memberNames}${attendance}`);
   }

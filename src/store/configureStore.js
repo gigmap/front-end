@@ -12,7 +12,8 @@ const persistConfig = {
   key: 'root',
   storage,
   version: CURRENT_VERSION,
-  migrate: createMigrate(MIGRATIONS, { debug: true }),
+  migrate: createMigrate(
+    MIGRATIONS, {debug: process.env.NODE_ENV === 'development'})
 };
 
 export default function configureStore(initialState) {

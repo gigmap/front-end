@@ -10,12 +10,18 @@ export type EventOptionsFilter = {
   going: boolean;
   interested: boolean;
   noAttendance: boolean;
+  postponed: boolean;
+  festivals: boolean;
+  concerts: boolean;
 }
 
 export const INITIAL_EVENT_OPTIONS = {
   going: true,
   interested: true,
-  noAttendance: true
+  noAttendance: true,
+  postponed: true,
+  festivals: true,
+  concerts: true
 };
 
 const initialState = {

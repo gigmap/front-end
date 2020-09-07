@@ -27,6 +27,18 @@ const makeEventOptionsPredicate = (eventOptions: EventOptionsFilter) => (concert
     return false;
   }
 
+  if (concert.postponed && !eventOptions.postponed) {
+    return false;
+  }
+
+  if (concert.isFestival && !eventOptions.festivals) {
+    return false;
+  }
+
+  if (!concert.isFestival && !eventOptions.concerts) {
+    return false;
+  }
+
   if (!concert.going && !concert.interested && !eventOptions.noAttendance) {
     return false;
   }
