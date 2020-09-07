@@ -20,10 +20,10 @@ const renderLink = (event: string, record: Concert) => (
   </a>
 );
 
-const renderMembers = (members: string, record: Concert) => (
+const renderMembers = (concert: Concert) => (
   <>
-    {members}
-    <MemoizedEventOptionIcons concert={record}/>
+    {concert.memberNames}
+    <MemoizedEventOptionIcons concert={concert} />
   </>
 );
 
@@ -34,7 +34,7 @@ const columns = [
     key: 'memberNames',
     width: 250,
     sorter: (a, b) => a.memberNames > b.memberNames ? 1 : -1,
-    render: renderMembers
+    render: (text, concert) => renderMembers(concert)
   },
   {
     title: 'When',
@@ -64,7 +64,7 @@ const renderDescriptionItem = (concert: Concert) => {
   return (
     <div key={concert.id} style={{marginBottom: 15}}>
       <Descriptions size={'small'} bordered layout={'vertical'}>
-        <Descriptions.Item label={concert.memberNames}>
+        <Descriptions.Item label={renderMembers(concert)}>
           <div>{renderDate(concert.start)}, {concert.location.city}</div>
           <div>{renderLink(concert.displayName, concert)}</div>
         </Descriptions.Item>
