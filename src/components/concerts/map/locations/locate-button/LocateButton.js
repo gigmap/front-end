@@ -35,7 +35,7 @@ export const LocateButton = ({setPosition}: LocateButtonProps) => {
   return (
     <div className={styles.wrapper}>
       <Tooltip placement={'right'} title={'Locate me'}>
-        <Button icon={'fullscreen-exit'} loading={loading}
+        <Button icon={'compass'} loading={loading}
                 onClick={tryToLocate} />
       </Tooltip>
     </div>

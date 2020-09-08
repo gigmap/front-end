@@ -1,6 +1,6 @@
 {
   "name": "@gigmap/front-end",
-  "version": "1.5.1",
+  "version": "1.5.2",
   "private": true,
   "dependencies": {
     "antd": "^3.24.3",
